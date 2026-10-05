@@ -1,0 +1,145 @@
+[
+  {
+    "id": "hive",
+    "week": 6,
+    "title": "Hive: estructura y consultas",
+    "what": "Define tablas sobre datos y permite consultarlos con HiveQL.",
+    "analogy": "Una ficha ordenada para buscar información en libros almacenados.",
+    "lab": "Tus archivos estaban en HDFS y los consultaste desde Hive.",
+    "remember": "HDFS guarda; Hive consulta.",
+    "trap": "Hive no reemplaza HDFS.",
+    "easy": "Los archivos siguen guardados; Hive ayuda a preguntar por ellos."
+  },
+  {
+    "id": "metastore",
+    "week": 6,
+    "title": "Hive Metastore",
+    "what": "Guarda metadata de bases, tablas, columnas, tipos y ubicaciones.",
+    "analogy": "El catálogo que explica qué significa cada columna.",
+    "lab": "La tabla tenía una definición aparte de los archivos.",
+    "remember": "Metastore = catálogo de Hive.",
+    "trap": "NameNode = catálogo de HDFS; no son el mismo.",
+    "easy": "Describe tablas; no guarda cada venta como bloque."
+  },
+  {
+    "id": "external",
+    "week": 6,
+    "title": "Tabla externa",
+    "what": "Es una definición de Hive que puede apuntar a archivos existentes.",
+    "analogy": "Una ficha que señala un libro que ya está en la biblioteca.",
+    "lab": "Creaste una estructura vinculada a una ruta HDFS.",
+    "remember": "Tabla no equivale a archivo.",
+    "trap": "Crear definición no significa mover todo al Metastore.",
+    "easy": "La tabla explica cómo leer los archivos."
+  },
+  {
+    "id": "location",
+    "week": 6,
+    "title": "LOCATION",
+    "what": "Indica la ubicación de los datos asociados a la tabla.",
+    "analogy": "La dirección escrita en la ficha del libro.",
+    "lab": "La tabla externa apuntaba a una ruta HDFS.",
+    "remember": "LOCATION = dónde están los datos.",
+    "trap": "No ordena filas ni define réplicas.",
+    "easy": "Es la dirección de los archivos."
+  },
+  {
+    "id": "drop-external",
+    "week": 6,
+    "title": "DROP de una externa",
+    "what": "En el caso del curso se elimina la definición, mientras los archivos HDFS pueden permanecer.",
+    "analogy": "Quitar la ficha del catálogo sin tirar el libro.",
+    "lab": "Después de DROP podías comprobar el CSV con HDFS.",
+    "remember": "Datos y metadata pueden vivir separados.",
+    "trap": "Revisa el tipo de tabla antes de borrar.",
+    "easy": "Desaparece la ficha, no necesariamente los archivos."
+  },
+  {
+    "id": "managed",
+    "week": 6,
+    "title": "Tabla administrada",
+    "what": "Hive gestiona definición y datos en el comportamiento básico estudiado.",
+    "analogy": "Un archivo gestionado por la misma oficina que guarda su ficha.",
+    "lab": "Contrasta con el caso de tabla externa.",
+    "remember": "Revisa administrada versus externa antes de DROP.",
+    "trap": "No generalices el comportamiento externo a cualquier tabla.",
+    "easy": "En la administrada, borrar puede afectar también los datos."
+  },
+  {
+    "id": "database",
+    "week": 6,
+    "title": "Bases y tablas",
+    "what": "Una base agrupa tablas; cada tabla describe columnas y tipos.",
+    "analogy": "Un archivador con fichas de varios temas.",
+    "lab": "SHOW DATABASES, CREATE DATABASE, USE y SHOW TABLES.",
+    "remember": "USE elige la base de trabajo.",
+    "trap": "Una base Hive no es un DataNode.",
+    "easy": "Elige el archivador antes de buscar sus tablas."
+  },
+  {
+    "id": "describe",
+    "week": 6,
+    "title": "Inspeccionar estructura",
+    "what": "DESCRIBE muestra columnas y tipos; FORMATTED agrega detalles de metadata.",
+    "analogy": "Leer la ficha antes de trabajar con el libro.",
+    "lab": "Revisaste estructura y ubicación de las tablas.",
+    "remember": "DESCRIBE describe, SELECT consulta.",
+    "trap": "No cuenta ventas ni muestra todos los datos.",
+    "easy": "Mira cómo está definida la tabla."
+  },
+  {
+    "id": "select",
+    "week": 6,
+    "title": "SELECT / FROM / LIMIT",
+    "what": "SELECT elige columnas, FROM la tabla y LIMIT cuántas filas mostrar.",
+    "analogy": "Elige qué datos leer, de qué lista y cuánto mostrar.",
+    "lab": "Consultaste columnas de ventas_hive.",
+    "remember": "Columnas → tabla → cantidad.",
+    "trap": "LIMIT sin orden no significa las mayores ventas.",
+    "easy": "Qué mostrar, de dónde y cuántas filas."
+  },
+  {
+    "id": "where-having",
+    "week": 6,
+    "title": "Filas y grupos",
+    "what": "WHERE filtra registros antes de agrupar; HAVING filtra resultados de grupos.",
+    "analogy": "Seleccionar recibos primero; después comparar los totales por ciudad.",
+    "lab": "Aplicaste filtros y agregaciones.",
+    "remember": "WHERE = filas; HAVING = grupos.",
+    "trap": "Una condición sobre SUM no equivale a una sobre monto de cada fila.",
+    "easy": "Primero filtras ventas; después filtras sus totales."
+  },
+  {
+    "id": "group",
+    "week": 6,
+    "title": "GROUP BY y ORDER BY",
+    "what": "GROUP BY forma grupos; ORDER BY ordena el resultado.",
+    "analogy": "Separar recibos por ciudad versus ordenar una lista.",
+    "lab": "Contaste o sumaste por ciudad o categoría.",
+    "remember": "Agrupar no es ordenar.",
+    "trap": "ORDER BY no calcula un total por grupo.",
+    "easy": "Una operación junta; la otra ordena."
+  },
+  {
+    "id": "join",
+    "week": 6,
+    "title": "JOIN",
+    "what": "Relaciona filas de tablas usando una condición de unión.",
+    "analogy": "Unir una venta con la ficha de su cliente mediante su identificador.",
+    "lab": "Forma parte del temario de Hive de semana 6.",
+    "remember": "La condición debe expresar una relación real.",
+    "trap": "Sin vínculo correcto puedes combinar información sin sentido.",
+    "easy": "Une información que corresponde entre tablas."
+  },
+  {
+    "id": "partition",
+    "week": 6,
+    "title": "Particiones y ALTER TABLE",
+    "what": "Particionar organiza datos por claves; ALTER TABLE modifica definiciones existentes.",
+    "analogy": "Separadores por fecha y cambios en las fichas del archivador.",
+    "lab": "Se consideran particionamiento y modificación de tablas.",
+    "remember": "Partición organiza; ALTER modifica.",
+    "trap": "No es lo mismo que la división HDFS en bloques.",
+    "easy": "Son operaciones sobre la organización de la tabla."
+  }
+]

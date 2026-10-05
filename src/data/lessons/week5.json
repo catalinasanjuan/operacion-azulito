@@ -1,0 +1,123 @@
+[
+  {
+    "id": "hdfs",
+    "week": 5,
+    "title": "HDFS: archivos distribuidos",
+    "what": "Guarda archivos repartiendo bloques entre nodos, pero tú ves archivos y carpetas.",
+    "analogy": "Una biblioteca con depósitos distintos y un catálogo común.",
+    "lab": "Trabajaste con rutas HDFS, no solo carpetas locales.",
+    "remember": "HDFS guarda archivos distribuidos.",
+    "trap": "No es una tabla Hive.",
+    "easy": "Ves un archivo; por dentro puede estar repartido."
+  },
+  {
+    "id": "namenode",
+    "week": 5,
+    "title": "NameNode: el mapa",
+    "what": "Administra nombres, rutas y la información sobre bloques y sus ubicaciones.",
+    "analogy": "El catálogo que indica en qué estante está cada libro.",
+    "lab": "Inspeccionaste el namespace y el estado mediante la interfaz del NameNode.",
+    "remember": "NameNode = mapa de HDFS.",
+    "trap": "No almacena físicamente los bloques como un DataNode.",
+    "easy": "Sabe dónde está cada parte del archivo."
+  },
+  {
+    "id": "datanode",
+    "week": 5,
+    "title": "DataNode: los bloques",
+    "what": "Es el componente que almacena físicamente bloques.",
+    "analogy": "Los estantes donde están las partes de los libros.",
+    "lab": "El entorno académico tenía un DataNode.",
+    "remember": "DataNode = datos.",
+    "trap": "No es el catálogo de tablas de Hive.",
+    "easy": "Aquí viven las partes del archivo."
+  },
+  {
+    "id": "blocks",
+    "week": 5,
+    "title": "Archivos y bloques",
+    "what": "Un archivo lógico puede dividirse en varios bloques. El último puede quedar parcial.",
+    "analogy": "Una novela repartida en varios tomos.",
+    "lab": "29 MiB: 1 bloque; 155 MiB: 2; 305 MiB: 3, con bloques de 128 MiB.",
+    "remember": "Bloques necesarios = redondear hacia arriba tamaño / 128 MiB.",
+    "trap": "Tres bloques no significan tres réplicas.",
+    "easy": "Un archivo grande necesita varias partes."
+  },
+  {
+    "id": "replication",
+    "week": 5,
+    "title": "Replicación",
+    "what": "Mantiene copias de bloques para mejorar disponibilidad y tolerancia a fallos.",
+    "analogy": "Copias de las mismas páginas guardadas en depósitos diferentes.",
+    "lab": "Se pidió factor 3, pero había un solo DataNode.",
+    "remember": "Replicación = copias de bloques.",
+    "trap": "Pedir 3 no crea tres nodos nuevos.",
+    "easy": "Tener otra copia ayuda si un nodo falla."
+  },
+  {
+    "id": "under-replicated",
+    "week": 5,
+    "title": "Pocas réplicas ≠ corrupción",
+    "what": "Under-replicated significa menos copias reales que las deseadas.",
+    "analogy": "Querías tres copias del libro, pero solo tienes una legible.",
+    "lab": "Un archivo podía seguir HEALTHY con una réplica real y objetivo 3.",
+    "remember": "Revisa disponibilidad y réplicas por separado.",
+    "trap": "Under-replicated no significa automáticamente corrupto.",
+    "easy": "Pocas copias no significa que la única copia esté dañada."
+  },
+  {
+    "id": "healthy",
+    "week": 5,
+    "title": "HEALTHY y diagnóstico",
+    "what": "Si están disponibles los bloques necesarios, el archivo puede estar saludable aunque falten réplicas deseadas.",
+    "analogy": "El libro se puede leer, aunque faltan copias de respaldo.",
+    "lab": "fsck ayudó a distinguir estas situaciones.",
+    "remember": "Diagnostica antes de borrar.",
+    "trap": "Borrar para arreglar una advertencia puede perder datos.",
+    "easy": "Primero comprueba qué falta: copias o datos."
+  },
+  {
+    "id": "local-hdfs",
+    "week": 5,
+    "title": "Local y HDFS",
+    "what": "Son sistemas de archivos distintos. Cargar crea una copia en HDFS.",
+    "analogy": "Tu cuaderno y una copia en la biblioteca no son el mismo objeto.",
+    "lab": "Tras cargar podías borrar la copia local y comprobar la de HDFS.",
+    "remember": "PUT entra; GET sale.",
+    "trap": "Una ruta local no existe automáticamente en HDFS.",
+    "easy": "Hay dos lugares diferentes donde puede estar el archivo."
+  },
+  {
+    "id": "cp",
+    "week": 5,
+    "title": "Copiar o mover",
+    "what": "cp conserva el origen; mv cambia su ubicación o nombre.",
+    "analogy": "Fotocopiar un libro versus cambiarlo de estante.",
+    "lab": "RAW → PROCESSED podía copiarse; RAW → ARCHIVE podía moverse.",
+    "remember": "CP copia; MV mueve.",
+    "trap": "Copiar un archivo no es cambiar su replicación.",
+    "easy": "¿Necesitas mantener el original? Copia."
+  },
+  {
+    "id": "organization",
+    "week": 5,
+    "title": "Organizar para crecer",
+    "what": "Usa estado, fuente y fecha para ordenar información.",
+    "analogy": "Carpetas con tema, año y mes en lugar de un cajón lleno.",
+    "lab": "RAW / PROCESSED / ARCHIVE separan estados de los datos.",
+    "remember": "Organizar datos es más que recordar comandos.",
+    "trap": "Estas carpetas no son tipos de DataNode.",
+    "easy": "Separa lo original, lo procesado y lo archivado."
+  },
+  {
+    "id": "commands",
+    "week": 5,
+    "title": "Inspección y operaciones HDFS",
+    "what": "Lista con ls, crea carpetas con mkdir, ve contenido con cat y elimina con rm. du revisa uso, df capacidad y count cantidades.",
+    "analogy": "Abrir un archivador, crear separadores, leer hojas y revisar cuánto espacio ocupan.",
+    "lab": "Usaste comandos para inspeccionar y administrar rutas HDFS.",
+    "remember": "Primero decide la función; luego elige el comando.",
+    "trap": "cat no muestra columnas Hive; rm no elimina solo metadata Hive.",
+    "easy": "Cada comando tiene un trabajo distinto. Consulta la referencia rápida cuando lo necesites."
+  }
+]

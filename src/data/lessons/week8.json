@@ -1,0 +1,145 @@
+[
+  {
+    "id": "comparison",
+    "week": 8,
+    "title": "Consultar y comparar",
+    "what": "Filtra ventas con WHERE y operadores =, >, <, >=, <=, <>.",
+    "analogy": "Seleccionar recibos que cumplen un requisito.",
+    "lab": "Tecnologia, montos altos y ciudades concretas.",
+    "remember": "> excluye el límite; >= lo incluye.",
+    "trap": "<> significa distinto, no menor.",
+    "easy": "El símbolo decide qué filas pasan."
+  },
+  {
+    "id": "and",
+    "week": 8,
+    "title": "AND / OR",
+    "what": "AND exige todas las condiciones; OR permite al menos una.",
+    "analogy": "Hogar y Valparaiso versus Hogar o Valparaiso.",
+    "lab": "Construiste condiciones sobre categoría, ciudad y monto.",
+    "remember": "AND = ambas; OR = cualquiera.",
+    "trap": "Usa paréntesis para expresar la combinación deseada.",
+    "easy": "¿Deben cumplirse las dos o basta una?"
+  },
+  {
+    "id": "in",
+    "week": 8,
+    "title": "IN",
+    "what": "Comprueba si el valor está en una lista permitida.",
+    "analogy": "Una lista de ciudades aceptadas.",
+    "lab": "Santiago, Temuco o Rancagua.",
+    "remember": "IN = pertenecer a un conjunto.",
+    "trap": "No pide varias ciudades en una misma fila.",
+    "easy": "Sirve si el dato es uno de estos valores."
+  },
+  {
+    "id": "between",
+    "week": 8,
+    "title": "BETWEEN",
+    "what": "Selecciona un rango incluyendo sus límites.",
+    "analogy": "Una entrada válida entre dos fechas, incluyendo ambas.",
+    "lab": "Se trabajaron condiciones de montos y períodos.",
+    "remember": "BETWEEN incluye extremos.",
+    "trap": "No significa solo el primer y último valor.",
+    "easy": "Desde este valor hasta este otro, incluidos."
+  },
+  {
+    "id": "like",
+    "week": 8,
+    "title": "LIKE",
+    "what": "Compara un texto con un patrón; % permite una secuencia de caracteres.",
+    "analogy": "Buscar nombres por comienzo o fragmento.",
+    "lab": "Patrones sobre cliente.",
+    "remember": "Ana% empieza con Ana; %Ana% contiene Ana.",
+    "trap": "El comodín no es un nombre literal en igualdad.",
+    "easy": "Busca texto que tenga cierta forma."
+  },
+  {
+    "id": "count-sum",
+    "week": 8,
+    "title": "COUNT / SUM / AVG",
+    "what": "COUNT cuenta ventas; SUM suma montos; AVG calcula promedio.",
+    "analogy": "Cuántos recibos, cuánto gastaste y gasto medio por recibo.",
+    "lab": "Analizaste las 100000 ventas ficticias.",
+    "remember": "Cantidad ≠ total ≠ promedio.",
+    "trap": "Una consulta válida puede usar la medida equivocada.",
+    "easy": "¿Cuántas, cuánto en total o cuánto en promedio?"
+  },
+  {
+    "id": "minmax",
+    "week": 8,
+    "title": "MIN / MAX",
+    "what": "Obtienen el menor y el mayor valor de una columna.",
+    "analogy": "El recibo más barato y el más caro.",
+    "lab": "Extremos del monto de venta.",
+    "remember": "MIN menor; MAX mayor.",
+    "trap": "Monto máximo no significa venta más reciente.",
+    "easy": "Son los extremos, no el total."
+  },
+  {
+    "id": "group",
+    "week": 8,
+    "title": "Agrupar por una dimensión",
+    "what": "GROUP BY permite medidas por ciudad, categoría o cliente.",
+    "analogy": "Poner recibos en pilas por ciudad y sumar cada pila.",
+    "lab": "COUNT por ciudad; SUM por categoría.",
+    "remember": "La clave dice de quién es cada resultado.",
+    "trap": "Cada fila del resultado agregado no es una venta individual.",
+    "easy": "Un resultado para cada grupo."
+  },
+  {
+    "id": "where-having",
+    "week": 8,
+    "title": "Filtrar antes y después",
+    "what": "WHERE decide qué ventas participan; HAVING qué grupos finales quedan.",
+    "analogy": "Excluir recibos primero, luego elegir pilas con total alto.",
+    "lab": "Filtraste agregados por condiciones.",
+    "remember": "WHERE filas; HAVING grupos.",
+    "trap": "monto > X y SUM(monto) > X no son la misma necesidad.",
+    "easy": "Una venta alta no es lo mismo que un total alto."
+  },
+  {
+    "id": "order",
+    "week": 8,
+    "title": "Ordenar y limitar",
+    "what": "ORDER BY DESC pone mayores primero; LIMIT reduce filas mostradas.",
+    "analogy": "Ordenar una lista de totales y tomar los primeros.",
+    "lab": "Categorías con mayor monto total.",
+    "remember": "Ordena antes de elegir las primeras filas.",
+    "trap": "LIMIT solo no garantiza las mayores.",
+    "easy": "Primero el ranking, luego cuántos mostrar."
+  },
+  {
+    "id": "year",
+    "week": 8,
+    "title": "Analizar 2026",
+    "what": "Filtra fecha por el período y luego calcula la medida requerida.",
+    "analogy": "Separar los recibos del año antes de hacer cuentas.",
+    "lab": "Desafío de comportamiento comercial 2026.",
+    "remember": "El período se aplica a fecha.",
+    "trap": "No filtres monto usando el número del año.",
+    "easy": "Elige las ventas del año antes de resumirlas."
+  },
+  {
+    "id": "campaign",
+    "week": 8,
+    "title": "Clientes de campaña",
+    "what": "Agrupa por cliente y elige conteo o gasto según la necesidad.",
+    "analogy": "Comprador frecuente versus comprador con gasto acumulado alto.",
+    "lab": "Desafío de clientes relevantes para campaña.",
+    "remember": "Frecuencia = COUNT; gasto = SUM.",
+    "trap": "Una compra cara no implica gran gasto acumulado.",
+    "easy": "Define qué significa relevante antes de escribir SQL."
+  },
+  {
+    "id": "query-logic",
+    "week": 8,
+    "title": "Que responda la pregunta",
+    "what": "Una consulta debe ejecutarse, responder la necesidad, ser coherente e interpretable.",
+    "analogy": "Una calculadora puede funcionar y aun sumar lo que no pediste.",
+    "lab": "Desafíos e informe ejecutivo.",
+    "remember": "Pregunta → datos → filtros → grupos → medida → orden → interpretación.",
+    "trap": "No basta con que no haya error de sintaxis.",
+    "easy": "Compara el resultado con lo que realmente te preguntaron."
+  }
+]

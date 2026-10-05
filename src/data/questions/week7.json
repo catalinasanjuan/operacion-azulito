@@ -1,0 +1,812 @@
+[
+  {
+    "id": "w7-001",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "host",
+    "concept": "host",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "¿Qué representa EC2 / host en la arquitectura del laboratorio?",
+    "options": [
+      "La infraestructura que ejecuta servicios y contenedores",
+      "El catálogo de tablas Hive",
+      "Una función de agregación",
+      "Un bloque de ventas"
+    ],
+    "correctAnswer": 0,
+    "explanation": "El host sostiene la ejecución; no equivale a HDFS ni al Metastore.",
+    "optionExplanations": [
+      "El host sostiene la ejecución; no equivale a HDFS ni al Metastore.",
+      "Elegiste «El catálogo de tablas Hive». La pregunta pide «La infraestructura que ejecuta servicios y contenedores». El host sostiene la ejecución; no equivale a HDFS ni al Metastore.",
+      "Elegiste «Una función de agregación». La pregunta pide «La infraestructura que ejecuta servicios y contenedores». El host sostiene la ejecución; no equivale a HDFS ni al Metastore.",
+      "Elegiste «Un bloque de ventas». La pregunta pide «La infraestructura que ejecuta servicios y contenedores». El host sostiene la ejecución; no equivale a HDFS ni al Metastore."
+    ],
+    "memoryTip": "El host sostiene la ejecución",
+    "source": "Semana 7 · Temario maestro proporcionado · host",
+    "highValue": false
+  },
+  {
+    "id": "w7-002",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "container",
+    "concept": "container-volume",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "¿Qué aporta Docker en esta arquitectura?",
+    "options": [
+      "Un reemplazo de todas las rutas HDFS",
+      "Contenedores para ejecutar servicios",
+      "Un lenguaje SQL",
+      "Un backup automático diario"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Docker organiza la ejecución de servicios mediante contenedores.",
+    "optionExplanations": [
+      "Elegiste «Un reemplazo de todas las rutas HDFS». La pregunta pide «Contenedores para ejecutar servicios». Docker organiza la ejecución de servicios mediante contenedores.",
+      "Docker organiza la ejecución de servicios mediante contenedores.",
+      "Elegiste «Un lenguaje SQL». La pregunta pide «Contenedores para ejecutar servicios». Docker organiza la ejecución de servicios mediante contenedores.",
+      "Elegiste «Un backup automático diario». La pregunta pide «Contenedores para ejecutar servicios». Docker organiza la ejecución de servicios mediante contenedores."
+    ],
+    "memoryTip": "Docker organiza la ejecución de servicios mediante contenedores.",
+    "source": "Semana 7 · Temario maestro proporcionado · container",
+    "highValue": true
+  },
+  {
+    "id": "w7-003",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "volume",
+    "concept": "container-volume",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "¿Qué permite un volumen Docker correctamente configurado?",
+    "options": [
+      "Garantizar un backup independiente",
+      "Sustituir el NameNode",
+      "Persistir datos fuera del ciclo inmediato del contenedor",
+      "Crear todas las tablas sin metadata"
+    ],
+    "correctAnswer": 2,
+    "explanation": "El volumen separa almacenamiento de la vida del contenedor; no asegura backup.",
+    "optionExplanations": [
+      "Elegiste «Garantizar un backup independiente». La pregunta pide «Persistir datos fuera del ciclo inmediato del contenedor». El volumen separa almacenamiento de la vida del contenedor; no asegura backup.",
+      "Elegiste «Sustituir el NameNode». La pregunta pide «Persistir datos fuera del ciclo inmediato del contenedor». El volumen separa almacenamiento de la vida del contenedor; no asegura backup.",
+      "El volumen separa almacenamiento de la vida del contenedor; no asegura backup.",
+      "Elegiste «Crear todas las tablas sin metadata». La pregunta pide «Persistir datos fuera del ciclo inmediato del contenedor». El volumen separa almacenamiento de la vida del contenedor; no asegura backup."
+    ],
+    "memoryTip": "El volumen separa almacenamiento de la vida del contenedor",
+    "source": "Semana 7 · Temario maestro proporcionado · volume",
+    "highValue": true
+  },
+  {
+    "id": "w7-004",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "container-volume",
+    "concept": "container-volume",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Cuál es la distinción correcta?",
+    "options": [
+      "Contenedor y volumen son siempre el mismo objeto",
+      "Volumen consulta; contenedor guarda tablas",
+      "Contenedor garantiza respaldo externo",
+      "Contenedor ejecuta; volumen conserva almacenamiento"
+    ],
+    "correctAnswer": 3,
+    "explanation": "Ejecución y almacenamiento persistente son responsabilidades distintas.",
+    "optionExplanations": [
+      "Elegiste «Contenedor y volumen son siempre el mismo objeto». La pregunta pide «Contenedor ejecuta; volumen conserva almacenamiento». Ejecución y almacenamiento persistente son responsabilidades distintas.",
+      "Elegiste «Volumen consulta; contenedor guarda tablas». La pregunta pide «Contenedor ejecuta; volumen conserva almacenamiento». Ejecución y almacenamiento persistente son responsabilidades distintas.",
+      "Elegiste «Contenedor garantiza respaldo externo». La pregunta pide «Contenedor ejecuta; volumen conserva almacenamiento». Ejecución y almacenamiento persistente son responsabilidades distintas.",
+      "Ejecución y almacenamiento persistente son responsabilidades distintas."
+    ],
+    "memoryTip": "Ejecución y almacenamiento persistente son responsabilidades distintas.",
+    "source": "Semana 7 · Temario maestro proporcionado · container-volume",
+    "highValue": true
+  },
+  {
+    "id": "w7-005",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "backup",
+    "concept": "backup",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Por qué un volumen persistente no equivale a un backup?",
+    "options": [
+      "Puede perderse o alterarse junto con el almacenamiento original",
+      "Porque no puede contener datos",
+      "Porque solo guarda consultas",
+      "Porque reemplaza todos los archivos"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Persistir tras recrear un contenedor no implica tener una copia de respaldo independiente.",
+    "optionExplanations": [
+      "Persistir tras recrear un contenedor no implica tener una copia de respaldo independiente.",
+      "Elegiste «Porque no puede contener datos». La pregunta pide «Puede perderse o alterarse junto con el almacenamiento original». Persistir tras recrear un contenedor no implica tener una copia de respaldo independiente.",
+      "Elegiste «Porque solo guarda consultas». La pregunta pide «Puede perderse o alterarse junto con el almacenamiento original». Persistir tras recrear un contenedor no implica tener una copia de respaldo independiente.",
+      "Elegiste «Porque reemplaza todos los archivos». La pregunta pide «Puede perderse o alterarse junto con el almacenamiento original». Persistir tras recrear un contenedor no implica tener una copia de respaldo independiente."
+    ],
+    "memoryTip": "Persistencia no equivale a backup.",
+    "source": "Semana 7 · Temario maestro proporcionado · backup",
+    "highValue": true
+  },
+  {
+    "id": "w7-006",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "backup",
+    "concept": "backup",
+    "difficulty": "hard",
+    "type": "comprensión",
+    "prompt": "Borraste información dentro del volumen. ¿La persistencia garantiza recuperarla?",
+    "options": [
+      "Sí; un volumen siempre guarda todas las versiones",
+      "No; persistencia no implica copia histórica",
+      "Sí; Hive reconstruye cualquier bloque",
+      "Sí; LIMIT recupera lo borrado"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Sin respaldo disponible no se puede asumir recuperación de datos eliminados.",
+    "optionExplanations": [
+      "Elegiste «Sí; un volumen siempre guarda todas las versiones». La pregunta pide «No; persistencia no implica copia histórica». Sin respaldo disponible no se puede asumir recuperación de datos eliminados.",
+      "Sin respaldo disponible no se puede asumir recuperación de datos eliminados.",
+      "Elegiste «Sí; Hive reconstruye cualquier bloque». La pregunta pide «No; persistencia no implica copia histórica». Sin respaldo disponible no se puede asumir recuperación de datos eliminados.",
+      "Elegiste «Sí; LIMIT recupera lo borrado». La pregunta pide «No; persistencia no implica copia histórica». Sin respaldo disponible no se puede asumir recuperación de datos eliminados."
+    ],
+    "memoryTip": "Persistencia no equivale a backup.",
+    "source": "Semana 7 · Temario maestro proporcionado · backup",
+    "highValue": true
+  },
+  {
+    "id": "w7-007",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "hdfs-hive",
+    "concept": "hive",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "¿Qué capa guarda archivos distribuidos del dataset?",
+    "options": [
+      "Hive Metastore",
+      "HiveQL",
+      "HDFS",
+      "Definición de la tabla"
+    ],
+    "correctAnswer": 2,
+    "explanation": "HDFS almacena; Hive aporta estructura y consultas.",
+    "optionExplanations": [
+      "Elegiste «Hive Metastore». La pregunta pide «HDFS». HDFS almacena; Hive aporta estructura y consultas.",
+      "Elegiste «HiveQL». La pregunta pide «HDFS». HDFS almacena; Hive aporta estructura y consultas.",
+      "HDFS almacena; Hive aporta estructura y consultas.",
+      "Elegiste «Definición de la tabla». La pregunta pide «HDFS». HDFS almacena; Hive aporta estructura y consultas."
+    ],
+    "memoryTip": "HDFS almacena",
+    "source": "Semana 7 · Temario maestro proporcionado · hdfs-hive",
+    "highValue": true
+  },
+  {
+    "id": "w7-008",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "hdfs-hive",
+    "concept": "hive",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Qué capa interpreta la consulta sobre ventas_hive?",
+    "options": [
+      "DataNode",
+      "Sistema local exclusivamente",
+      "Volumen como lenguaje",
+      "Hive"
+    ],
+    "correctAnswer": 3,
+    "explanation": "Hive usa la estructura de la tabla para consultar los datos.",
+    "optionExplanations": [
+      "Elegiste «DataNode». La pregunta pide «Hive». Hive usa la estructura de la tabla para consultar los datos.",
+      "Elegiste «Sistema local exclusivamente». La pregunta pide «Hive». Hive usa la estructura de la tabla para consultar los datos.",
+      "Elegiste «Volumen como lenguaje». La pregunta pide «Hive». Hive usa la estructura de la tabla para consultar los datos.",
+      "Hive usa la estructura de la tabla para consultar los datos."
+    ],
+    "memoryTip": "Hive usa la estructura de la tabla para consultar los datos.",
+    "source": "Semana 7 · Temario maestro proporcionado · hdfs-hive",
+    "highValue": true
+  },
+  {
+    "id": "w7-009",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "metastore",
+    "concept": "metastore",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "¿Dónde están las definiciones de tablas Hive?",
+    "options": [
+      "Hive Metastore",
+      "Bloques del DataNode",
+      "Nombre del archivo local",
+      "Resultado de ORDER BY"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Las definiciones pertenecen al catálogo de Hive.",
+    "optionExplanations": [
+      "Las definiciones pertenecen al catálogo de Hive.",
+      "Elegiste «Bloques del DataNode». La pregunta pide «Hive Metastore». Las definiciones pertenecen al catálogo de Hive.",
+      "Elegiste «Nombre del archivo local». La pregunta pide «Hive Metastore». Las definiciones pertenecen al catálogo de Hive.",
+      "Elegiste «Resultado de ORDER BY». La pregunta pide «Hive Metastore». Las definiciones pertenecen al catálogo de Hive."
+    ],
+    "memoryTip": "Metastore = catálogo de Hive.",
+    "source": "Semana 7 · Temario maestro proporcionado · metastore",
+    "highValue": true
+  },
+  {
+    "id": "w7-010",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "postgres",
+    "concept": "postgres",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "¿Qué función tuvo PostgreSQL en el caso descrito?",
+    "options": [
+      "Guardar los bloques HDFS como DataNode",
+      "Almacenar metadata usada por Hive Metastore",
+      "Ejecutar put y get",
+      "Reemplazar el host EC2"
+    ],
+    "correctAnswer": 1,
+    "explanation": "En el laboratorio PostgreSQL se utilizó para el Metastore.",
+    "optionExplanations": [
+      "Elegiste «Guardar los bloques HDFS como DataNode». La pregunta pide «Almacenar metadata usada por Hive Metastore». En el laboratorio PostgreSQL se utilizó para el Metastore.",
+      "En el laboratorio PostgreSQL se utilizó para el Metastore.",
+      "Elegiste «Ejecutar put y get». La pregunta pide «Almacenar metadata usada por Hive Metastore». En el laboratorio PostgreSQL se utilizó para el Metastore.",
+      "Elegiste «Reemplazar el host EC2». La pregunta pide «Almacenar metadata usada por Hive Metastore». En el laboratorio PostgreSQL se utilizó para el Metastore."
+    ],
+    "memoryTip": "En el laboratorio PostgreSQL se utilizó para el Metastore.",
+    "source": "Semana 7 · Temario maestro proporcionado · postgres",
+    "highValue": true
+  },
+  {
+    "id": "w7-011",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "namenode",
+    "concept": "namenode",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "¿Qué metadata necesitas para entender rutas y archivos HDFS?",
+    "options": [
+      "Tipos de columnas del Metastore",
+      "Promedios de ventas",
+      "Namespace del NameNode",
+      "Filtros de una consulta"
+    ],
+    "correctAnswer": 2,
+    "explanation": "El mapa de HDFS vincula nombres, rutas y bloques.",
+    "optionExplanations": [
+      "Elegiste «Tipos de columnas del Metastore». La pregunta pide «Namespace del NameNode». El mapa de HDFS vincula nombres, rutas y bloques.",
+      "Elegiste «Promedios de ventas». La pregunta pide «Namespace del NameNode». El mapa de HDFS vincula nombres, rutas y bloques.",
+      "El mapa de HDFS vincula nombres, rutas y bloques.",
+      "Elegiste «Filtros de una consulta». La pregunta pide «Namespace del NameNode». El mapa de HDFS vincula nombres, rutas y bloques."
+    ],
+    "memoryTip": "NameNode = mapa.",
+    "source": "Semana 7 · Temario maestro proporcionado · namenode",
+    "highValue": true
+  },
+  {
+    "id": "w7-012",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "datanode",
+    "concept": "datanode",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "¿Qué contiene el almacenamiento de un DataNode?",
+    "options": [
+      "Solo nombres de columnas",
+      "Solo consultas guardadas",
+      "Bases Hive como definiciones",
+      "Bloques de datos"
+    ],
+    "correctAnswer": 3,
+    "explanation": "El DataNode aporta almacenamiento físico de bloques.",
+    "optionExplanations": [
+      "Elegiste «Solo nombres de columnas». La pregunta pide «Bloques de datos». El DataNode aporta almacenamiento físico de bloques.",
+      "Elegiste «Solo consultas guardadas». La pregunta pide «Bloques de datos». El DataNode aporta almacenamiento físico de bloques.",
+      "Elegiste «Bases Hive como definiciones». La pregunta pide «Bloques de datos». El DataNode aporta almacenamiento físico de bloques.",
+      "El DataNode aporta almacenamiento físico de bloques."
+    ],
+    "memoryTip": "DataNode = datos.",
+    "source": "Semana 7 · Temario maestro proporcionado · datanode",
+    "highValue": true
+  },
+  {
+    "id": "w7-013",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "metadata-data",
+    "concept": "metadata-data",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Cuál es un dato del dataset y no metadata?",
+    "options": [
+      "El monto de una venta",
+      "El tipo de la columna monto",
+      "El nombre de la tabla",
+      "La ruta LOCATION"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Los valores de registros son datos; sus descripciones son metadata.",
+    "optionExplanations": [
+      "Los valores de registros son datos; sus descripciones son metadata.",
+      "Elegiste «El tipo de la columna monto». La pregunta pide «El monto de una venta». Los valores de registros son datos; sus descripciones son metadata.",
+      "Elegiste «El nombre de la tabla». La pregunta pide «El monto de una venta». Los valores de registros son datos; sus descripciones son metadata.",
+      "Elegiste «La ruta LOCATION». La pregunta pide «El monto de una venta». Los valores de registros son datos; sus descripciones son metadata."
+    ],
+    "memoryTip": "Los valores de registros son datos",
+    "source": "Semana 7 · Temario maestro proporcionado · metadata-data",
+    "highValue": true
+  },
+  {
+    "id": "w7-014",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "metadata-data",
+    "concept": "metadata-data",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "¿Cuál es metadata y no una venta?",
+    "options": [
+      "El cliente de una venta",
+      "El tipo de la columna fecha",
+      "El monto pagado",
+      "La ciudad de una venta"
+    ],
+    "correctAnswer": 1,
+    "explanation": "La definición de la columna describe cómo interpretar valores.",
+    "optionExplanations": [
+      "Elegiste «El cliente de una venta». La pregunta pide «El tipo de la columna fecha». La definición de la columna describe cómo interpretar valores.",
+      "La definición de la columna describe cómo interpretar valores.",
+      "Elegiste «El monto pagado». La pregunta pide «El tipo de la columna fecha». La definición de la columna describe cómo interpretar valores.",
+      "Elegiste «La ciudad de una venta». La pregunta pide «El tipo de la columna fecha». La definición de la columna describe cómo interpretar valores."
+    ],
+    "memoryTip": "La definición de la columna describe cómo interpretar valores.",
+    "source": "Semana 7 · Temario maestro proporcionado · metadata-data",
+    "highValue": true
+  },
+  {
+    "id": "w7-015",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "namespace",
+    "concept": "namespace",
+    "difficulty": "hard",
+    "type": "escenario",
+    "prompt": "Hay bloques físicos antiguos pero falta el namespace útil. ¿Qué puedes afirmar?",
+    "options": [
+      "Todos los archivos reaparecen automáticamente",
+      "Hive inventa sus rutas originales",
+      "No está garantizada la reconstrucción de archivos originales",
+      "Cada bloque contiene siempre toda la tabla"
+    ],
+    "correctAnswer": 2,
+    "explanation": "Los bloques por sí solos no garantizan recuperar nombres y estructura lógica.",
+    "optionExplanations": [
+      "Elegiste «Todos los archivos reaparecen automáticamente». La pregunta pide «No está garantizada la reconstrucción de archivos originales». Los bloques por sí solos no garantizan recuperar nombres y estructura lógica.",
+      "Elegiste «Hive inventa sus rutas originales». La pregunta pide «No está garantizada la reconstrucción de archivos originales». Los bloques por sí solos no garantizan recuperar nombres y estructura lógica.",
+      "Los bloques por sí solos no garantizan recuperar nombres y estructura lógica.",
+      "Elegiste «Cada bloque contiene siempre toda la tabla». La pregunta pide «No está garantizada la reconstrucción de archivos originales». Los bloques por sí solos no garantizan recuperar nombres y estructura lógica."
+    ],
+    "memoryTip": "Bloques sin mapa no garantizan archivos recuperables.",
+    "source": "Semana 7 · Temario maestro proporcionado · namespace",
+    "highValue": true
+  },
+  {
+    "id": "w7-016",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "namespace",
+    "concept": "namespace",
+    "difficulty": "hard",
+    "type": "escenario",
+    "prompt": "¿Qué información no se recupera automáticamente solo por ver bloques antiguos?",
+    "options": [
+      "Existencia física de esos bloques",
+      "Que hay bytes en almacenamiento",
+      "Que el directorio físico tiene elementos",
+      "Nombres y rutas originales de los archivos"
+    ],
+    "correctAnswer": 3,
+    "explanation": "Hace falta el mapa lógico para relacionar bloques con archivos originales.",
+    "optionExplanations": [
+      "Elegiste «Existencia física de esos bloques». La pregunta pide «Nombres y rutas originales de los archivos». Hace falta el mapa lógico para relacionar bloques con archivos originales.",
+      "Elegiste «Que hay bytes en almacenamiento». La pregunta pide «Nombres y rutas originales de los archivos». Hace falta el mapa lógico para relacionar bloques con archivos originales.",
+      "Elegiste «Que el directorio físico tiene elementos». La pregunta pide «Nombres y rutas originales de los archivos». Hace falta el mapa lógico para relacionar bloques con archivos originales.",
+      "Hace falta el mapa lógico para relacionar bloques con archivos originales."
+    ],
+    "memoryTip": "Bloques sin mapa no garantizan archivos recuperables.",
+    "source": "Semana 7 · Temario maestro proporcionado · namespace",
+    "highValue": true
+  },
+  {
+    "id": "w7-017",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "recovery",
+    "concept": "recovery",
+    "difficulty": "hard",
+    "type": "escenario",
+    "prompt": "Antes de reconstruir infraestructura con datos antiguos, ¿qué revisarías?",
+    "options": [
+      "Qué metadata y volúmenes siguen disponibles",
+      "Solo la cantidad de consultas anteriores",
+      "Solo el resultado de la última consulta",
+      "Solo el número de columnas visibles"
+    ],
+    "correctAnswer": 0,
+    "explanation": "La recuperación depende de datos y metadata de las capas relevantes.",
+    "optionExplanations": [
+      "La recuperación depende de datos y metadata de las capas relevantes.",
+      "Elegiste «Solo la cantidad de consultas anteriores». La pregunta pide «Qué metadata y volúmenes siguen disponibles». La recuperación depende de datos y metadata de las capas relevantes.",
+      "Elegiste «Solo el resultado de la última consulta». La pregunta pide «Qué metadata y volúmenes siguen disponibles». La recuperación depende de datos y metadata de las capas relevantes.",
+      "Elegiste «Solo el número de columnas visibles». La pregunta pide «Qué metadata y volúmenes siguen disponibles». La recuperación depende de datos y metadata de las capas relevantes."
+    ],
+    "memoryTip": "La recuperación depende de datos y metadata de las capas relevantes.",
+    "source": "Semana 7 · Temario maestro proporcionado · recovery",
+    "highValue": true
+  },
+  {
+    "id": "w7-018",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "recovery",
+    "concept": "recovery",
+    "difficulty": "intermediate",
+    "type": "escenario",
+    "prompt": "¿Qué pregunta guía un diagnóstico de persistencia?",
+    "options": [
+      "Qué cantidad de filas muestra LIMIT",
+      "En qué capa vive cada dato y qué debe sobrevivir",
+      "Cuántas veces se ejecutó SELECT",
+      "Si LIMIT tiene un número grande"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Localizar cada recurso permite revisar su almacenamiento y dependencias.",
+    "optionExplanations": [
+      "Elegiste «Qué cantidad de filas muestra LIMIT». La pregunta pide «En qué capa vive cada dato y qué debe sobrevivir». Localizar cada recurso permite revisar su almacenamiento y dependencias.",
+      "Localizar cada recurso permite revisar su almacenamiento y dependencias.",
+      "Elegiste «Cuántas veces se ejecutó SELECT». La pregunta pide «En qué capa vive cada dato y qué debe sobrevivir». Localizar cada recurso permite revisar su almacenamiento y dependencias.",
+      "Elegiste «Si LIMIT tiene un número grande». La pregunta pide «En qué capa vive cada dato y qué debe sobrevivir». Localizar cada recurso permite revisar su almacenamiento y dependencias."
+    ],
+    "memoryTip": "Localizar cada recurso permite revisar su almacenamiento y dependencias.",
+    "source": "Semana 7 · Temario maestro proporcionado · recovery",
+    "highValue": true
+  },
+  {
+    "id": "w7-019",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "local",
+    "concept": "local-hdfs",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "Un archivo existe en el sistema local del host. ¿Implica que está en HDFS?",
+    "options": [
+      "Sí; todas las rutas del host son HDFS",
+      "Sí; Docker lo registra como tabla",
+      "No; debes verificar la copia HDFS",
+      "No; solo los archivos grandes entran en HDFS"
+    ],
+    "correctAnswer": 2,
+    "explanation": "Local y HDFS son capas diferentes, independientemente del tamaño.",
+    "optionExplanations": [
+      "Elegiste «Sí; todas las rutas del host son HDFS». La pregunta pide «No; debes verificar la copia HDFS». Local y HDFS son capas diferentes, independientemente del tamaño.",
+      "Elegiste «Sí; Docker lo registra como tabla». La pregunta pide «No; debes verificar la copia HDFS». Local y HDFS son capas diferentes, independientemente del tamaño.",
+      "Local y HDFS son capas diferentes, independientemente del tamaño.",
+      "Elegiste «No; solo los archivos grandes entran en HDFS». La pregunta pide «No; debes verificar la copia HDFS». Local y HDFS son capas diferentes, independientemente del tamaño."
+    ],
+    "memoryTip": "Local y HDFS son capas diferentes, independientemente del tamaño.",
+    "source": "Semana 7 · Temario maestro proporcionado · local",
+    "highValue": true
+  },
+  {
+    "id": "w7-020",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "external",
+    "concept": "external",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "Falta la definición externa pero permanecen archivos HDFS. ¿Qué componente lógico revisarías para consultar?",
+    "options": [
+      "El número de réplicas como sustituto de columnas",
+      "El LIMIT del último resultado",
+      "El contenido del historial del navegador",
+      "La metadata de la tabla en Hive"
+    ],
+    "correctAnswer": 3,
+    "explanation": "Archivos y definición de tabla son recursos separados.",
+    "optionExplanations": [
+      "Elegiste «El número de réplicas como sustituto de columnas». La pregunta pide «La metadata de la tabla en Hive». Archivos y definición de tabla son recursos separados.",
+      "Elegiste «El LIMIT del último resultado». La pregunta pide «La metadata de la tabla en Hive». Archivos y definición de tabla son recursos separados.",
+      "Elegiste «El contenido del historial del navegador». La pregunta pide «La metadata de la tabla en Hive». Archivos y definición de tabla son recursos separados.",
+      "Archivos y definición de tabla son recursos separados."
+    ],
+    "memoryTip": "Archivos y definición de tabla son recursos separados.",
+    "source": "Semana 7 · Temario maestro proporcionado · external",
+    "highValue": true
+  },
+  {
+    "id": "w7-021",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "metastore-namenode",
+    "concept": "metastore-namenode",
+    "difficulty": "hard",
+    "type": "comprensión",
+    "prompt": "¿Qué par está correctamente asociado?",
+    "options": [
+      "NameNode: rutas HDFS; Metastore: tablas Hive",
+      "NameNode: columnas; Metastore: bloques físicos",
+      "NameNode: promedios; Metastore: réplicas",
+      "NameNode: contenedores; Metastore: host"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Cada catálogo describe una capa distinta.",
+    "optionExplanations": [
+      "Cada catálogo describe una capa distinta.",
+      "Elegiste «NameNode: columnas; Metastore: bloques físicos». La pregunta pide «NameNode: rutas HDFS; Metastore: tablas Hive». Cada catálogo describe una capa distinta.",
+      "Elegiste «NameNode: promedios; Metastore: réplicas». La pregunta pide «NameNode: rutas HDFS; Metastore: tablas Hive». Cada catálogo describe una capa distinta.",
+      "Elegiste «NameNode: contenedores; Metastore: host». La pregunta pide «NameNode: rutas HDFS; Metastore: tablas Hive». Cada catálogo describe una capa distinta."
+    ],
+    "memoryTip": "Cada catálogo describe una capa distinta.",
+    "source": "Semana 7 · Temario maestro proporcionado · metastore-namenode",
+    "highValue": true
+  },
+  {
+    "id": "w7-022",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "metastore-namenode",
+    "concept": "metastore-namenode",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "Si sabes la ubicación de bloques HDFS, ¿ya conoces automáticamente los tipos de columnas Hive?",
+    "options": [
+      "Sí; cada bloque define todas las columnas",
+      "No; pertenecen a metadata distinta",
+      "Sí; el factor de replicación los indica",
+      "No; Hive no usa tipos"
+    ],
+    "correctAnswer": 1,
+    "explanation": "El mapa de bloques no sustituye la definición de tabla.",
+    "optionExplanations": [
+      "Elegiste «Sí; cada bloque define todas las columnas». La pregunta pide «No; pertenecen a metadata distinta». El mapa de bloques no sustituye la definición de tabla.",
+      "El mapa de bloques no sustituye la definición de tabla.",
+      "Elegiste «Sí; el factor de replicación los indica». La pregunta pide «No; pertenecen a metadata distinta». El mapa de bloques no sustituye la definición de tabla.",
+      "Elegiste «No; Hive no usa tipos». La pregunta pide «No; pertenecen a metadata distinta». El mapa de bloques no sustituye la definición de tabla."
+    ],
+    "memoryTip": "El mapa de bloques no sustituye la definición de tabla.",
+    "source": "Semana 7 · Temario maestro proporcionado · metastore-namenode",
+    "highValue": true
+  },
+  {
+    "id": "w7-023",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "volume",
+    "concept": "container-volume",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "Recreas un contenedor que vuelve a montar su volumen conservado. ¿Qué puede seguir disponible?",
+    "options": [
+      "Toda copia eliminada históricamente",
+      "Todas las rutas locales de cualquier host",
+      "Los datos persistidos en ese volumen",
+      "Todo archivo que nunca se cargó"
+    ],
+    "correctAnswer": 2,
+    "explanation": "La persistencia depende de conservar y montar el almacenamiento correcto.",
+    "optionExplanations": [
+      "Elegiste «Toda copia eliminada históricamente». La pregunta pide «Los datos persistidos en ese volumen». La persistencia depende de conservar y montar el almacenamiento correcto.",
+      "Elegiste «Todas las rutas locales de cualquier host». La pregunta pide «Los datos persistidos en ese volumen». La persistencia depende de conservar y montar el almacenamiento correcto.",
+      "La persistencia depende de conservar y montar el almacenamiento correcto.",
+      "Elegiste «Todo archivo que nunca se cargó». La pregunta pide «Los datos persistidos en ese volumen». La persistencia depende de conservar y montar el almacenamiento correcto."
+    ],
+    "memoryTip": "La persistencia depende de conservar y montar el almacenamiento correcto.",
+    "source": "Semana 7 · Temario maestro proporcionado · volume",
+    "highValue": true
+  },
+  {
+    "id": "w7-024",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "container",
+    "concept": "container-volume",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Qué afirmación es incorrecta?",
+    "options": [
+      "Un contenedor ejecuta servicios",
+      "Un volumen puede conservar datos",
+      "Debe revisarse cómo se montó el almacenamiento",
+      "Eliminar un contenedor garantiza borrar todo volumen asociado"
+    ],
+    "correctAnswer": 3,
+    "explanation": "El ciclo de vida del volumen debe revisarse; no se deduce solo de eliminar un contenedor.",
+    "optionExplanations": [
+      "Elegiste «Un contenedor ejecuta servicios». La pregunta pide «Eliminar un contenedor garantiza borrar todo volumen asociado». El ciclo de vida del volumen debe revisarse; no se deduce solo de eliminar un contenedor.",
+      "Elegiste «Un volumen puede conservar datos». La pregunta pide «Eliminar un contenedor garantiza borrar todo volumen asociado». El ciclo de vida del volumen debe revisarse; no se deduce solo de eliminar un contenedor.",
+      "Elegiste «Debe revisarse cómo se montó el almacenamiento». La pregunta pide «Eliminar un contenedor garantiza borrar todo volumen asociado». El ciclo de vida del volumen debe revisarse; no se deduce solo de eliminar un contenedor.",
+      "El ciclo de vida del volumen debe revisarse; no se deduce solo de eliminar un contenedor."
+    ],
+    "memoryTip": "El ciclo de vida del volumen debe revisarse",
+    "source": "Semana 7 · Temario maestro proporcionado · container",
+    "highValue": true
+  },
+  {
+    "id": "w7-025",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "backup",
+    "concept": "backup",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Qué situación muestra persistencia pero no demuestra backup?",
+    "options": [
+      "Los datos sobreviven al reinicio del contenedor",
+      "Existe una copia independiente verificable",
+      "Puedes restaurar una copia anterior probada",
+      "Dispones de un respaldo separado"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Sobrevivir a un reinicio es persistencia; respaldo exige una copia recuperable.",
+    "optionExplanations": [
+      "Sobrevivir a un reinicio es persistencia; respaldo exige una copia recuperable.",
+      "Elegiste «Existe una copia independiente verificable». La pregunta pide «Los datos sobreviven al reinicio del contenedor». Sobrevivir a un reinicio es persistencia; respaldo exige una copia recuperable.",
+      "Elegiste «Puedes restaurar una copia anterior probada». La pregunta pide «Los datos sobreviven al reinicio del contenedor». Sobrevivir a un reinicio es persistencia; respaldo exige una copia recuperable.",
+      "Elegiste «Dispones de un respaldo separado». La pregunta pide «Los datos sobreviven al reinicio del contenedor». Sobrevivir a un reinicio es persistencia; respaldo exige una copia recuperable."
+    ],
+    "memoryTip": "Persistencia no equivale a backup.",
+    "source": "Semana 7 · Temario maestro proporcionado · backup",
+    "highValue": true
+  },
+  {
+    "id": "w7-026",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "architecture",
+    "concept": "metastore-namenode",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Qué recorrido conceptual conecta consulta y datos?",
+    "options": [
+      "Metastore almacena cada bloque como una fila de venta",
+      "Hive usa metadata de tablas y accede a archivos HDFS",
+      "DataNode traduce WHERE en nombres de columnas",
+      "Docker sustituye SELECT por archivos"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Las capas colaboran; no forman un único objeto intercambiable.",
+    "optionExplanations": [
+      "Elegiste «Metastore almacena cada bloque como una fila de venta». La pregunta pide «Hive usa metadata de tablas y accede a archivos HDFS». Las capas colaboran; no forman un único objeto intercambiable.",
+      "Las capas colaboran; no forman un único objeto intercambiable.",
+      "Elegiste «DataNode traduce WHERE en nombres de columnas». La pregunta pide «Hive usa metadata de tablas y accede a archivos HDFS». Las capas colaboran; no forman un único objeto intercambiable.",
+      "Elegiste «Docker sustituye SELECT por archivos». La pregunta pide «Hive usa metadata de tablas y accede a archivos HDFS». Las capas colaboran; no forman un único objeto intercambiable."
+    ],
+    "memoryTip": "Las capas colaboran",
+    "source": "Semana 7 · Temario maestro proporcionado · architecture",
+    "highValue": true
+  },
+  {
+    "id": "w7-027",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "architecture",
+    "concept": "metastore-namenode",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Qué necesitas distinguir al planificar qué conservar?",
+    "options": [
+      "Solo las consultas con LIMIT",
+      "Solo el nombre del contenedor",
+      "Datos HDFS, metadata HDFS y metadata Hive",
+      "Solo el CSV local más reciente"
+    ],
+    "correctAnswer": 2,
+    "explanation": "La persistencia debe considerar los recursos de cada capa.",
+    "optionExplanations": [
+      "Elegiste «Solo las consultas con LIMIT». La pregunta pide «Datos HDFS, metadata HDFS y metadata Hive». La persistencia debe considerar los recursos de cada capa.",
+      "Elegiste «Solo el nombre del contenedor». La pregunta pide «Datos HDFS, metadata HDFS y metadata Hive». La persistencia debe considerar los recursos de cada capa.",
+      "La persistencia debe considerar los recursos de cada capa.",
+      "Elegiste «Solo el CSV local más reciente». La pregunta pide «Datos HDFS, metadata HDFS y metadata Hive». La persistencia debe considerar los recursos de cada capa."
+    ],
+    "memoryTip": "La persistencia debe considerar los recursos de cada capa.",
+    "source": "Semana 7 · Temario maestro proporcionado · architecture",
+    "highValue": true
+  },
+  {
+    "id": "w7-028",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "recovery",
+    "concept": "recovery",
+    "difficulty": "intermediate",
+    "type": "escenario",
+    "prompt": "Un CSV local se perdió, pero su copia HDFS es accesible. ¿Qué operación recupera una copia local?",
+    "options": [
+      "DROP TABLE",
+      "hdfs dfs -rm",
+      "HAVING",
+      "hdfs dfs -get"
+    ],
+    "correctAnswer": 3,
+    "explanation": "get copia de HDFS al sistema local sin requerir el original local.",
+    "optionExplanations": [
+      "Elegiste «DROP TABLE». La pregunta pide «hdfs dfs -get». get copia de HDFS al sistema local sin requerir el original local.",
+      "Elegiste «hdfs dfs -rm». La pregunta pide «hdfs dfs -get». get copia de HDFS al sistema local sin requerir el original local.",
+      "Elegiste «HAVING». La pregunta pide «hdfs dfs -get». get copia de HDFS al sistema local sin requerir el original local.",
+      "get copia de HDFS al sistema local sin requerir el original local."
+    ],
+    "memoryTip": "get copia de HDFS al sistema local sin requerir el original local.",
+    "source": "Semana 7 · Temario maestro proporcionado · recovery",
+    "highValue": true
+  },
+  {
+    "id": "w7-029",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "metadata-data",
+    "concept": "metadata-data",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Qué pasa si confundes datos con metadata?",
+    "options": [
+      "Puedes conservar bytes y perder la estructura necesaria",
+      "Siempre ganas tres réplicas",
+      "Los datos pasan a ser un backup",
+      "Las consultas quedan automáticamente correctas"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Conservar contenido no garantiza conservar su interpretación y organización.",
+    "optionExplanations": [
+      "Conservar contenido no garantiza conservar su interpretación y organización.",
+      "Elegiste «Siempre ganas tres réplicas». La pregunta pide «Puedes conservar bytes y perder la estructura necesaria». Conservar contenido no garantiza conservar su interpretación y organización.",
+      "Elegiste «Los datos pasan a ser un backup». La pregunta pide «Puedes conservar bytes y perder la estructura necesaria». Conservar contenido no garantiza conservar su interpretación y organización.",
+      "Elegiste «Las consultas quedan automáticamente correctas». La pregunta pide «Puedes conservar bytes y perder la estructura necesaria». Conservar contenido no garantiza conservar su interpretación y organización."
+    ],
+    "memoryTip": "Conservar contenido no garantiza conservar su interpretación y organización.",
+    "source": "Semana 7 · Temario maestro proporcionado · metadata-data",
+    "highValue": true
+  },
+  {
+    "id": "w7-030",
+    "week": 7,
+    "topic": "Persistencia",
+    "subtopic": "namespace",
+    "concept": "namespace",
+    "difficulty": "hard",
+    "type": "escenario",
+    "prompt": "¿Cuál es la conclusión del caso de bloques antiguos?",
+    "options": [
+      "Todos los bloques son archivos completos",
+      "Existencia física no basta para recuperación lógica automática",
+      "El Metastore reconstruye cualquier namespace",
+      "Under-replicated implica pérdida total del namespace"
+    ],
+    "correctAnswer": 1,
+    "explanation": "La recuperación lógica requiere relacionar los bloques con la estructura original.",
+    "optionExplanations": [
+      "Elegiste «Todos los bloques son archivos completos». La pregunta pide «Existencia física no basta para recuperación lógica automática». La recuperación lógica requiere relacionar los bloques con la estructura original.",
+      "La recuperación lógica requiere relacionar los bloques con la estructura original.",
+      "Elegiste «El Metastore reconstruye cualquier namespace». La pregunta pide «Existencia física no basta para recuperación lógica automática». La recuperación lógica requiere relacionar los bloques con la estructura original.",
+      "Elegiste «Under-replicated implica pérdida total del namespace». La pregunta pide «Existencia física no basta para recuperación lógica automática». La recuperación lógica requiere relacionar los bloques con la estructura original."
+    ],
+    "memoryTip": "Bloques sin mapa no garantizan archivos recuperables.",
+    "source": "Semana 7 · Temario maestro proporcionado · namespace",
+    "highValue": true
+  }
+]

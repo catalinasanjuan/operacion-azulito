@@ -1,0 +1,1217 @@
+[
+  {
+    "id": "w6-001",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "hive",
+    "concept": "hive",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "¿Qué agrega Hive sobre datos almacenados en HDFS?",
+    "options": [
+      "Estructura lógica y consultas",
+      "Un reemplazo obligatorio de HDFS",
+      "Réplicas físicas del NameNode",
+      "Un backup de Docker"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Hive permite definir tablas y consultar archivos que siguen almacenados en HDFS.",
+    "optionExplanations": [
+      "Hive permite definir tablas y consultar archivos que siguen almacenados en HDFS.",
+      "Elegiste «Un reemplazo obligatorio de HDFS». La pregunta pide «Estructura lógica y consultas». Hive permite definir tablas y consultar archivos que siguen almacenados en HDFS.",
+      "Elegiste «Réplicas físicas del NameNode». La pregunta pide «Estructura lógica y consultas». Hive permite definir tablas y consultar archivos que siguen almacenados en HDFS.",
+      "Elegiste «Un backup de Docker». La pregunta pide «Estructura lógica y consultas». Hive permite definir tablas y consultar archivos que siguen almacenados en HDFS."
+    ],
+    "memoryTip": "Hive permite definir tablas y consultar archivos que siguen almacenados en HDFS.",
+    "source": "Semana 6 · Temario maestro proporcionado · hive",
+    "highValue": true
+  },
+  {
+    "id": "w6-002",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "hive",
+    "concept": "hive",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Cuál es la relación correcta entre Hive y HDFS?",
+    "options": [
+      "Hive almacena bloques; HDFS consulta SQL",
+      "Hive consulta; HDFS almacena",
+      "Ambos son el Metastore",
+      "Hive elimina la necesidad de almacenamiento"
+    ],
+    "correctAnswer": 1,
+    "explanation": "La estructura de tablas y el almacenamiento cumplen funciones distintas.",
+    "optionExplanations": [
+      "Elegiste «Hive almacena bloques; HDFS consulta SQL». La pregunta pide «Hive consulta; HDFS almacena». La estructura de tablas y el almacenamiento cumplen funciones distintas.",
+      "La estructura de tablas y el almacenamiento cumplen funciones distintas.",
+      "Elegiste «Ambos son el Metastore». La pregunta pide «Hive consulta; HDFS almacena». La estructura de tablas y el almacenamiento cumplen funciones distintas.",
+      "Elegiste «Hive elimina la necesidad de almacenamiento». La pregunta pide «Hive consulta; HDFS almacena». La estructura de tablas y el almacenamiento cumplen funciones distintas."
+    ],
+    "memoryTip": "La estructura de tablas y el almacenamiento cumplen funciones distintas.",
+    "source": "Semana 6 · Temario maestro proporcionado · hive",
+    "highValue": true
+  },
+  {
+    "id": "w6-003",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "hiveql",
+    "concept": "hive",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "¿Qué es HiveQL en este temario?",
+    "options": [
+      "Un comando para crear DataNodes",
+      "El namespace de HDFS",
+      "El lenguaje para consultar mediante Hive",
+      "Un volumen de PostgreSQL"
+    ],
+    "correctAnswer": 2,
+    "explanation": "HiveQL expresa consultas y operaciones sobre la estructura de Hive.",
+    "optionExplanations": [
+      "Elegiste «Un comando para crear DataNodes». La pregunta pide «El lenguaje para consultar mediante Hive». HiveQL expresa consultas y operaciones sobre la estructura de Hive.",
+      "Elegiste «El namespace de HDFS». La pregunta pide «El lenguaje para consultar mediante Hive». HiveQL expresa consultas y operaciones sobre la estructura de Hive.",
+      "HiveQL expresa consultas y operaciones sobre la estructura de Hive.",
+      "Elegiste «Un volumen de PostgreSQL». La pregunta pide «El lenguaje para consultar mediante Hive». HiveQL expresa consultas y operaciones sobre la estructura de Hive."
+    ],
+    "memoryTip": "HiveQL expresa consultas y operaciones sobre la estructura de Hive.",
+    "source": "Semana 6 · Temario maestro proporcionado · hiveql",
+    "highValue": true
+  },
+  {
+    "id": "w6-004",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "database",
+    "concept": "database",
+    "difficulty": "basic",
+    "type": "interpretación de comando",
+    "prompt": "¿Qué muestra SHOW DATABASES;?",
+    "options": [
+      "Archivos locales del host",
+      "Bloques de un DataNode",
+      "Únicamente ventas agrupadas",
+      "Bases disponibles en Hive"
+    ],
+    "correctAnswer": 3,
+    "explanation": "SHOW DATABASES explora las bases del catálogo de Hive.",
+    "optionExplanations": [
+      "Elegiste «Archivos locales del host». La pregunta pide «Bases disponibles en Hive». SHOW DATABASES explora las bases del catálogo de Hive.",
+      "Elegiste «Bloques de un DataNode». La pregunta pide «Bases disponibles en Hive». SHOW DATABASES explora las bases del catálogo de Hive.",
+      "Elegiste «Únicamente ventas agrupadas». La pregunta pide «Bases disponibles en Hive». SHOW DATABASES explora las bases del catálogo de Hive.",
+      "SHOW DATABASES explora las bases del catálogo de Hive."
+    ],
+    "memoryTip": "SHOW DATABASES explora las bases del catálogo de Hive.",
+    "source": "Semana 6 · Temario maestro proporcionado · database",
+    "highValue": true
+  },
+  {
+    "id": "w6-005",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "database",
+    "concept": "database",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "¿Qué hace CREATE DATABASE curso;?",
+    "options": [
+      "Crea una base Hive",
+      "Crea un DataNode",
+      "Descarga un directorio HDFS",
+      "Copia un volumen Docker"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Una base agrupa definiciones lógicas de Hive.",
+    "optionExplanations": [
+      "Una base agrupa definiciones lógicas de Hive.",
+      "Elegiste «Crea un DataNode». La pregunta pide «Crea una base Hive». Una base agrupa definiciones lógicas de Hive.",
+      "Elegiste «Descarga un directorio HDFS». La pregunta pide «Crea una base Hive». Una base agrupa definiciones lógicas de Hive.",
+      "Elegiste «Copia un volumen Docker». La pregunta pide «Crea una base Hive». Una base agrupa definiciones lógicas de Hive."
+    ],
+    "memoryTip": "Una base agrupa definiciones lógicas de Hive.",
+    "source": "Semana 6 · Temario maestro proporcionado · database",
+    "highValue": true
+  },
+  {
+    "id": "w6-006",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "database",
+    "concept": "database",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "¿Para qué sirve USE curso;?",
+    "options": [
+      "Filtrar filas por curso",
+      "Seleccionar la base de trabajo",
+      "Elegir el DataNode de una réplica",
+      "Cambiar el sistema local"
+    ],
+    "correctAnswer": 1,
+    "explanation": "USE define la base sobre la que se referencian las tablas.",
+    "optionExplanations": [
+      "Elegiste «Filtrar filas por curso». La pregunta pide «Seleccionar la base de trabajo». USE define la base sobre la que se referencian las tablas.",
+      "USE define la base sobre la que se referencian las tablas.",
+      "Elegiste «Elegir el DataNode de una réplica». La pregunta pide «Seleccionar la base de trabajo». USE define la base sobre la que se referencian las tablas.",
+      "Elegiste «Cambiar el sistema local». La pregunta pide «Seleccionar la base de trabajo». USE define la base sobre la que se referencian las tablas."
+    ],
+    "memoryTip": "USE define la base sobre la que se referencian las tablas.",
+    "source": "Semana 6 · Temario maestro proporcionado · database",
+    "highValue": true
+  },
+  {
+    "id": "w6-007",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "table",
+    "concept": "database",
+    "difficulty": "basic",
+    "type": "interpretación de comando",
+    "prompt": "¿Qué muestra SHOW TABLES;?",
+    "options": [
+      "Todas las rutas del host",
+      "Réplicas de cada bloque",
+      "Tablas de la base seleccionada",
+      "Todos los volúmenes Docker"
+    ],
+    "correctAnswer": 2,
+    "explanation": "Permite explorar las tablas registradas en la base activa.",
+    "optionExplanations": [
+      "Elegiste «Todas las rutas del host». La pregunta pide «Tablas de la base seleccionada». Permite explorar las tablas registradas en la base activa.",
+      "Elegiste «Réplicas de cada bloque». La pregunta pide «Tablas de la base seleccionada». Permite explorar las tablas registradas en la base activa.",
+      "Permite explorar las tablas registradas en la base activa.",
+      "Elegiste «Todos los volúmenes Docker». La pregunta pide «Tablas de la base seleccionada». Permite explorar las tablas registradas en la base activa."
+    ],
+    "memoryTip": "Permite explorar las tablas registradas en la base activa.",
+    "source": "Semana 6 · Temario maestro proporcionado · table",
+    "highValue": true
+  },
+  {
+    "id": "w6-008",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "table",
+    "concept": "database",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "¿Qué define CREATE TABLE?",
+    "options": [
+      "Un nuevo DataNode",
+      "Un backup del namespace",
+      "Una copia local automática",
+      "Una estructura de tabla y columnas"
+    ],
+    "correctAnswer": 3,
+    "explanation": "La tabla aporta una estructura lógica con columnas y tipos.",
+    "optionExplanations": [
+      "Elegiste «Un nuevo DataNode». La pregunta pide «Una estructura de tabla y columnas». La tabla aporta una estructura lógica con columnas y tipos.",
+      "Elegiste «Un backup del namespace». La pregunta pide «Una estructura de tabla y columnas». La tabla aporta una estructura lógica con columnas y tipos.",
+      "Elegiste «Una copia local automática». La pregunta pide «Una estructura de tabla y columnas». La tabla aporta una estructura lógica con columnas y tipos.",
+      "La tabla aporta una estructura lógica con columnas y tipos."
+    ],
+    "memoryTip": "La tabla aporta una estructura lógica con columnas y tipos.",
+    "source": "Semana 6 · Temario maestro proporcionado · table",
+    "highValue": true
+  },
+  {
+    "id": "w6-009",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "types",
+    "concept": "database",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Por qué definir tipos de datos en una tabla?",
+    "options": [
+      "Para interpretar valores según su naturaleza",
+      "Para determinar el número de DataNodes",
+      "Para copiar el archivo automáticamente",
+      "Para fijar tres réplicas"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Los tipos indican cómo tratar valores de las columnas.",
+    "optionExplanations": [
+      "Los tipos indican cómo tratar valores de las columnas.",
+      "Elegiste «Para determinar el número de DataNodes». La pregunta pide «Para interpretar valores según su naturaleza». Los tipos indican cómo tratar valores de las columnas.",
+      "Elegiste «Para copiar el archivo automáticamente». La pregunta pide «Para interpretar valores según su naturaleza». Los tipos indican cómo tratar valores de las columnas.",
+      "Elegiste «Para fijar tres réplicas». La pregunta pide «Para interpretar valores según su naturaleza». Los tipos indican cómo tratar valores de las columnas."
+    ],
+    "memoryTip": "Los tipos indican cómo tratar valores de las columnas.",
+    "source": "Semana 6 · Temario maestro proporcionado · types",
+    "highValue": true
+  },
+  {
+    "id": "w6-010",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "metastore",
+    "concept": "metastore",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "¿Qué guarda el Hive Metastore?",
+    "options": [
+      "Los bloques físicos de ventas",
+      "Metadata de bases y tablas",
+      "Los archivos locales de EC2",
+      "Las réplicas del DataNode"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Guarda definiciones como columnas, tipos y ubicación.",
+    "optionExplanations": [
+      "Elegiste «Los bloques físicos de ventas». La pregunta pide «Metadata de bases y tablas». Guarda definiciones como columnas, tipos y ubicación.",
+      "Guarda definiciones como columnas, tipos y ubicación.",
+      "Elegiste «Los archivos locales de EC2». La pregunta pide «Metadata de bases y tablas». Guarda definiciones como columnas, tipos y ubicación.",
+      "Elegiste «Las réplicas del DataNode». La pregunta pide «Metadata de bases y tablas». Guarda definiciones como columnas, tipos y ubicación."
+    ],
+    "memoryTip": "Metastore = catálogo de Hive.",
+    "source": "Semana 6 · Temario maestro proporcionado · metastore",
+    "highValue": true
+  },
+  {
+    "id": "w6-011",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "metastore",
+    "concept": "metastore",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Cuál corresponde al catálogo de Hive?",
+    "options": [
+      "NameNode",
+      "DataNode",
+      "Hive Metastore",
+      "Comando put"
+    ],
+    "correctAnswer": 2,
+    "explanation": "El catálogo de tablas es metadata de Hive, distinta del namespace HDFS.",
+    "optionExplanations": [
+      "Elegiste «NameNode». La pregunta pide «Hive Metastore». El catálogo de tablas es metadata de Hive, distinta del namespace HDFS.",
+      "Elegiste «DataNode». La pregunta pide «Hive Metastore». El catálogo de tablas es metadata de Hive, distinta del namespace HDFS.",
+      "El catálogo de tablas es metadata de Hive, distinta del namespace HDFS.",
+      "Elegiste «Comando put». La pregunta pide «Hive Metastore». El catálogo de tablas es metadata de Hive, distinta del namespace HDFS."
+    ],
+    "memoryTip": "Metastore = catálogo de Hive.",
+    "source": "Semana 6 · Temario maestro proporcionado · metastore",
+    "highValue": true
+  },
+  {
+    "id": "w6-012",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "location",
+    "concept": "location",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "¿Qué indica LOCATION en una tabla externa?",
+    "options": [
+      "El orden de las filas",
+      "El número de réplicas",
+      "La base de trabajo de la sesión",
+      "La ubicación de sus datos"
+    ],
+    "correctAnswer": 3,
+    "explanation": "LOCATION vincula la definición de la tabla con la ruta de almacenamiento.",
+    "optionExplanations": [
+      "Elegiste «El orden de las filas». La pregunta pide «La ubicación de sus datos». LOCATION vincula la definición de la tabla con la ruta de almacenamiento.",
+      "Elegiste «El número de réplicas». La pregunta pide «La ubicación de sus datos». LOCATION vincula la definición de la tabla con la ruta de almacenamiento.",
+      "Elegiste «La base de trabajo de la sesión». La pregunta pide «La ubicación de sus datos». LOCATION vincula la definición de la tabla con la ruta de almacenamiento.",
+      "LOCATION vincula la definición de la tabla con la ruta de almacenamiento."
+    ],
+    "memoryTip": "LOCATION vincula la definición de la tabla con la ruta de almacenamiento.",
+    "source": "Semana 6 · Temario maestro proporcionado · location",
+    "highValue": true
+  },
+  {
+    "id": "w6-013",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "location",
+    "concept": "location",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "La tabla externa apunta a /raw/ventas. ¿Dónde inspeccionarías los archivos?",
+    "options": [
+      "En esa ruta HDFS",
+      "Dentro del texto de SELECT",
+      "En las alternativas de la tabla",
+      "En la lista de columnas únicamente"
+    ],
+    "correctAnswer": 0,
+    "explanation": "La definición apunta a archivos; no contiene por sí misma todas sus filas.",
+    "optionExplanations": [
+      "La definición apunta a archivos; no contiene por sí misma todas sus filas.",
+      "Elegiste «Dentro del texto de SELECT». La pregunta pide «En esa ruta HDFS». La definición apunta a archivos; no contiene por sí misma todas sus filas.",
+      "Elegiste «En las alternativas de la tabla». La pregunta pide «En esa ruta HDFS». La definición apunta a archivos; no contiene por sí misma todas sus filas.",
+      "Elegiste «En la lista de columnas únicamente». La pregunta pide «En esa ruta HDFS». La definición apunta a archivos; no contiene por sí misma todas sus filas."
+    ],
+    "memoryTip": "La definición apunta a archivos",
+    "source": "Semana 6 · Temario maestro proporcionado · location",
+    "highValue": true
+  },
+  {
+    "id": "w6-014",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "external",
+    "concept": "external",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Para qué sirve CREATE EXTERNAL TABLE sobre archivos existentes?",
+    "options": [
+      "Mover todos los datos al Metastore",
+      "Definir una tabla que apunta a esos datos",
+      "Crear réplicas en el NameNode",
+      "Eliminar automáticamente el CSV"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Una tabla externa describe datos existentes mediante su ubicación.",
+    "optionExplanations": [
+      "Elegiste «Mover todos los datos al Metastore». La pregunta pide «Definir una tabla que apunta a esos datos». Una tabla externa describe datos existentes mediante su ubicación.",
+      "Una tabla externa describe datos existentes mediante su ubicación.",
+      "Elegiste «Crear réplicas en el NameNode». La pregunta pide «Definir una tabla que apunta a esos datos». Una tabla externa describe datos existentes mediante su ubicación.",
+      "Elegiste «Eliminar automáticamente el CSV». La pregunta pide «Definir una tabla que apunta a esos datos». Una tabla externa describe datos existentes mediante su ubicación."
+    ],
+    "memoryTip": "Una tabla externa describe datos existentes mediante su ubicación.",
+    "source": "Semana 6 · Temario maestro proporcionado · external",
+    "highValue": true
+  },
+  {
+    "id": "w6-015",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "external",
+    "concept": "external",
+    "difficulty": "hard",
+    "type": "comprensión",
+    "prompt": "¿Qué distingue los datos de una tabla externa de su definición?",
+    "options": [
+      "Son siempre el mismo objeto",
+      "Los archivos viven en el Metastore",
+      "Los archivos pueden existir sin esa metadata Hive",
+      "La definición almacena los bloques"
+    ],
+    "correctAnswer": 2,
+    "explanation": "Datos y definición tienen vidas separadas en el caso trabajado.",
+    "optionExplanations": [
+      "Elegiste «Son siempre el mismo objeto». La pregunta pide «Los archivos pueden existir sin esa metadata Hive». Datos y definición tienen vidas separadas en el caso trabajado.",
+      "Elegiste «Los archivos viven en el Metastore». La pregunta pide «Los archivos pueden existir sin esa metadata Hive». Datos y definición tienen vidas separadas en el caso trabajado.",
+      "Datos y definición tienen vidas separadas en el caso trabajado.",
+      "Elegiste «La definición almacena los bloques». La pregunta pide «Los archivos pueden existir sin esa metadata Hive». Datos y definición tienen vidas separadas en el caso trabajado."
+    ],
+    "memoryTip": "Datos y definición tienen vidas separadas en el caso trabajado.",
+    "source": "Semana 6 · Temario maestro proporcionado · external",
+    "highValue": true
+  },
+  {
+    "id": "w6-016",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "drop-external",
+    "concept": "drop-external",
+    "difficulty": "hard",
+    "type": "interpretación de comando",
+    "prompt": "En el caso del curso, DROP TABLE sobre una externa elimina ¿qué?",
+    "options": [
+      "Siempre los bloques y el volumen",
+      "Solo el NameNode",
+      "Todas las bases Hive",
+      "La definición de Hive; los archivos pueden permanecer"
+    ],
+    "correctAnswer": 3,
+    "explanation": "El caso delimitado conserva archivos HDFS después de quitar metadata externa.",
+    "optionExplanations": [
+      "Elegiste «Siempre los bloques y el volumen». La pregunta pide «La definición de Hive; los archivos pueden permanecer». El caso delimitado conserva archivos HDFS después de quitar metadata externa.",
+      "Elegiste «Solo el NameNode». La pregunta pide «La definición de Hive; los archivos pueden permanecer». El caso delimitado conserva archivos HDFS después de quitar metadata externa.",
+      "Elegiste «Todas las bases Hive». La pregunta pide «La definición de Hive; los archivos pueden permanecer». El caso delimitado conserva archivos HDFS después de quitar metadata externa.",
+      "El caso delimitado conserva archivos HDFS después de quitar metadata externa."
+    ],
+    "memoryTip": "El caso delimitado conserva archivos HDFS después de quitar metadata externa.",
+    "source": "Semana 6 · Temario maestro proporcionado · drop-external",
+    "highValue": true
+  },
+  {
+    "id": "w6-017",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "drop-external",
+    "concept": "drop-external",
+    "difficulty": "hard",
+    "type": "comprensión",
+    "prompt": "Después de eliminar la tabla externa, -ls todavía muestra el CSV. ¿Qué significa?",
+    "options": [
+      "Persisten datos aunque falta la definición Hive",
+      "DROP no se ejecutó necesariamente",
+      "El archivo es una tabla administrada",
+      "HDFS recreó el Metastore"
+    ],
+    "correctAnswer": 0,
+    "explanation": "La existencia del archivo no implica que la tabla siga registrada.",
+    "optionExplanations": [
+      "La existencia del archivo no implica que la tabla siga registrada.",
+      "Elegiste «DROP no se ejecutó necesariamente». La pregunta pide «Persisten datos aunque falta la definición Hive». La existencia del archivo no implica que la tabla siga registrada.",
+      "Elegiste «El archivo es una tabla administrada». La pregunta pide «Persisten datos aunque falta la definición Hive». La existencia del archivo no implica que la tabla siga registrada.",
+      "Elegiste «HDFS recreó el Metastore». La pregunta pide «Persisten datos aunque falta la definición Hive». La existencia del archivo no implica que la tabla siga registrada."
+    ],
+    "memoryTip": "La existencia del archivo no implica que la tabla siga registrada.",
+    "source": "Semana 6 · Temario maestro proporcionado · drop-external",
+    "highValue": true
+  },
+  {
+    "id": "w6-018",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "managed",
+    "concept": "managed",
+    "difficulty": "hard",
+    "type": "interpretación de comando",
+    "prompt": "¿Qué diferencia debe revisarse antes de DROP TABLE?",
+    "options": [
+      "Si se usó LIMIT en SELECT",
+      "Si la tabla es administrada o externa",
+      "Si la ciudad es Santiago",
+      "Si el archivo tiene menos de 128 MiB"
+    ],
+    "correctAnswer": 1,
+    "explanation": "La relación de gestión de los datos afecta las consecuencias de DROP.",
+    "optionExplanations": [
+      "Elegiste «Si se usó LIMIT en SELECT». La pregunta pide «Si la tabla es administrada o externa». La relación de gestión de los datos afecta las consecuencias de DROP.",
+      "La relación de gestión de los datos afecta las consecuencias de DROP.",
+      "Elegiste «Si la ciudad es Santiago». La pregunta pide «Si la tabla es administrada o externa». La relación de gestión de los datos afecta las consecuencias de DROP.",
+      "Elegiste «Si el archivo tiene menos de 128 MiB». La pregunta pide «Si la tabla es administrada o externa». La relación de gestión de los datos afecta las consecuencias de DROP."
+    ],
+    "memoryTip": "La relación de gestión de los datos afecta las consecuencias de DROP.",
+    "source": "Semana 6 · Temario maestro proporcionado · managed",
+    "highValue": true
+  },
+  {
+    "id": "w6-019",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "managed",
+    "concept": "managed",
+    "difficulty": "hard",
+    "type": "interpretación de comando",
+    "prompt": "En el comportamiento básico del curso, ¿qué implica DROP de una tabla administrada?",
+    "options": [
+      "Eliminar solo una columna del SELECT",
+      "Convertirla en externa",
+      "Eliminar definición y datos administrados",
+      "Crear una copia local"
+    ],
+    "correctAnswer": 2,
+    "explanation": "En una administrada Hive gestiona también los datos; se debe revisar su tipo antes de borrar.",
+    "optionExplanations": [
+      "Elegiste «Eliminar solo una columna del SELECT». La pregunta pide «Eliminar definición y datos administrados». En una administrada Hive gestiona también los datos; se debe revisar su tipo antes de borrar.",
+      "Elegiste «Convertirla en externa». La pregunta pide «Eliminar definición y datos administrados». En una administrada Hive gestiona también los datos; se debe revisar su tipo antes de borrar.",
+      "En una administrada Hive gestiona también los datos; se debe revisar su tipo antes de borrar.",
+      "Elegiste «Crear una copia local». La pregunta pide «Eliminar definición y datos administrados». En una administrada Hive gestiona también los datos; se debe revisar su tipo antes de borrar."
+    ],
+    "memoryTip": "En una administrada Hive gestiona también los datos",
+    "source": "Semana 6 · Temario maestro proporcionado · managed",
+    "highValue": true
+  },
+  {
+    "id": "w6-020",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "describe",
+    "concept": "describe",
+    "difficulty": "basic",
+    "type": "interpretación de comando",
+    "prompt": "¿Qué muestra DESCRIBE ventas_hive;?",
+    "options": [
+      "Todas las ventas ordenadas",
+      "Los DataNodes activos",
+      "El contenido de cada bloque",
+      "Columnas y tipos de la tabla"
+    ],
+    "correctAnswer": 3,
+    "explanation": "DESCRIBE inspecciona estructura, no calcula resultados de ventas.",
+    "optionExplanations": [
+      "Elegiste «Todas las ventas ordenadas». La pregunta pide «Columnas y tipos de la tabla». DESCRIBE inspecciona estructura, no calcula resultados de ventas.",
+      "Elegiste «Los DataNodes activos». La pregunta pide «Columnas y tipos de la tabla». DESCRIBE inspecciona estructura, no calcula resultados de ventas.",
+      "Elegiste «El contenido de cada bloque». La pregunta pide «Columnas y tipos de la tabla». DESCRIBE inspecciona estructura, no calcula resultados de ventas.",
+      "DESCRIBE inspecciona estructura, no calcula resultados de ventas."
+    ],
+    "memoryTip": "DESCRIBE inspecciona estructura, no calcula resultados de ventas.",
+    "source": "Semana 6 · Temario maestro proporcionado · describe",
+    "highValue": true
+  },
+  {
+    "id": "w6-021",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "describe",
+    "concept": "describe",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Qué consultarías para inspeccionar metadata más detallada y LOCATION?",
+    "options": [
+      "DESCRIBE FORMATTED",
+      "SELECT COUNT(*)",
+      "hdfs dfs -get",
+      "ORDER BY"
+    ],
+    "correctAnswer": 0,
+    "explanation": "DESCRIBE FORMATTED permite revisar información detallada de la tabla.",
+    "optionExplanations": [
+      "DESCRIBE FORMATTED permite revisar información detallada de la tabla.",
+      "Elegiste «SELECT COUNT(*)». La pregunta pide «DESCRIBE FORMATTED». DESCRIBE FORMATTED permite revisar información detallada de la tabla.",
+      "Elegiste «hdfs dfs -get». La pregunta pide «DESCRIBE FORMATTED». DESCRIBE FORMATTED permite revisar información detallada de la tabla.",
+      "Elegiste «ORDER BY». La pregunta pide «DESCRIBE FORMATTED». DESCRIBE FORMATTED permite revisar información detallada de la tabla."
+    ],
+    "memoryTip": "DESCRIBE FORMATTED permite revisar información detallada de la tabla.",
+    "source": "Semana 6 · Temario maestro proporcionado · describe",
+    "highValue": true
+  },
+  {
+    "id": "w6-022",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "select",
+    "concept": "select",
+    "difficulty": "intermediate",
+    "type": "interpretación de comando",
+    "prompt": "¿Qué determina SELECT fecha, cliente, monto?",
+    "options": [
+      "La carpeta de replicación",
+      "Las columnas del resultado",
+      "Los grupos a eliminar",
+      "El límite de filas"
+    ],
+    "correctAnswer": 1,
+    "explanation": "SELECT elige qué información mostrar.",
+    "optionExplanations": [
+      "Elegiste «La carpeta de replicación». La pregunta pide «Las columnas del resultado». SELECT elige qué información mostrar.",
+      "SELECT elige qué información mostrar.",
+      "Elegiste «Los grupos a eliminar». La pregunta pide «Las columnas del resultado». SELECT elige qué información mostrar.",
+      "Elegiste «El límite de filas». La pregunta pide «Las columnas del resultado». SELECT elige qué información mostrar."
+    ],
+    "memoryTip": "SELECT elige qué información mostrar.",
+    "source": "Semana 6 · Temario maestro proporcionado · select",
+    "highValue": true
+  },
+  {
+    "id": "w6-023",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "from",
+    "concept": "select",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "¿Qué indica FROM ventas_hive?",
+    "options": [
+      "La ciudad filtrada",
+      "La función de promedio",
+      "La tabla consultada",
+      "El número máximo de filas"
+    ],
+    "correctAnswer": 2,
+    "explanation": "FROM identifica la fuente lógica de la consulta.",
+    "optionExplanations": [
+      "Elegiste «La ciudad filtrada». La pregunta pide «La tabla consultada». FROM identifica la fuente lógica de la consulta.",
+      "Elegiste «La función de promedio». La pregunta pide «La tabla consultada». FROM identifica la fuente lógica de la consulta.",
+      "FROM identifica la fuente lógica de la consulta.",
+      "Elegiste «El número máximo de filas». La pregunta pide «La tabla consultada». FROM identifica la fuente lógica de la consulta."
+    ],
+    "memoryTip": "FROM identifica la fuente lógica de la consulta.",
+    "source": "Semana 6 · Temario maestro proporcionado · from",
+    "highValue": true
+  },
+  {
+    "id": "w6-024",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "limit",
+    "concept": "select",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Qué hace LIMIT 10?",
+    "options": [
+      "Devuelve necesariamente las diez mayores ventas",
+      "Divide el CSV en diez bloques",
+      "Crea diez tablas",
+      "Limita a diez filas mostradas"
+    ],
+    "correctAnswer": 3,
+    "explanation": "LIMIT no garantiza orden; para mayores valores hace falta ordenar.",
+    "optionExplanations": [
+      "Elegiste «Devuelve necesariamente las diez mayores ventas». La pregunta pide «Limita a diez filas mostradas». LIMIT no garantiza orden; para mayores valores hace falta ordenar.",
+      "Elegiste «Divide el CSV en diez bloques». La pregunta pide «Limita a diez filas mostradas». LIMIT no garantiza orden; para mayores valores hace falta ordenar.",
+      "Elegiste «Crea diez tablas». La pregunta pide «Limita a diez filas mostradas». LIMIT no garantiza orden; para mayores valores hace falta ordenar.",
+      "LIMIT no garantiza orden; para mayores valores hace falta ordenar."
+    ],
+    "memoryTip": "LIMIT no garantiza orden",
+    "source": "Semana 6 · Temario maestro proporcionado · limit",
+    "highValue": true
+  },
+  {
+    "id": "w6-025",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "where",
+    "concept": "where-having",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Qué hace WHERE ciudad = 'Santiago'?",
+    "options": [
+      "Filtra filas de Santiago",
+      "Agrupa por todas las ciudades",
+      "Ordena por ciudad",
+      "Filtra promedios de grupos"
+    ],
+    "correctAnswer": 0,
+    "explanation": "WHERE evalúa condiciones sobre filas antes del agrupamiento.",
+    "optionExplanations": [
+      "WHERE evalúa condiciones sobre filas antes del agrupamiento.",
+      "Elegiste «Agrupa por todas las ciudades». La pregunta pide «Filtra filas de Santiago». WHERE evalúa condiciones sobre filas antes del agrupamiento.",
+      "Elegiste «Ordena por ciudad». La pregunta pide «Filtra filas de Santiago». WHERE evalúa condiciones sobre filas antes del agrupamiento.",
+      "Elegiste «Filtra promedios de grupos». La pregunta pide «Filtra filas de Santiago». WHERE evalúa condiciones sobre filas antes del agrupamiento."
+    ],
+    "memoryTip": "WHERE evalúa condiciones sobre filas antes del agrupamiento.",
+    "source": "Semana 6 · Temario maestro proporcionado · where",
+    "highValue": true
+  },
+  {
+    "id": "w6-026",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "and",
+    "concept": "and",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Qué exige A AND B en un filtro?",
+    "options": [
+      "Que solo una se cumpla",
+      "Que ambas condiciones se cumplan",
+      "Que ninguna se cumpla",
+      "Que ambas columnas se agrupen"
+    ],
+    "correctAnswer": 1,
+    "explanation": "AND combina requisitos simultáneos.",
+    "optionExplanations": [
+      "Elegiste «Que solo una se cumpla». La pregunta pide «Que ambas condiciones se cumplan». AND combina requisitos simultáneos.",
+      "AND combina requisitos simultáneos.",
+      "Elegiste «Que ninguna se cumpla». La pregunta pide «Que ambas condiciones se cumplan». AND combina requisitos simultáneos.",
+      "Elegiste «Que ambas columnas se agrupen». La pregunta pide «Que ambas condiciones se cumplan». AND combina requisitos simultáneos."
+    ],
+    "memoryTip": "AND combina requisitos simultáneos.",
+    "source": "Semana 6 · Temario maestro proporcionado · and",
+    "highValue": true
+  },
+  {
+    "id": "w6-027",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "or",
+    "concept": "and",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "¿Qué exige A OR B en un filtro?",
+    "options": [
+      "Que ambas sean obligatorias",
+      "Que ambas sean falsas",
+      "Que al menos una condición se cumpla",
+      "Que se ordene por A"
+    ],
+    "correctAnswer": 2,
+    "explanation": "OR permite cualquiera de las condiciones, incluyendo ambas.",
+    "optionExplanations": [
+      "Elegiste «Que ambas sean obligatorias». La pregunta pide «Que al menos una condición se cumpla». OR permite cualquiera de las condiciones, incluyendo ambas.",
+      "Elegiste «Que ambas sean falsas». La pregunta pide «Que al menos una condición se cumpla». OR permite cualquiera de las condiciones, incluyendo ambas.",
+      "OR permite cualquiera de las condiciones, incluyendo ambas.",
+      "Elegiste «Que se ordene por A». La pregunta pide «Que al menos una condición se cumpla». OR permite cualquiera de las condiciones, incluyendo ambas."
+    ],
+    "memoryTip": "OR permite cualquiera de las condiciones, incluyendo ambas.",
+    "source": "Semana 6 · Temario maestro proporcionado · or",
+    "highValue": true
+  },
+  {
+    "id": "w6-028",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "between",
+    "concept": "between",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Qué expresa monto BETWEEN 100 AND 200?",
+    "options": [
+      "Solo montos 100 o 200",
+      "Montos fuera del intervalo",
+      "Un promedio entre ciudades",
+      "Un rango que incluye ambos extremos"
+    ],
+    "correctAnswer": 3,
+    "explanation": "BETWEEN incluye los límites del rango.",
+    "optionExplanations": [
+      "Elegiste «Solo montos 100 o 200». La pregunta pide «Un rango que incluye ambos extremos». BETWEEN incluye los límites del rango.",
+      "Elegiste «Montos fuera del intervalo». La pregunta pide «Un rango que incluye ambos extremos». BETWEEN incluye los límites del rango.",
+      "Elegiste «Un promedio entre ciudades». La pregunta pide «Un rango que incluye ambos extremos». BETWEEN incluye los límites del rango.",
+      "BETWEEN incluye los límites del rango."
+    ],
+    "memoryTip": "BETWEEN incluye los límites del rango.",
+    "source": "Semana 6 · Temario maestro proporcionado · between",
+    "highValue": true
+  },
+  {
+    "id": "w6-029",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "in",
+    "concept": "in",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Qué expresa ciudad IN ('Santiago', 'Temuco')?",
+    "options": [
+      "Filas de cualquiera de esas ciudades",
+      "Filas que pertenecen a ambas a la vez",
+      "Grupos con dos ventas",
+      "Orden alfabético"
+    ],
+    "correctAnswer": 0,
+    "explanation": "IN permite comparar con un conjunto de valores.",
+    "optionExplanations": [
+      "IN permite comparar con un conjunto de valores.",
+      "Elegiste «Filas que pertenecen a ambas a la vez». La pregunta pide «Filas de cualquiera de esas ciudades». IN permite comparar con un conjunto de valores.",
+      "Elegiste «Grupos con dos ventas». La pregunta pide «Filas de cualquiera de esas ciudades». IN permite comparar con un conjunto de valores.",
+      "Elegiste «Orden alfabético». La pregunta pide «Filas de cualquiera de esas ciudades». IN permite comparar con un conjunto de valores."
+    ],
+    "memoryTip": "IN permite comparar con un conjunto de valores.",
+    "source": "Semana 6 · Temario maestro proporcionado · in",
+    "highValue": true
+  },
+  {
+    "id": "w6-030",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "like",
+    "concept": "like",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Qué expresa cliente LIKE 'Ana%'?",
+    "options": [
+      "Solo el nombre exacto Ana",
+      "Nombres que comienzan con Ana",
+      "Nombres que terminan necesariamente en Ana",
+      "Promedio de compras de Ana"
+    ],
+    "correctAnswer": 1,
+    "explanation": "El porcentaje representa una secuencia de caracteres en el patrón.",
+    "optionExplanations": [
+      "Elegiste «Solo el nombre exacto Ana». La pregunta pide «Nombres que comienzan con Ana». El porcentaje representa una secuencia de caracteres en el patrón.",
+      "El porcentaje representa una secuencia de caracteres en el patrón.",
+      "Elegiste «Nombres que terminan necesariamente en Ana». La pregunta pide «Nombres que comienzan con Ana». El porcentaje representa una secuencia de caracteres en el patrón.",
+      "Elegiste «Promedio de compras de Ana». La pregunta pide «Nombres que comienzan con Ana». El porcentaje representa una secuencia de caracteres en el patrón."
+    ],
+    "memoryTip": "El porcentaje representa una secuencia de caracteres en el patrón.",
+    "source": "Semana 6 · Temario maestro proporcionado · like",
+    "highValue": true
+  },
+  {
+    "id": "w6-031",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "order",
+    "concept": "order",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Qué hace ORDER BY monto DESC?",
+    "options": [
+      "Filtra montos mayores que cero",
+      "Agrupa montos iguales",
+      "Ordena de mayor a menor monto",
+      "Cuenta las ventas"
+    ],
+    "correctAnswer": 2,
+    "explanation": "ORDER BY organiza el resultado; DESC indica orden descendente.",
+    "optionExplanations": [
+      "Elegiste «Filtra montos mayores que cero». La pregunta pide «Ordena de mayor a menor monto». ORDER BY organiza el resultado; DESC indica orden descendente.",
+      "Elegiste «Agrupa montos iguales». La pregunta pide «Ordena de mayor a menor monto». ORDER BY organiza el resultado; DESC indica orden descendente.",
+      "ORDER BY organiza el resultado; DESC indica orden descendente.",
+      "Elegiste «Cuenta las ventas». La pregunta pide «Ordena de mayor a menor monto». ORDER BY organiza el resultado; DESC indica orden descendente."
+    ],
+    "memoryTip": "ORDER BY organiza el resultado",
+    "source": "Semana 6 · Temario maestro proporcionado · order",
+    "highValue": true
+  },
+  {
+    "id": "w6-032",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "count",
+    "concept": "count-sum",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "¿Qué calcula COUNT(*)?",
+    "options": [
+      "Suma de montos",
+      "Promedio de montos",
+      "Mayor monto",
+      "Cantidad de filas"
+    ],
+    "correctAnswer": 3,
+    "explanation": "COUNT(*) cuenta registros del resultado considerado.",
+    "optionExplanations": [
+      "Elegiste «Suma de montos». La pregunta pide «Cantidad de filas». COUNT(*) cuenta registros del resultado considerado.",
+      "Elegiste «Promedio de montos». La pregunta pide «Cantidad de filas». COUNT(*) cuenta registros del resultado considerado.",
+      "Elegiste «Mayor monto». La pregunta pide «Cantidad de filas». COUNT(*) cuenta registros del resultado considerado.",
+      "COUNT(*) cuenta registros del resultado considerado."
+    ],
+    "memoryTip": "COUNT(*) cuenta registros del resultado considerado.",
+    "source": "Semana 6 · Temario maestro proporcionado · count",
+    "highValue": true
+  },
+  {
+    "id": "w6-033",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "sum",
+    "concept": "count-sum",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "¿Qué calcula SUM(monto)?",
+    "options": [
+      "Total de los montos",
+      "Número de ciudades",
+      "Monto promedio",
+      "Monto mínimo"
+    ],
+    "correctAnswer": 0,
+    "explanation": "SUM suma los valores de la columna.",
+    "optionExplanations": [
+      "SUM suma los valores de la columna.",
+      "Elegiste «Número de ciudades». La pregunta pide «Total de los montos». SUM suma los valores de la columna.",
+      "Elegiste «Monto promedio». La pregunta pide «Total de los montos». SUM suma los valores de la columna.",
+      "Elegiste «Monto mínimo». La pregunta pide «Total de los montos». SUM suma los valores de la columna."
+    ],
+    "memoryTip": "SUM suma los valores de la columna.",
+    "source": "Semana 6 · Temario maestro proporcionado · sum",
+    "highValue": true
+  },
+  {
+    "id": "w6-034",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "avg",
+    "concept": "count-sum",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Qué calcula AVG(monto)?",
+    "options": [
+      "Monto acumulado",
+      "Promedio del monto",
+      "Número de filas",
+      "Monto máximo"
+    ],
+    "correctAnswer": 1,
+    "explanation": "AVG calcula una media, no el total vendido.",
+    "optionExplanations": [
+      "Elegiste «Monto acumulado». La pregunta pide «Promedio del monto». AVG calcula una media, no el total vendido.",
+      "AVG calcula una media, no el total vendido.",
+      "Elegiste «Número de filas». La pregunta pide «Promedio del monto». AVG calcula una media, no el total vendido.",
+      "Elegiste «Monto máximo». La pregunta pide «Promedio del monto». AVG calcula una media, no el total vendido."
+    ],
+    "memoryTip": "AVG calcula una media, no el total vendido.",
+    "source": "Semana 6 · Temario maestro proporcionado · avg",
+    "highValue": true
+  },
+  {
+    "id": "w6-035",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "minmax",
+    "concept": "minmax",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Qué función obtiene el menor monto?",
+    "options": [
+      "MAX(monto)",
+      "SUM(monto)",
+      "MIN(monto)",
+      "COUNT(monto)"
+    ],
+    "correctAnswer": 2,
+    "explanation": "MIN devuelve el menor valor; MAX el mayor.",
+    "optionExplanations": [
+      "Elegiste «MAX(monto)». La pregunta pide «MIN(monto)». MIN devuelve el menor valor; MAX el mayor.",
+      "Elegiste «SUM(monto)». La pregunta pide «MIN(monto)». MIN devuelve el menor valor; MAX el mayor.",
+      "MIN devuelve el menor valor; MAX el mayor.",
+      "Elegiste «COUNT(monto)». La pregunta pide «MIN(monto)». MIN devuelve el menor valor; MAX el mayor."
+    ],
+    "memoryTip": "MIN devuelve el menor valor",
+    "source": "Semana 6 · Temario maestro proporcionado · minmax",
+    "highValue": true
+  },
+  {
+    "id": "w6-036",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "minmax",
+    "concept": "minmax",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Qué función obtiene el mayor monto?",
+    "options": [
+      "MIN(monto)",
+      "AVG(monto)",
+      "COUNT(*)",
+      "MAX(monto)"
+    ],
+    "correctAnswer": 3,
+    "explanation": "MAX responde por el valor máximo, no por cantidad de registros.",
+    "optionExplanations": [
+      "Elegiste «MIN(monto)». La pregunta pide «MAX(monto)». MAX responde por el valor máximo, no por cantidad de registros.",
+      "Elegiste «AVG(monto)». La pregunta pide «MAX(monto)». MAX responde por el valor máximo, no por cantidad de registros.",
+      "Elegiste «COUNT(*)». La pregunta pide «MAX(monto)». MAX responde por el valor máximo, no por cantidad de registros.",
+      "MAX responde por el valor máximo, no por cantidad de registros."
+    ],
+    "memoryTip": "MAX responde por el valor máximo, no por cantidad de registros.",
+    "source": "Semana 6 · Temario maestro proporcionado · minmax",
+    "highValue": true
+  },
+  {
+    "id": "w6-037",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "group",
+    "concept": "group",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Qué hace GROUP BY ciudad?",
+    "options": [
+      "Forma grupos de filas por ciudad",
+      "Ordena alfabéticamente las ciudades",
+      "Elimina ciudades repetidas del archivo",
+      "Filtra solo Santiago"
+    ],
+    "correctAnswer": 0,
+    "explanation": "GROUP BY permite calcular agregados por cada ciudad.",
+    "optionExplanations": [
+      "GROUP BY permite calcular agregados por cada ciudad.",
+      "Elegiste «Ordena alfabéticamente las ciudades». La pregunta pide «Forma grupos de filas por ciudad». GROUP BY permite calcular agregados por cada ciudad.",
+      "Elegiste «Elimina ciudades repetidas del archivo». La pregunta pide «Forma grupos de filas por ciudad». GROUP BY permite calcular agregados por cada ciudad.",
+      "Elegiste «Filtra solo Santiago». La pregunta pide «Forma grupos de filas por ciudad». GROUP BY permite calcular agregados por cada ciudad."
+    ],
+    "memoryTip": "GROUP BY permite calcular agregados por cada ciudad.",
+    "source": "Semana 6 · Temario maestro proporcionado · group",
+    "highValue": true
+  },
+  {
+    "id": "w6-038",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "having",
+    "concept": "where-having",
+    "difficulty": "hard",
+    "type": "comprensión",
+    "prompt": "¿Qué hace HAVING COUNT(*) > 10?",
+    "options": [
+      "Conserva filas cuyo monto supera diez",
+      "Conserva grupos con más de diez filas",
+      "Limita a diez resultados",
+      "Ordena por número de bloques"
+    ],
+    "correctAnswer": 1,
+    "explanation": "HAVING filtra resultados agregados después de agrupar.",
+    "optionExplanations": [
+      "Elegiste «Conserva filas cuyo monto supera diez». La pregunta pide «Conserva grupos con más de diez filas». HAVING filtra resultados agregados después de agrupar.",
+      "HAVING filtra resultados agregados después de agrupar.",
+      "Elegiste «Limita a diez resultados». La pregunta pide «Conserva grupos con más de diez filas». HAVING filtra resultados agregados después de agrupar.",
+      "Elegiste «Ordena por número de bloques». La pregunta pide «Conserva grupos con más de diez filas». HAVING filtra resultados agregados después de agrupar."
+    ],
+    "memoryTip": "HAVING filtra resultados agregados después de agrupar.",
+    "source": "Semana 6 · Temario maestro proporcionado · having",
+    "highValue": true
+  },
+  {
+    "id": "w6-039",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "where-having",
+    "concept": "where-having",
+    "difficulty": "hard",
+    "type": "escenario",
+    "prompt": "Necesitas filtrar ciudades por monto total. ¿Qué cláusula aplica al agregado?",
+    "options": [
+      "WHERE sobre SUM antes de agrupar",
+      "LOCATION",
+      "HAVING",
+      "LIMIT"
+    ],
+    "correctAnswer": 2,
+    "explanation": "Las condiciones sobre SUM de un grupo corresponden a HAVING.",
+    "optionExplanations": [
+      "Elegiste «WHERE sobre SUM antes de agrupar». La pregunta pide «HAVING». Las condiciones sobre SUM de un grupo corresponden a HAVING.",
+      "Elegiste «LOCATION». La pregunta pide «HAVING». Las condiciones sobre SUM de un grupo corresponden a HAVING.",
+      "Las condiciones sobre SUM de un grupo corresponden a HAVING.",
+      "Elegiste «LIMIT». La pregunta pide «HAVING». Las condiciones sobre SUM de un grupo corresponden a HAVING."
+    ],
+    "memoryTip": "WHERE = filas; HAVING = grupos.",
+    "source": "Semana 6 · Temario maestro proporcionado · where-having",
+    "highValue": true
+  },
+  {
+    "id": "w6-040",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "join",
+    "concept": "join",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Para qué sirve JOIN?",
+    "options": [
+      "Duplicar bloques HDFS",
+      "Modificar el tamaño de bloque",
+      "Seleccionar una base",
+      "Relacionar filas de tablas mediante una condición"
+    ],
+    "correctAnswer": 3,
+    "explanation": "JOIN combina información de tablas según la relación indicada.",
+    "optionExplanations": [
+      "Elegiste «Duplicar bloques HDFS». La pregunta pide «Relacionar filas de tablas mediante una condición». JOIN combina información de tablas según la relación indicada.",
+      "Elegiste «Modificar el tamaño de bloque». La pregunta pide «Relacionar filas de tablas mediante una condición». JOIN combina información de tablas según la relación indicada.",
+      "Elegiste «Seleccionar una base». La pregunta pide «Relacionar filas de tablas mediante una condición». JOIN combina información de tablas según la relación indicada.",
+      "JOIN combina información de tablas según la relación indicada."
+    ],
+    "memoryTip": "JOIN combina información de tablas según la relación indicada.",
+    "source": "Semana 6 · Temario maestro proporcionado · join",
+    "highValue": false
+  },
+  {
+    "id": "w6-041",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "join",
+    "concept": "join",
+    "difficulty": "hard",
+    "type": "comprensión",
+    "prompt": "Al relacionar ventas y clientes, ¿qué necesitas para evitar combinaciones sin sentido?",
+    "options": [
+      "Una condición que vincule las claves correspondientes",
+      "Una cláusula LOCATION distinta por fila",
+      "Un setrep para cada cliente",
+      "Un LIMIT que sustituya la relación"
+    ],
+    "correctAnswer": 0,
+    "explanation": "La condición de unión debe expresar cómo se relacionan ambas tablas.",
+    "optionExplanations": [
+      "La condición de unión debe expresar cómo se relacionan ambas tablas.",
+      "Elegiste «Una cláusula LOCATION distinta por fila». La pregunta pide «Una condición que vincule las claves correspondientes». La condición de unión debe expresar cómo se relacionan ambas tablas.",
+      "Elegiste «Un setrep para cada cliente». La pregunta pide «Una condición que vincule las claves correspondientes». La condición de unión debe expresar cómo se relacionan ambas tablas.",
+      "Elegiste «Un LIMIT que sustituya la relación». La pregunta pide «Una condición que vincule las claves correspondientes». La condición de unión debe expresar cómo se relacionan ambas tablas."
+    ],
+    "memoryTip": "La condición de unión debe expresar cómo se relacionan ambas tablas.",
+    "source": "Semana 6 · Temario maestro proporcionado · join",
+    "highValue": false
+  },
+  {
+    "id": "w6-042",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "partition",
+    "concept": "partition",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Qué busca el particionamiento de una tabla?",
+    "options": [
+      "Reemplazar las columnas por bloques",
+      "Organizar datos por valores de una clave",
+      "Ordenar todas las filas por monto",
+      "Copiar el Metastore al DataNode"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Particionar organiza datos de la tabla, por ejemplo por un valor de fecha.",
+    "optionExplanations": [
+      "Elegiste «Reemplazar las columnas por bloques». La pregunta pide «Organizar datos por valores de una clave». Particionar organiza datos de la tabla, por ejemplo por un valor de fecha.",
+      "Particionar organiza datos de la tabla, por ejemplo por un valor de fecha.",
+      "Elegiste «Ordenar todas las filas por monto». La pregunta pide «Organizar datos por valores de una clave». Particionar organiza datos de la tabla, por ejemplo por un valor de fecha.",
+      "Elegiste «Copiar el Metastore al DataNode». La pregunta pide «Organizar datos por valores de una clave». Particionar organiza datos de la tabla, por ejemplo por un valor de fecha."
+    ],
+    "memoryTip": "Particionar organiza datos de la tabla, por ejemplo por un valor de fecha.",
+    "source": "Semana 6 · Temario maestro proporcionado · partition",
+    "highValue": false
+  },
+  {
+    "id": "w6-043",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "alter",
+    "concept": "partition",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Qué operación permite modificar una definición existente?",
+    "options": [
+      "SHOW DATABASES",
+      "COUNT(*)",
+      "ALTER TABLE",
+      "hdfs dfs -cat"
+    ],
+    "correctAnswer": 2,
+    "explanation": "ALTER TABLE modifica aspectos de la estructura o metadata de una tabla.",
+    "optionExplanations": [
+      "Elegiste «SHOW DATABASES». La pregunta pide «ALTER TABLE». ALTER TABLE modifica aspectos de la estructura o metadata de una tabla.",
+      "Elegiste «COUNT(*)». La pregunta pide «ALTER TABLE». ALTER TABLE modifica aspectos de la estructura o metadata de una tabla.",
+      "ALTER TABLE modifica aspectos de la estructura o metadata de una tabla.",
+      "Elegiste «hdfs dfs -cat». La pregunta pide «ALTER TABLE». ALTER TABLE modifica aspectos de la estructura o metadata de una tabla."
+    ],
+    "memoryTip": "ALTER TABLE modifica aspectos de la estructura o metadata de una tabla.",
+    "source": "Semana 6 · Temario maestro proporcionado · alter",
+    "highValue": false
+  },
+  {
+    "id": "w6-044",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "metadata",
+    "concept": "metastore",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Cuál es metadata de Hive?",
+    "options": [
+      "Una venta de 500000",
+      "Un bloque del CSV",
+      "Una copia local del dataset",
+      "Nombre y tipo de una columna"
+    ],
+    "correctAnswer": 3,
+    "explanation": "La descripción de los datos es metadata; los valores de ventas son datos.",
+    "optionExplanations": [
+      "Elegiste «Una venta de 500000». La pregunta pide «Nombre y tipo de una columna». La descripción de los datos es metadata; los valores de ventas son datos.",
+      "Elegiste «Un bloque del CSV». La pregunta pide «Nombre y tipo de una columna». La descripción de los datos es metadata; los valores de ventas son datos.",
+      "Elegiste «Una copia local del dataset». La pregunta pide «Nombre y tipo de una columna». La descripción de los datos es metadata; los valores de ventas son datos.",
+      "La descripción de los datos es metadata; los valores de ventas son datos."
+    ],
+    "memoryTip": "La descripción de los datos es metadata",
+    "source": "Semana 6 · Temario maestro proporcionado · metadata",
+    "highValue": true
+  },
+  {
+    "id": "w6-045",
+    "week": 6,
+    "topic": "Hive",
+    "subtopic": "where-having",
+    "concept": "where-having",
+    "difficulty": "hard",
+    "type": "escenario",
+    "prompt": "¿Cuál describe el orden lógico relevante de filtrado?",
+    "options": [
+      "WHERE filtra filas; HAVING filtra grupos",
+      "HAVING filtra filas; WHERE filtra grupos",
+      "ORDER BY sustituye ambos filtros",
+      "LIMIT crea los grupos"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Distinguir filas de grupos evita consultas que responden otra pregunta.",
+    "optionExplanations": [
+      "Distinguir filas de grupos evita consultas que responden otra pregunta.",
+      "Elegiste «HAVING filtra filas; WHERE filtra grupos». La pregunta pide «WHERE filtra filas; HAVING filtra grupos». Distinguir filas de grupos evita consultas que responden otra pregunta.",
+      "Elegiste «ORDER BY sustituye ambos filtros». La pregunta pide «WHERE filtra filas; HAVING filtra grupos». Distinguir filas de grupos evita consultas que responden otra pregunta.",
+      "Elegiste «LIMIT crea los grupos». La pregunta pide «WHERE filtra filas; HAVING filtra grupos». Distinguir filas de grupos evita consultas que responden otra pregunta."
+    ],
+    "memoryTip": "WHERE = filas; HAVING = grupos.",
+    "source": "Semana 6 · Temario maestro proporcionado · where-having",
+    "highValue": true
+  }
+]

@@ -1,0 +1,1082 @@
+[
+  {
+    "id": "w5-001",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "hdfs",
+    "concept": "hdfs",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "¿Qué ofrece HDFS al almacenar datos?",
+    "options": [
+      "Un sistema de archivos distribuido",
+      "Un catálogo de tablas Hive",
+      "Una consola SQL",
+      "Un volumen Docker"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Distribuye archivos en bloques entre nodos y presenta rutas lógicas.",
+    "optionExplanations": [
+      "Distribuye archivos en bloques entre nodos y presenta rutas lógicas.",
+      "Elegiste «Un catálogo de tablas Hive». La pregunta pide «Un sistema de archivos distribuido». Distribuye archivos en bloques entre nodos y presenta rutas lógicas.",
+      "Elegiste «Una consola SQL». La pregunta pide «Un sistema de archivos distribuido». Distribuye archivos en bloques entre nodos y presenta rutas lógicas.",
+      "Elegiste «Un volumen Docker». La pregunta pide «Un sistema de archivos distribuido». Distribuye archivos en bloques entre nodos y presenta rutas lógicas."
+    ],
+    "memoryTip": "Distribuye archivos en bloques entre nodos y presenta rutas lógicas.",
+    "source": "Semana 5 · Temario maestro proporcionado · hdfs",
+    "highValue": true
+  },
+  {
+    "id": "w5-002",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "hdfs",
+    "concept": "hdfs",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "Un usuario ve /curso/ventas.csv en HDFS. ¿Qué está viendo?",
+    "options": [
+      "Una tabla del Metastore",
+      "Un archivo lógico del namespace",
+      "Un bloque único obligatorio",
+      "Un archivo local del host"
+    ],
+    "correctAnswer": 1,
+    "explanation": "La ruta visible es lógica; el archivo puede ocupar varios bloques físicos.",
+    "optionExplanations": [
+      "Elegiste «Una tabla del Metastore». La pregunta pide «Un archivo lógico del namespace». La ruta visible es lógica; el archivo puede ocupar varios bloques físicos.",
+      "La ruta visible es lógica; el archivo puede ocupar varios bloques físicos.",
+      "Elegiste «Un bloque único obligatorio». La pregunta pide «Un archivo lógico del namespace». La ruta visible es lógica; el archivo puede ocupar varios bloques físicos.",
+      "Elegiste «Un archivo local del host». La pregunta pide «Un archivo lógico del namespace». La ruta visible es lógica; el archivo puede ocupar varios bloques físicos."
+    ],
+    "memoryTip": "La ruta visible es lógica",
+    "source": "Semana 5 · Temario maestro proporcionado · hdfs",
+    "highValue": true
+  },
+  {
+    "id": "w5-003",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "namenode",
+    "concept": "namenode",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "¿Qué componente administra nombres y rutas en HDFS?",
+    "options": [
+      "DataNode",
+      "Hive Metastore",
+      "NameNode",
+      "PostgreSQL del Metastore"
+    ],
+    "correctAnswer": 2,
+    "explanation": "El NameNode administra el namespace y la metadata de HDFS.",
+    "optionExplanations": [
+      "Elegiste «DataNode». La pregunta pide «NameNode». El NameNode administra el namespace y la metadata de HDFS.",
+      "Elegiste «Hive Metastore». La pregunta pide «NameNode». El NameNode administra el namespace y la metadata de HDFS.",
+      "El NameNode administra el namespace y la metadata de HDFS.",
+      "Elegiste «PostgreSQL del Metastore». La pregunta pide «NameNode». El NameNode administra el namespace y la metadata de HDFS."
+    ],
+    "memoryTip": "NameNode = mapa.",
+    "source": "Semana 5 · Temario maestro proporcionado · namenode",
+    "highValue": true
+  },
+  {
+    "id": "w5-004",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "namenode",
+    "concept": "namenode",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "Necesitas conocer qué bloques componen un archivo. ¿Qué capa mantiene ese mapa?",
+    "options": [
+      "Columnas de Hive",
+      "Contenido del CSV",
+      "Copia local del archivo",
+      "Metadata del NameNode"
+    ],
+    "correctAnswer": 3,
+    "explanation": "El NameNode relaciona el archivo lógico con sus bloques y ubicaciones.",
+    "optionExplanations": [
+      "Elegiste «Columnas de Hive». La pregunta pide «Metadata del NameNode». El NameNode relaciona el archivo lógico con sus bloques y ubicaciones.",
+      "Elegiste «Contenido del CSV». La pregunta pide «Metadata del NameNode». El NameNode relaciona el archivo lógico con sus bloques y ubicaciones.",
+      "Elegiste «Copia local del archivo». La pregunta pide «Metadata del NameNode». El NameNode relaciona el archivo lógico con sus bloques y ubicaciones.",
+      "El NameNode relaciona el archivo lógico con sus bloques y ubicaciones."
+    ],
+    "memoryTip": "NameNode = mapa.",
+    "source": "Semana 5 · Temario maestro proporcionado · namenode",
+    "highValue": true
+  },
+  {
+    "id": "w5-005",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "datanode",
+    "concept": "datanode",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "¿Dónde se almacenan físicamente los bloques HDFS?",
+    "options": [
+      "DataNodes",
+      "NameNode",
+      "Hive Metastore",
+      "Cliente HiveQL"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Los DataNodes guardan los bloques; el NameNode mantiene su mapa.",
+    "optionExplanations": [
+      "Los DataNodes guardan los bloques; el NameNode mantiene su mapa.",
+      "Elegiste «NameNode». La pregunta pide «DataNodes». Los DataNodes guardan los bloques; el NameNode mantiene su mapa.",
+      "Elegiste «Hive Metastore». La pregunta pide «DataNodes». Los DataNodes guardan los bloques; el NameNode mantiene su mapa.",
+      "Elegiste «Cliente HiveQL». La pregunta pide «DataNodes». Los DataNodes guardan los bloques; el NameNode mantiene su mapa."
+    ],
+    "memoryTip": "DataNode = datos.",
+    "source": "Semana 5 · Temario maestro proporcionado · datanode",
+    "highValue": true
+  },
+  {
+    "id": "w5-006",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "datanode",
+    "concept": "datanode",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "Un DataNode deja de funcionar. ¿Qué recurso se pierde temporalmente en ese nodo?",
+    "options": [
+      "Definiciones de columnas Hive",
+      "Acceso a sus bloques",
+      "Toda la sintaxis HiveQL",
+      "Todas las rutas del namespace"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Los bloques de ese nodo dejan de estar disponibles; otras réplicas pueden permitir acceso.",
+    "optionExplanations": [
+      "Elegiste «Definiciones de columnas Hive». La pregunta pide «Acceso a sus bloques». Los bloques de ese nodo dejan de estar disponibles; otras réplicas pueden permitir acceso.",
+      "Los bloques de ese nodo dejan de estar disponibles; otras réplicas pueden permitir acceso.",
+      "Elegiste «Toda la sintaxis HiveQL». La pregunta pide «Acceso a sus bloques». Los bloques de ese nodo dejan de estar disponibles; otras réplicas pueden permitir acceso.",
+      "Elegiste «Todas las rutas del namespace». La pregunta pide «Acceso a sus bloques». Los bloques de ese nodo dejan de estar disponibles; otras réplicas pueden permitir acceso."
+    ],
+    "memoryTip": "DataNode = datos.",
+    "source": "Semana 5 · Temario maestro proporcionado · datanode",
+    "highValue": true
+  },
+  {
+    "id": "w5-007",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "local-hdfs",
+    "concept": "local-hdfs",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Qué diferencia hay entre /tmp/a.csv local y /datos/a.csv en HDFS?",
+    "options": [
+      "Son alias obligatorios del mismo archivo",
+      "Ambos son tablas Hive",
+      "Pertenecen a sistemas de archivos distintos",
+      "El local siempre tiene más réplicas"
+    ],
+    "correctAnswer": 2,
+    "explanation": "Una ruta local no identifica automáticamente una ruta HDFS.",
+    "optionExplanations": [
+      "Elegiste «Son alias obligatorios del mismo archivo». La pregunta pide «Pertenecen a sistemas de archivos distintos». Una ruta local no identifica automáticamente una ruta HDFS.",
+      "Elegiste «Ambos son tablas Hive». La pregunta pide «Pertenecen a sistemas de archivos distintos». Una ruta local no identifica automáticamente una ruta HDFS.",
+      "Una ruta local no identifica automáticamente una ruta HDFS.",
+      "Elegiste «El local siempre tiene más réplicas». La pregunta pide «Pertenecen a sistemas de archivos distintos». Una ruta local no identifica automáticamente una ruta HDFS."
+    ],
+    "memoryTip": "Una ruta local no identifica automáticamente una ruta HDFS.",
+    "source": "Semana 5 · Temario maestro proporcionado · local-hdfs",
+    "highValue": true
+  },
+  {
+    "id": "w5-008",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "local-hdfs",
+    "concept": "local-hdfs",
+    "difficulty": "hard",
+    "type": "comprensión",
+    "prompt": "Después de cargar un CSV a HDFS eliminas la copia local. ¿Qué comprobarías?",
+    "options": [
+      "Que Hive creó una tabla automáticamente",
+      "Que cambió el factor de replicación",
+      "Que se borró el namespace",
+      "Que la copia HDFS sigue disponible"
+    ],
+    "correctAnswer": 3,
+    "explanation": "La carga crea una copia en HDFS; borrar el original local no la elimina.",
+    "optionExplanations": [
+      "Elegiste «Que Hive creó una tabla automáticamente». La pregunta pide «Que la copia HDFS sigue disponible». La carga crea una copia en HDFS; borrar el original local no la elimina.",
+      "Elegiste «Que cambió el factor de replicación». La pregunta pide «Que la copia HDFS sigue disponible». La carga crea una copia en HDFS; borrar el original local no la elimina.",
+      "Elegiste «Que se borró el namespace». La pregunta pide «Que la copia HDFS sigue disponible». La carga crea una copia en HDFS; borrar el original local no la elimina.",
+      "La carga crea una copia en HDFS; borrar el original local no la elimina."
+    ],
+    "memoryTip": "La carga crea una copia en HDFS",
+    "source": "Semana 5 · Temario maestro proporcionado · local-hdfs",
+    "highValue": true
+  },
+  {
+    "id": "w5-009",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "ls",
+    "concept": "commands",
+    "difficulty": "basic",
+    "type": "interpretación de comando",
+    "prompt": "¿Qué hace hdfs dfs -ls /datos?",
+    "options": [
+      "Lista el contenido de la ruta HDFS",
+      "Lista columnas de una tabla",
+      "Descarga todos los archivos",
+      "Cuenta únicamente bloques"
+    ],
+    "correctAnswer": 0,
+    "explanation": "ls permite inspeccionar archivos y directorios de HDFS.",
+    "optionExplanations": [
+      "ls permite inspeccionar archivos y directorios de HDFS.",
+      "Elegiste «Lista columnas de una tabla». La pregunta pide «Lista el contenido de la ruta HDFS». ls permite inspeccionar archivos y directorios de HDFS.",
+      "Elegiste «Descarga todos los archivos». La pregunta pide «Lista el contenido de la ruta HDFS». ls permite inspeccionar archivos y directorios de HDFS.",
+      "Elegiste «Cuenta únicamente bloques». La pregunta pide «Lista el contenido de la ruta HDFS». ls permite inspeccionar archivos y directorios de HDFS."
+    ],
+    "memoryTip": "ls permite inspeccionar archivos y directorios de HDFS.",
+    "source": "Semana 5 · Temario maestro proporcionado · ls",
+    "highValue": true
+  },
+  {
+    "id": "w5-010",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "mkdir",
+    "concept": "commands",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "¿Qué operación necesitas antes de organizar archivos en un nuevo directorio HDFS?",
+    "options": [
+      "hdfs dfs -get /datos/raw",
+      "hdfs dfs -mkdir /datos/raw",
+      "hdfs dfs -cat /datos/raw",
+      "hdfs dfs -df /datos/raw"
+    ],
+    "correctAnswer": 1,
+    "explanation": "mkdir crea directorios en el sistema HDFS.",
+    "optionExplanations": [
+      "Elegiste «hdfs dfs -get /datos/raw». La pregunta pide «hdfs dfs -mkdir /datos/raw». mkdir crea directorios en el sistema HDFS.",
+      "mkdir crea directorios en el sistema HDFS.",
+      "Elegiste «hdfs dfs -cat /datos/raw». La pregunta pide «hdfs dfs -mkdir /datos/raw». mkdir crea directorios en el sistema HDFS.",
+      "Elegiste «hdfs dfs -df /datos/raw». La pregunta pide «hdfs dfs -mkdir /datos/raw». mkdir crea directorios en el sistema HDFS."
+    ],
+    "memoryTip": "mkdir crea directorios en el sistema HDFS.",
+    "source": "Semana 5 · Temario maestro proporcionado · mkdir",
+    "highValue": true
+  },
+  {
+    "id": "w5-011",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "put",
+    "concept": "local-hdfs",
+    "difficulty": "basic",
+    "type": "interpretación de comando",
+    "prompt": "¿Qué hace hdfs dfs -put ventas.csv /raw/?",
+    "options": [
+      "Descarga de HDFS al host",
+      "Mueve dentro de HDFS",
+      "Copia el archivo local a HDFS",
+      "Crea metadata Hive"
+    ],
+    "correctAnswer": 2,
+    "explanation": "put incorpora una copia local al almacenamiento HDFS.",
+    "optionExplanations": [
+      "Elegiste «Descarga de HDFS al host». La pregunta pide «Copia el archivo local a HDFS». put incorpora una copia local al almacenamiento HDFS.",
+      "Elegiste «Mueve dentro de HDFS». La pregunta pide «Copia el archivo local a HDFS». put incorpora una copia local al almacenamiento HDFS.",
+      "put incorpora una copia local al almacenamiento HDFS.",
+      "Elegiste «Crea metadata Hive». La pregunta pide «Copia el archivo local a HDFS». put incorpora una copia local al almacenamiento HDFS."
+    ],
+    "memoryTip": "PUT entra a HDFS.",
+    "source": "Semana 5 · Temario maestro proporcionado · put",
+    "highValue": true
+  },
+  {
+    "id": "w5-012",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "put",
+    "concept": "local-hdfs",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "Un CSV está en tu equipo y quieres cargarlo a HDFS. ¿Qué operación corresponde?",
+    "options": [
+      "get",
+      "cp entre rutas HDFS",
+      "setrep",
+      "put"
+    ],
+    "correctAnswer": 3,
+    "explanation": "PUT entra a HDFS desde el sistema local.",
+    "optionExplanations": [
+      "Elegiste «get». La pregunta pide «put». PUT entra a HDFS desde el sistema local.",
+      "Elegiste «cp entre rutas HDFS». La pregunta pide «put». PUT entra a HDFS desde el sistema local.",
+      "Elegiste «setrep». La pregunta pide «put». PUT entra a HDFS desde el sistema local.",
+      "PUT entra a HDFS desde el sistema local."
+    ],
+    "memoryTip": "PUT entra a HDFS.",
+    "source": "Semana 5 · Temario maestro proporcionado · put",
+    "highValue": true
+  },
+  {
+    "id": "w5-013",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "get",
+    "concept": "local-hdfs",
+    "difficulty": "basic",
+    "type": "interpretación de comando",
+    "prompt": "¿Qué hace hdfs dfs -get /raw/ventas.csv ./?",
+    "options": [
+      "Copia desde HDFS al sistema local",
+      "Carga desde local hacia HDFS",
+      "Elimina el archivo HDFS",
+      "Consulta una tabla externa"
+    ],
+    "correctAnswer": 0,
+    "explanation": "get recupera una copia local desde HDFS.",
+    "optionExplanations": [
+      "get recupera una copia local desde HDFS.",
+      "Elegiste «Carga desde local hacia HDFS». La pregunta pide «Copia desde HDFS al sistema local». get recupera una copia local desde HDFS.",
+      "Elegiste «Elimina el archivo HDFS». La pregunta pide «Copia desde HDFS al sistema local». get recupera una copia local desde HDFS.",
+      "Elegiste «Consulta una tabla externa». La pregunta pide «Copia desde HDFS al sistema local». get recupera una copia local desde HDFS."
+    ],
+    "memoryTip": "GET sale hacia local.",
+    "source": "Semana 5 · Temario maestro proporcionado · get",
+    "highValue": true
+  },
+  {
+    "id": "w5-014",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "get",
+    "concept": "local-hdfs",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "Quieres conservar el archivo HDFS y analizar una copia en el host. ¿Qué usarías?",
+    "options": [
+      "mv",
+      "get",
+      "rm",
+      "mkdir"
+    ],
+    "correctAnswer": 1,
+    "explanation": "get descarga una copia sin eliminar el origen HDFS.",
+    "optionExplanations": [
+      "Elegiste «mv». La pregunta pide «get». get descarga una copia sin eliminar el origen HDFS.",
+      "get descarga una copia sin eliminar el origen HDFS.",
+      "Elegiste «rm». La pregunta pide «get». get descarga una copia sin eliminar el origen HDFS.",
+      "Elegiste «mkdir». La pregunta pide «get». get descarga una copia sin eliminar el origen HDFS."
+    ],
+    "memoryTip": "GET sale hacia local.",
+    "source": "Semana 5 · Temario maestro proporcionado · get",
+    "highValue": true
+  },
+  {
+    "id": "w5-015",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "cat",
+    "concept": "commands",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "¿Qué necesitas para ver el contenido de un archivo HDFS?",
+    "options": [
+      "hdfs dfs -mkdir /raw/a.csv",
+      "hdfs dfs -stat %r /raw/a.csv",
+      "hdfs dfs -cat /raw/a.csv",
+      "hdfs dfs -df /raw/a.csv"
+    ],
+    "correctAnswer": 2,
+    "explanation": "cat muestra contenido; no describe columnas de Hive.",
+    "optionExplanations": [
+      "Elegiste «hdfs dfs -mkdir /raw/a.csv». La pregunta pide «hdfs dfs -cat /raw/a.csv». cat muestra contenido; no describe columnas de Hive.",
+      "Elegiste «hdfs dfs -stat %r /raw/a.csv». La pregunta pide «hdfs dfs -cat /raw/a.csv». cat muestra contenido; no describe columnas de Hive.",
+      "cat muestra contenido; no describe columnas de Hive.",
+      "Elegiste «hdfs dfs -df /raw/a.csv». La pregunta pide «hdfs dfs -cat /raw/a.csv». cat muestra contenido; no describe columnas de Hive."
+    ],
+    "memoryTip": "cat muestra contenido",
+    "source": "Semana 5 · Temario maestro proporcionado · cat",
+    "highValue": true
+  },
+  {
+    "id": "w5-016",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "cp",
+    "concept": "cp",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "Debes conservar RAW y crear una copia en PROCESSED. ¿Qué operación corresponde?",
+    "options": [
+      "mv",
+      "rm",
+      "get",
+      "cp"
+    ],
+    "correctAnswer": 3,
+    "explanation": "cp mantiene el origen y crea otra copia dentro de HDFS.",
+    "optionExplanations": [
+      "Elegiste «mv». La pregunta pide «cp». cp mantiene el origen y crea otra copia dentro de HDFS.",
+      "Elegiste «rm». La pregunta pide «cp». cp mantiene el origen y crea otra copia dentro de HDFS.",
+      "Elegiste «get». La pregunta pide «cp». cp mantiene el origen y crea otra copia dentro de HDFS.",
+      "cp mantiene el origen y crea otra copia dentro de HDFS."
+    ],
+    "memoryTip": "CP conserva el origen.",
+    "source": "Semana 5 · Temario maestro proporcionado · cp",
+    "highValue": true
+  },
+  {
+    "id": "w5-017",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "cp",
+    "concept": "cp",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Qué sucede al copiar /raw/a.csv a /processed/a.csv con cp?",
+    "options": [
+      "Quedan ambas rutas con una copia",
+      "Solo queda la ruta de destino",
+      "Se crea una tabla externa",
+      "Se aumenta la replicación a 3"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Copiar archivos es distinto de la replicación interna de bloques.",
+    "optionExplanations": [
+      "Copiar archivos es distinto de la replicación interna de bloques.",
+      "Elegiste «Solo queda la ruta de destino». La pregunta pide «Quedan ambas rutas con una copia». Copiar archivos es distinto de la replicación interna de bloques.",
+      "Elegiste «Se crea una tabla externa». La pregunta pide «Quedan ambas rutas con una copia». Copiar archivos es distinto de la replicación interna de bloques.",
+      "Elegiste «Se aumenta la replicación a 3». La pregunta pide «Quedan ambas rutas con una copia». Copiar archivos es distinto de la replicación interna de bloques."
+    ],
+    "memoryTip": "CP conserva el origen.",
+    "source": "Semana 5 · Temario maestro proporcionado · cp",
+    "highValue": true
+  },
+  {
+    "id": "w5-018",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "mv",
+    "concept": "cp",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "Quieres trasladar un archivo de RAW a ARCHIVE sin conservar la ruta original. ¿Qué usas?",
+    "options": [
+      "cp",
+      "mv",
+      "put",
+      "cat"
+    ],
+    "correctAnswer": 1,
+    "explanation": "mv mueve o renombra; la ruta anterior deja de ser la ubicación del archivo.",
+    "optionExplanations": [
+      "Elegiste «cp». La pregunta pide «mv». mv mueve o renombra; la ruta anterior deja de ser la ubicación del archivo.",
+      "mv mueve o renombra; la ruta anterior deja de ser la ubicación del archivo.",
+      "Elegiste «put». La pregunta pide «mv». mv mueve o renombra; la ruta anterior deja de ser la ubicación del archivo.",
+      "Elegiste «cat». La pregunta pide «mv». mv mueve o renombra; la ruta anterior deja de ser la ubicación del archivo."
+    ],
+    "memoryTip": "MV mueve o renombra.",
+    "source": "Semana 5 · Temario maestro proporcionado · mv",
+    "highValue": true
+  },
+  {
+    "id": "w5-019",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "mv",
+    "concept": "cp",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Qué operación sirve para renombrar un archivo HDFS?",
+    "options": [
+      "du",
+      "setrep",
+      "mv",
+      "count"
+    ],
+    "correctAnswer": 2,
+    "explanation": "Renombrar modifica su ubicación o nombre lógico mediante mv.",
+    "optionExplanations": [
+      "Elegiste «du». La pregunta pide «mv». Renombrar modifica su ubicación o nombre lógico mediante mv.",
+      "Elegiste «setrep». La pregunta pide «mv». Renombrar modifica su ubicación o nombre lógico mediante mv.",
+      "Renombrar modifica su ubicación o nombre lógico mediante mv.",
+      "Elegiste «count». La pregunta pide «mv». Renombrar modifica su ubicación o nombre lógico mediante mv."
+    ],
+    "memoryTip": "MV mueve o renombra.",
+    "source": "Semana 5 · Temario maestro proporcionado · mv",
+    "highValue": true
+  },
+  {
+    "id": "w5-020",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "rm",
+    "concept": "commands",
+    "difficulty": "basic",
+    "type": "interpretación de comando",
+    "prompt": "¿Qué hace hdfs dfs -rm /raw/a.csv?",
+    "options": [
+      "Elimina solo metadata Hive",
+      "Descarga el archivo",
+      "Lista su contenido",
+      "Elimina el archivo indicado en HDFS"
+    ],
+    "correctAnswer": 3,
+    "explanation": "rm opera sobre el archivo HDFS, no sobre la definición de una tabla Hive.",
+    "optionExplanations": [
+      "Elegiste «Elimina solo metadata Hive». La pregunta pide «Elimina el archivo indicado en HDFS». rm opera sobre el archivo HDFS, no sobre la definición de una tabla Hive.",
+      "Elegiste «Descarga el archivo». La pregunta pide «Elimina el archivo indicado en HDFS». rm opera sobre el archivo HDFS, no sobre la definición de una tabla Hive.",
+      "Elegiste «Lista su contenido». La pregunta pide «Elimina el archivo indicado en HDFS». rm opera sobre el archivo HDFS, no sobre la definición de una tabla Hive.",
+      "rm opera sobre el archivo HDFS, no sobre la definición de una tabla Hive."
+    ],
+    "memoryTip": "rm opera sobre el archivo HDFS, no sobre la definición de una tabla Hive.",
+    "source": "Semana 5 · Temario maestro proporcionado · rm",
+    "highValue": true
+  },
+  {
+    "id": "w5-021",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "du",
+    "concept": "commands",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "Quieres inspeccionar cuánto espacio usan archivos en una ruta. ¿Qué comando eliges?",
+    "options": [
+      "hdfs dfs -du",
+      "hdfs dfs -cat",
+      "hdfs dfs -mkdir",
+      "hdfs dfs -get"
+    ],
+    "correctAnswer": 0,
+    "explanation": "du informa tamaño y espacio utilizado por archivos o directorios.",
+    "optionExplanations": [
+      "du informa tamaño y espacio utilizado por archivos o directorios.",
+      "Elegiste «hdfs dfs -cat». La pregunta pide «hdfs dfs -du». du informa tamaño y espacio utilizado por archivos o directorios.",
+      "Elegiste «hdfs dfs -mkdir». La pregunta pide «hdfs dfs -du». du informa tamaño y espacio utilizado por archivos o directorios.",
+      "Elegiste «hdfs dfs -get». La pregunta pide «hdfs dfs -du». du informa tamaño y espacio utilizado por archivos o directorios."
+    ],
+    "memoryTip": "du informa tamaño y espacio utilizado por archivos o directorios.",
+    "source": "Semana 5 · Temario maestro proporcionado · du",
+    "highValue": true
+  },
+  {
+    "id": "w5-022",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "df",
+    "concept": "commands",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "Quieres consultar capacidad y espacio disponible del sistema HDFS. ¿Qué usas?",
+    "options": [
+      "hdfs dfs -cp",
+      "hdfs dfs -df",
+      "hdfs dfs -stat %r",
+      "hdfs dfs -mv"
+    ],
+    "correctAnswer": 1,
+    "explanation": "df se orienta a capacidad y disponibilidad del sistema de archivos.",
+    "optionExplanations": [
+      "Elegiste «hdfs dfs -cp». La pregunta pide «hdfs dfs -df». df se orienta a capacidad y disponibilidad del sistema de archivos.",
+      "df se orienta a capacidad y disponibilidad del sistema de archivos.",
+      "Elegiste «hdfs dfs -stat %r». La pregunta pide «hdfs dfs -df». df se orienta a capacidad y disponibilidad del sistema de archivos.",
+      "Elegiste «hdfs dfs -mv». La pregunta pide «hdfs dfs -df». df se orienta a capacidad y disponibilidad del sistema de archivos."
+    ],
+    "memoryTip": "df se orienta a capacidad y disponibilidad del sistema de archivos.",
+    "source": "Semana 5 · Temario maestro proporcionado · df",
+    "highValue": true
+  },
+  {
+    "id": "w5-023",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "count",
+    "concept": "commands",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Qué ayuda a contar archivos y directorios de una ruta HDFS?",
+    "options": [
+      "hdfs dfs -setrep",
+      "hdfs dfs -cat",
+      "hdfs dfs -count",
+      "hdfs dfs -get"
+    ],
+    "correctAnswer": 2,
+    "explanation": "count permite inspeccionar cantidades en la estructura HDFS.",
+    "optionExplanations": [
+      "Elegiste «hdfs dfs -setrep». La pregunta pide «hdfs dfs -count». count permite inspeccionar cantidades en la estructura HDFS.",
+      "Elegiste «hdfs dfs -cat». La pregunta pide «hdfs dfs -count». count permite inspeccionar cantidades en la estructura HDFS.",
+      "count permite inspeccionar cantidades en la estructura HDFS.",
+      "Elegiste «hdfs dfs -get». La pregunta pide «hdfs dfs -count». count permite inspeccionar cantidades en la estructura HDFS."
+    ],
+    "memoryTip": "count permite inspeccionar cantidades en la estructura HDFS.",
+    "source": "Semana 5 · Temario maestro proporcionado · count",
+    "highValue": true
+  },
+  {
+    "id": "w5-024",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "replication",
+    "concept": "replication",
+    "difficulty": "basic",
+    "type": "comprensión",
+    "prompt": "¿Qué representa la replicación de HDFS?",
+    "options": [
+      "Varias tablas con igual nombre",
+      "Varias columnas del CSV",
+      "Copias del catálogo Hive",
+      "Copias de bloques para tolerar fallos"
+    ],
+    "correctAnswer": 3,
+    "explanation": "La replicación mejora disponibilidad mediante copias de bloques.",
+    "optionExplanations": [
+      "Elegiste «Varias tablas con igual nombre». La pregunta pide «Copias de bloques para tolerar fallos». La replicación mejora disponibilidad mediante copias de bloques.",
+      "Elegiste «Varias columnas del CSV». La pregunta pide «Copias de bloques para tolerar fallos». La replicación mejora disponibilidad mediante copias de bloques.",
+      "Elegiste «Copias del catálogo Hive». La pregunta pide «Copias de bloques para tolerar fallos». La replicación mejora disponibilidad mediante copias de bloques.",
+      "La replicación mejora disponibilidad mediante copias de bloques."
+    ],
+    "memoryTip": "Replicación = copias de bloques.",
+    "source": "Semana 5 · Temario maestro proporcionado · replication",
+    "highValue": true
+  },
+  {
+    "id": "w5-025",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "replication",
+    "concept": "replication",
+    "difficulty": "hard",
+    "type": "escenario",
+    "prompt": "Con un DataNode y factor solicitado 3, ¿qué conclusión es correcta?",
+    "options": [
+      "No hay tres DataNodes distintos donde alojar las copias",
+      "El archivo tiene necesariamente tres bloques",
+      "Hive debe crear tres tablas",
+      "El NameNode almacena dos copias extra"
+    ],
+    "correctAnswer": 0,
+    "explanation": "La replicación deseada está limitada por los DataNodes disponibles.",
+    "optionExplanations": [
+      "La replicación deseada está limitada por los DataNodes disponibles.",
+      "Elegiste «El archivo tiene necesariamente tres bloques». La pregunta pide «No hay tres DataNodes distintos donde alojar las copias». La replicación deseada está limitada por los DataNodes disponibles.",
+      "Elegiste «Hive debe crear tres tablas». La pregunta pide «No hay tres DataNodes distintos donde alojar las copias». La replicación deseada está limitada por los DataNodes disponibles.",
+      "Elegiste «El NameNode almacena dos copias extra». La pregunta pide «No hay tres DataNodes distintos donde alojar las copias». La replicación deseada está limitada por los DataNodes disponibles."
+    ],
+    "memoryTip": "Replicación = copias de bloques.",
+    "source": "Semana 5 · Temario maestro proporcionado · replication",
+    "highValue": true
+  },
+  {
+    "id": "w5-026",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "setrep",
+    "concept": "replication",
+    "difficulty": "intermediate",
+    "type": "interpretación de comando",
+    "prompt": "¿Qué hace hdfs dfs -setrep 3 /raw/a.csv?",
+    "options": [
+      "Parte el archivo en tres bloques",
+      "Solicita factor de replicación 3",
+      "Crea tres tablas Hive",
+      "Agrega tres DataNodes al clúster"
+    ],
+    "correctAnswer": 1,
+    "explanation": "setrep cambia el factor solicitado; no crea infraestructura.",
+    "optionExplanations": [
+      "Elegiste «Parte el archivo en tres bloques». La pregunta pide «Solicita factor de replicación 3». setrep cambia el factor solicitado; no crea infraestructura.",
+      "setrep cambia el factor solicitado; no crea infraestructura.",
+      "Elegiste «Crea tres tablas Hive». La pregunta pide «Solicita factor de replicación 3». setrep cambia el factor solicitado; no crea infraestructura.",
+      "Elegiste «Agrega tres DataNodes al clúster». La pregunta pide «Solicita factor de replicación 3». setrep cambia el factor solicitado; no crea infraestructura."
+    ],
+    "memoryTip": "setrep cambia el factor solicitado",
+    "source": "Semana 5 · Temario maestro proporcionado · setrep",
+    "highValue": true
+  },
+  {
+    "id": "w5-027",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "stat",
+    "concept": "replication",
+    "difficulty": "intermediate",
+    "type": "interpretación de comando",
+    "prompt": "¿Qué dato permite consultar hdfs dfs -stat %r /raw/a.csv?",
+    "options": [
+      "Cantidad de columnas Hive",
+      "Número de DataNodes activos",
+      "Factor de replicación configurado",
+      "Contenido del primer bloque"
+    ],
+    "correctAnswer": 2,
+    "explanation": "El factor configurado no prueba por sí solo cuántas réplicas físicas existen.",
+    "optionExplanations": [
+      "Elegiste «Cantidad de columnas Hive». La pregunta pide «Factor de replicación configurado». El factor configurado no prueba por sí solo cuántas réplicas físicas existen.",
+      "Elegiste «Número de DataNodes activos». La pregunta pide «Factor de replicación configurado». El factor configurado no prueba por sí solo cuántas réplicas físicas existen.",
+      "El factor configurado no prueba por sí solo cuántas réplicas físicas existen.",
+      "Elegiste «Contenido del primer bloque». La pregunta pide «Factor de replicación configurado». El factor configurado no prueba por sí solo cuántas réplicas físicas existen."
+    ],
+    "memoryTip": "El factor configurado no prueba por sí solo cuántas réplicas físicas existen.",
+    "source": "Semana 5 · Temario maestro proporcionado · stat",
+    "highValue": true
+  },
+  {
+    "id": "w5-028",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "under-replicated",
+    "concept": "under-replicated",
+    "difficulty": "hard",
+    "type": "escenario",
+    "prompt": "fsck muestra objetivo 3 y réplica real 1. ¿Cómo se describe?",
+    "options": [
+      "Corrupto necesariamente",
+      "Sin bloques necesariamente",
+      "Tres copias físicas confirmadas",
+      "Under-replicated"
+    ],
+    "correctAnswer": 3,
+    "explanation": "Hay menos copias que las deseadas; eso no implica automáticamente corrupción.",
+    "optionExplanations": [
+      "Elegiste «Corrupto necesariamente». La pregunta pide «Under-replicated». Hay menos copias que las deseadas; eso no implica automáticamente corrupción.",
+      "Elegiste «Sin bloques necesariamente». La pregunta pide «Under-replicated». Hay menos copias que las deseadas; eso no implica automáticamente corrupción.",
+      "Elegiste «Tres copias físicas confirmadas». La pregunta pide «Under-replicated». Hay menos copias que las deseadas; eso no implica automáticamente corrupción.",
+      "Hay menos copias que las deseadas; eso no implica automáticamente corrupción."
+    ],
+    "memoryTip": "Hay menos copias que las deseadas",
+    "source": "Semana 5 · Temario maestro proporcionado · under-replicated",
+    "highValue": true
+  },
+  {
+    "id": "w5-029",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "healthy",
+    "concept": "healthy",
+    "difficulty": "hard",
+    "type": "escenario",
+    "prompt": "Un archivo HEALTHY está under-replicated. ¿Es posible en este laboratorio?",
+    "options": [
+      "Sí: los datos necesarios pueden seguir disponibles",
+      "No: HEALTHY exige siempre tres DataNodes",
+      "Sí: significa que no tiene bloques",
+      "No: Hive define HEALTHY"
+    ],
+    "correctAnswer": 0,
+    "explanation": "HEALTHY y replicación insuficiente no son conceptos equivalentes.",
+    "optionExplanations": [
+      "HEALTHY y replicación insuficiente no son conceptos equivalentes.",
+      "Elegiste «No: HEALTHY exige siempre tres DataNodes». La pregunta pide «Sí: los datos necesarios pueden seguir disponibles». HEALTHY y replicación insuficiente no son conceptos equivalentes.",
+      "Elegiste «Sí: significa que no tiene bloques». La pregunta pide «Sí: los datos necesarios pueden seguir disponibles». HEALTHY y replicación insuficiente no son conceptos equivalentes.",
+      "Elegiste «No: Hive define HEALTHY». La pregunta pide «Sí: los datos necesarios pueden seguir disponibles». HEALTHY y replicación insuficiente no son conceptos equivalentes."
+    ],
+    "memoryTip": "HEALTHY y replicación insuficiente no son conceptos equivalentes.",
+    "source": "Semana 5 · Temario maestro proporcionado · healthy",
+    "highValue": true
+  },
+  {
+    "id": "w5-030",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "corruption",
+    "concept": "healthy",
+    "difficulty": "hard",
+    "type": "comprensión",
+    "prompt": "¿Qué situación exige distinguirse de tener pocas réplicas?",
+    "options": [
+      "Un factor objetivo mayor a uno",
+      "Bloques necesarios faltantes o corruptos",
+      "Un archivo dividido en bloques",
+      "Una ruta con carpetas por año"
+    ],
+    "correctAnswer": 1,
+    "explanation": "La disponibilidad de bloques necesarios importa; pocas réplicas no equivalen a datos corruptos.",
+    "optionExplanations": [
+      "Elegiste «Un factor objetivo mayor a uno». La pregunta pide «Bloques necesarios faltantes o corruptos». La disponibilidad de bloques necesarios importa; pocas réplicas no equivalen a datos corruptos.",
+      "La disponibilidad de bloques necesarios importa; pocas réplicas no equivalen a datos corruptos.",
+      "Elegiste «Un archivo dividido en bloques». La pregunta pide «Bloques necesarios faltantes o corruptos». La disponibilidad de bloques necesarios importa; pocas réplicas no equivalen a datos corruptos.",
+      "Elegiste «Una ruta con carpetas por año». La pregunta pide «Bloques necesarios faltantes o corruptos». La disponibilidad de bloques necesarios importa; pocas réplicas no equivalen a datos corruptos."
+    ],
+    "memoryTip": "La disponibilidad de bloques necesarios importa",
+    "source": "Semana 5 · Temario maestro proporcionado · corruption",
+    "highValue": true
+  },
+  {
+    "id": "w5-031",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "fsck",
+    "concept": "healthy",
+    "difficulty": "basic",
+    "type": "interpretación de comando",
+    "prompt": "¿Para qué usarías hdfs fsck sobre una ruta?",
+    "options": [
+      "Agrupar ventas por ciudad",
+      "Crear una tabla Hive",
+      "Inspeccionar estado y bloques HDFS",
+      "Copiar CSV local a HDFS"
+    ],
+    "correctAnswer": 2,
+    "explanation": "fsck ayuda a diagnosticar estado, bloques y replicación.",
+    "optionExplanations": [
+      "Elegiste «Agrupar ventas por ciudad». La pregunta pide «Inspeccionar estado y bloques HDFS». fsck ayuda a diagnosticar estado, bloques y replicación.",
+      "Elegiste «Crear una tabla Hive». La pregunta pide «Inspeccionar estado y bloques HDFS». fsck ayuda a diagnosticar estado, bloques y replicación.",
+      "fsck ayuda a diagnosticar estado, bloques y replicación.",
+      "Elegiste «Copiar CSV local a HDFS». La pregunta pide «Inspeccionar estado y bloques HDFS». fsck ayuda a diagnosticar estado, bloques y replicación."
+    ],
+    "memoryTip": "fsck ayuda a diagnosticar estado, bloques y replicación.",
+    "source": "Semana 5 · Temario maestro proporcionado · fsck",
+    "highValue": true
+  },
+  {
+    "id": "w5-032",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "report",
+    "concept": "healthy",
+    "difficulty": "intermediate",
+    "type": "interpretación de comando",
+    "prompt": "¿Qué aporta hdfs dfsadmin -report?",
+    "options": [
+      "Definición de columnas de ventas_hive",
+      "Filas agrupadas por categoría",
+      "Contenido completo de todos los CSV",
+      "Estado general del clúster y DataNodes"
+    ],
+    "correctAnswer": 3,
+    "explanation": "report permite revisar infraestructura disponible antes de interpretar replicación.",
+    "optionExplanations": [
+      "Elegiste «Definición de columnas de ventas_hive». La pregunta pide «Estado general del clúster y DataNodes». report permite revisar infraestructura disponible antes de interpretar replicación.",
+      "Elegiste «Filas agrupadas por categoría». La pregunta pide «Estado general del clúster y DataNodes». report permite revisar infraestructura disponible antes de interpretar replicación.",
+      "Elegiste «Contenido completo de todos los CSV». La pregunta pide «Estado general del clúster y DataNodes». report permite revisar infraestructura disponible antes de interpretar replicación.",
+      "report permite revisar infraestructura disponible antes de interpretar replicación."
+    ],
+    "memoryTip": "report permite revisar infraestructura disponible antes de interpretar replicación.",
+    "source": "Semana 5 · Temario maestro proporcionado · report",
+    "highValue": true
+  },
+  {
+    "id": "w5-033",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "blocks",
+    "concept": "blocks",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "Con bloques de 128 MiB, ¿cuántos requiere un archivo de unos 29 MiB?",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "128"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Un archivo menor al bloque ocupa un bloque parcial; no necesita llenarlo.",
+    "optionExplanations": [
+      "Un archivo menor al bloque ocupa un bloque parcial; no necesita llenarlo.",
+      "Elegiste «2». La pregunta pide «1». Un archivo menor al bloque ocupa un bloque parcial; no necesita llenarlo.",
+      "Elegiste «3». La pregunta pide «1». Un archivo menor al bloque ocupa un bloque parcial; no necesita llenarlo.",
+      "Elegiste «128». La pregunta pide «1». Un archivo menor al bloque ocupa un bloque parcial; no necesita llenarlo."
+    ],
+    "memoryTip": "Un archivo menor al bloque ocupa un bloque parcial",
+    "source": "Semana 5 · Temario maestro proporcionado · blocks",
+    "highValue": true
+  },
+  {
+    "id": "w5-034",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "blocks",
+    "concept": "blocks",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "Con bloques de 128 MiB, ¿cuántos requiere un archivo de unos 155 MiB?",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "155"
+    ],
+    "correctAnswer": 1,
+    "explanation": "128 MiB no alcanza; se necesita un segundo bloque para el resto.",
+    "optionExplanations": [
+      "Elegiste «1». La pregunta pide «2». 128 MiB no alcanza; se necesita un segundo bloque para el resto.",
+      "128 MiB no alcanza; se necesita un segundo bloque para el resto.",
+      "Elegiste «3». La pregunta pide «2». 128 MiB no alcanza; se necesita un segundo bloque para el resto.",
+      "Elegiste «155». La pregunta pide «2». 128 MiB no alcanza; se necesita un segundo bloque para el resto."
+    ],
+    "memoryTip": "128 MiB no alcanza",
+    "source": "Semana 5 · Temario maestro proporcionado · blocks",
+    "highValue": true
+  },
+  {
+    "id": "w5-035",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "blocks",
+    "concept": "blocks",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "Con bloques de 128 MiB, ¿cuántos requiere un archivo de unos 305 MiB?",
+    "options": [
+      "2",
+      "4",
+      "3",
+      "305"
+    ],
+    "correctAnswer": 2,
+    "explanation": "Dos bloques cubren 256 MiB; el resto ocupa un tercer bloque.",
+    "optionExplanations": [
+      "Elegiste «2». La pregunta pide «3». Dos bloques cubren 256 MiB; el resto ocupa un tercer bloque.",
+      "Elegiste «4». La pregunta pide «3». Dos bloques cubren 256 MiB; el resto ocupa un tercer bloque.",
+      "Dos bloques cubren 256 MiB; el resto ocupa un tercer bloque.",
+      "Elegiste «305». La pregunta pide «3». Dos bloques cubren 256 MiB; el resto ocupa un tercer bloque."
+    ],
+    "memoryTip": "Dos bloques cubren 256 MiB",
+    "source": "Semana 5 · Temario maestro proporcionado · blocks",
+    "highValue": true
+  },
+  {
+    "id": "w5-036",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "blocks",
+    "concept": "blocks",
+    "difficulty": "hard",
+    "type": "escenario",
+    "prompt": "Un archivo ocupa tres bloques y tiene factor objetivo 3. ¿Qué distingue ambas cifras?",
+    "options": [
+      "Ambas indican cantidad de archivos lógicos",
+      "Ambas indican columnas del CSV",
+      "División del clúster y cantidad de tablas",
+      "División del archivo y copias de cada bloque"
+    ],
+    "correctAnswer": 3,
+    "explanation": "Bloques y replicación describen operaciones distintas.",
+    "optionExplanations": [
+      "Elegiste «Ambas indican cantidad de archivos lógicos». La pregunta pide «División del archivo y copias de cada bloque». Bloques y replicación describen operaciones distintas.",
+      "Elegiste «Ambas indican columnas del CSV». La pregunta pide «División del archivo y copias de cada bloque». Bloques y replicación describen operaciones distintas.",
+      "Elegiste «División del clúster y cantidad de tablas». La pregunta pide «División del archivo y copias de cada bloque». Bloques y replicación describen operaciones distintas.",
+      "Bloques y replicación describen operaciones distintas."
+    ],
+    "memoryTip": "Bloques y replicación describen operaciones distintas.",
+    "source": "Semana 5 · Temario maestro proporcionado · blocks",
+    "highValue": true
+  },
+  {
+    "id": "w5-037",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "organization",
+    "concept": "organization",
+    "difficulty": "hard",
+    "type": "comprensión",
+    "prompt": "¿Qué estructura facilita crecer por fuente y fecha?",
+    "options": [
+      "/raw/ventas/2026/10/",
+      "/todos_los_datos_sueltos/",
+      "Un único archivo llamado final_final.csv",
+      "Una tabla por cada bloque"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Separar fuente, estado y fecha permite organizar información de forma escalable.",
+    "optionExplanations": [
+      "Separar fuente, estado y fecha permite organizar información de forma escalable.",
+      "Elegiste «/todos_los_datos_sueltos/». La pregunta pide «/raw/ventas/2026/10/». Separar fuente, estado y fecha permite organizar información de forma escalable.",
+      "Elegiste «Un único archivo llamado final_final.csv». La pregunta pide «/raw/ventas/2026/10/». Separar fuente, estado y fecha permite organizar información de forma escalable.",
+      "Elegiste «Una tabla por cada bloque». La pregunta pide «/raw/ventas/2026/10/». Separar fuente, estado y fecha permite organizar información de forma escalable."
+    ],
+    "memoryTip": "Separar fuente, estado y fecha permite organizar información de forma escalable.",
+    "source": "Semana 5 · Temario maestro proporcionado · organization",
+    "highValue": true
+  },
+  {
+    "id": "w5-038",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "organization",
+    "concept": "organization",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Qué sentido tiene RAW / PROCESSED / ARCHIVE en el laboratorio?",
+    "options": [
+      "Definir tres tipos de DataNode",
+      "Separar estados de los datos",
+      "Reemplazar el Metastore",
+      "Configurar tres réplicas"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Son categorías de organización lógica, no componentes internos de Hadoop.",
+    "optionExplanations": [
+      "Elegiste «Definir tres tipos de DataNode». La pregunta pide «Separar estados de los datos». Son categorías de organización lógica, no componentes internos de Hadoop.",
+      "Son categorías de organización lógica, no componentes internos de Hadoop.",
+      "Elegiste «Reemplazar el Metastore». La pregunta pide «Separar estados de los datos». Son categorías de organización lógica, no componentes internos de Hadoop.",
+      "Elegiste «Configurar tres réplicas». La pregunta pide «Separar estados de los datos». Son categorías de organización lógica, no componentes internos de Hadoop."
+    ],
+    "memoryTip": "Son categorías de organización lógica, no componentes internos de Hadoop.",
+    "source": "Semana 5 · Temario maestro proporcionado · organization",
+    "highValue": true
+  },
+  {
+    "id": "w5-039",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "diagnosis",
+    "concept": "healthy",
+    "difficulty": "hard",
+    "type": "escenario",
+    "prompt": "Hay una advertencia de replicación. ¿Qué harías primero?",
+    "options": [
+      "Eliminar todos los archivos",
+      "Recrear todas las tablas Hive",
+      "Revisar fsck y DataNodes disponibles",
+      "Borrar volúmenes inmediatamente"
+    ],
+    "correctAnswer": 2,
+    "explanation": "Diagnosticar permite diferenciar límite de infraestructura de pérdida de datos.",
+    "optionExplanations": [
+      "Elegiste «Eliminar todos los archivos». La pregunta pide «Revisar fsck y DataNodes disponibles». Diagnosticar permite diferenciar límite de infraestructura de pérdida de datos.",
+      "Elegiste «Recrear todas las tablas Hive». La pregunta pide «Revisar fsck y DataNodes disponibles». Diagnosticar permite diferenciar límite de infraestructura de pérdida de datos.",
+      "Diagnosticar permite diferenciar límite de infraestructura de pérdida de datos.",
+      "Elegiste «Borrar volúmenes inmediatamente». La pregunta pide «Revisar fsck y DataNodes disponibles». Diagnosticar permite diferenciar límite de infraestructura de pérdida de datos."
+    ],
+    "memoryTip": "Diagnosticar permite diferenciar límite de infraestructura de pérdida de datos.",
+    "source": "Semana 5 · Temario maestro proporcionado · diagnosis",
+    "highValue": true
+  },
+  {
+    "id": "w5-040",
+    "week": 5,
+    "topic": "HDFS",
+    "subtopic": "namenode",
+    "concept": "namenode",
+    "difficulty": "intermediate",
+    "type": "comprensión",
+    "prompt": "¿Para qué sirve revisar la interfaz web del NameNode?",
+    "options": [
+      "Editar consultas comerciales",
+      "Reemplazar el volumen persistente",
+      "Crear un backup automáticamente",
+      "Inspeccionar información y estado de HDFS"
+    ],
+    "correctAnswer": 3,
+    "explanation": "La interfaz ayuda a inspeccionar HDFS; no equivale a respaldo ni a HiveQL.",
+    "optionExplanations": [
+      "Elegiste «Editar consultas comerciales». La pregunta pide «Inspeccionar información y estado de HDFS». La interfaz ayuda a inspeccionar HDFS; no equivale a respaldo ni a HiveQL.",
+      "Elegiste «Reemplazar el volumen persistente». La pregunta pide «Inspeccionar información y estado de HDFS». La interfaz ayuda a inspeccionar HDFS; no equivale a respaldo ni a HiveQL.",
+      "Elegiste «Crear un backup automáticamente». La pregunta pide «Inspeccionar información y estado de HDFS». La interfaz ayuda a inspeccionar HDFS; no equivale a respaldo ni a HiveQL.",
+      "La interfaz ayuda a inspeccionar HDFS; no equivale a respaldo ni a HiveQL."
+    ],
+    "memoryTip": "NameNode = mapa.",
+    "source": "Semana 5 · Temario maestro proporcionado · namenode",
+    "highValue": true
+  }
+]

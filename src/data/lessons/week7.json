@@ -1,0 +1,90 @@
+[
+  {
+    "id": "host",
+    "week": 7,
+    "title": "Host / EC2",
+    "what": "La máquina que ejecuta los servicios y contenedores.",
+    "analogy": "El edificio que sostiene varias oficinas.",
+    "lab": "El laboratorio ejecutaba servicios sobre un host.",
+    "remember": "Host = infraestructura de ejecución.",
+    "trap": "No es la misma capa que Hive ni HDFS.",
+    "easy": "Es la máquina donde corren los servicios."
+  },
+  {
+    "id": "container-volume",
+    "week": 7,
+    "title": "Contenedor versus volumen",
+    "what": "El contenedor ejecuta un servicio; un volumen permite conservar almacenamiento fuera de su ciclo inmediato.",
+    "analogy": "Una oficina que puedes reconstruir y un archivo que conservas aparte.",
+    "lab": "Se utilizaron contenedores y almacenamiento persistente.",
+    "remember": "Contenedor ejecuta; volumen conserva.",
+    "trap": "Hay que verificar qué volumen se montó.",
+    "easy": "Cambiar el servicio no obliga a perder sus datos persistidos."
+  },
+  {
+    "id": "backup",
+    "week": 7,
+    "title": "Persistencia versus backup",
+    "what": "Persistencia conserva datos tras ciertos cambios; backup es una copia recuperable de respaldo.",
+    "analogy": "Mantener tu cuaderno no es lo mismo que tener una copia aparte.",
+    "lab": "Un volumen no debe presentarse como backup.",
+    "remember": "Persistencia ≠ backup.",
+    "trap": "Si borras dentro del volumen, no se garantiza recuperación histórica.",
+    "easy": "Que siga ahí mañana no significa que haya una copia extra."
+  },
+  {
+    "id": "metadata-data",
+    "week": 7,
+    "title": "Datos versus metadata",
+    "what": "Datos son valores; metadata explica estructura, nombres, tipos o ubicaciones.",
+    "analogy": "El contenido del libro versus su ficha y ubicación.",
+    "lab": "El CSV contenía ventas; la definición describía sus columnas.",
+    "remember": "Monto de venta = dato; tipo de monto = metadata.",
+    "trap": "Conservar solo una capa puede ser insuficiente.",
+    "easy": "La información y su descripción son distintas."
+  },
+  {
+    "id": "metastore-namenode",
+    "week": 7,
+    "title": "Dos catálogos distintos",
+    "what": "NameNode describe archivos HDFS. Metastore describe tablas Hive.",
+    "analogy": "Mapa de estantes versus ficha de campos que puedes consultar.",
+    "lab": "Se distinguieron namespace y definiciones Hive.",
+    "remember": "NameNode ≠ Metastore.",
+    "trap": "Conocer bloques no define las columnas Hive.",
+    "easy": "Uno sabe de archivos; el otro de tablas."
+  },
+  {
+    "id": "postgres",
+    "week": 7,
+    "title": "PostgreSQL en el laboratorio",
+    "what": "Se utilizó como almacenamiento de metadata del Hive Metastore.",
+    "analogy": "El soporte donde se guardan las fichas del catálogo.",
+    "lab": "Este rol corresponde al entorno descrito.",
+    "remember": "PostgreSQL del caso → metadata Hive.",
+    "trap": "No se debe confundir con el DataNode.",
+    "easy": "Guarda el catálogo Hive, no los bloques HDFS."
+  },
+  {
+    "id": "namespace",
+    "week": 7,
+    "title": "Bloques sin mapa",
+    "what": "Ver bloques antiguos no garantiza reconstruir los archivos originales.",
+    "analogy": "Encontrar páginas sueltas sin índice ni títulos.",
+    "lab": "Existían bloques físicos antiguos, pero el namespace no permitió reconstrucción automática.",
+    "remember": "Bytes presentes no garantizan recuperación lógica.",
+    "trap": "El Metastore no reemplaza el mapa HDFS.",
+    "easy": "Tener las partes no basta para saber cómo unirlas y nombrarlas."
+  },
+  {
+    "id": "recovery",
+    "week": 7,
+    "title": "Qué debe sobrevivir",
+    "what": "Revisa datos HDFS, metadata HDFS, metadata Hive y sus almacenamientos.",
+    "analogy": "Conservar libros, mapa de estantes y fichas.",
+    "lab": "El diagnóstico distinguió capas y volúmenes.",
+    "remember": "¿Dónde vive cada cosa y qué necesita para recuperarse?",
+    "trap": "No borres o reconstruyas sin diagnosticar.",
+    "easy": "Haz inventario de datos y mapas antes de cambiar servicios."
+  }
+]

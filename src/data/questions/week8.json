@@ -1,0 +1,1217 @@
+[
+  {
+    "id": "w8-001",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "select",
+    "concept": "select",
+    "difficulty": "basic",
+    "type": "HiveQL",
+    "prompt": "¿Qué devuelve SELECT fecha, cliente, monto FROM ventas_hive;?",
+    "options": [
+      "Esas tres columnas de las ventas",
+      "Todas las columnas y solo Santiago",
+      "El total por cliente",
+      "La cantidad por fecha"
+    ],
+    "correctAnswer": 0,
+    "explanation": "SELECT decide las columnas; no agrupa ni filtra sin otras cláusulas.",
+    "optionExplanations": [
+      "SELECT decide las columnas; no agrupa ni filtra sin otras cláusulas.",
+      "Elegiste «Todas las columnas y solo Santiago». La pregunta pide «Esas tres columnas de las ventas». SELECT decide las columnas; no agrupa ni filtra sin otras cláusulas.",
+      "Elegiste «El total por cliente». La pregunta pide «Esas tres columnas de las ventas». SELECT decide las columnas; no agrupa ni filtra sin otras cláusulas.",
+      "Elegiste «La cantidad por fecha». La pregunta pide «Esas tres columnas de las ventas». SELECT decide las columnas; no agrupa ni filtra sin otras cláusulas."
+    ],
+    "memoryTip": "SELECT decide las columnas",
+    "source": "Semana 8 · Temario maestro proporcionado · select",
+    "highValue": true
+  },
+  {
+    "id": "w8-002",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "where",
+    "concept": "where-having",
+    "difficulty": "basic",
+    "type": "HiveQL",
+    "prompt": "SELECT * FROM ventas_hive WHERE categoria = 'Tecnologia'; ¿qué selecciona?",
+    "options": [
+      "Una fila por cada categoría",
+      "Ventas de Tecnologia",
+      "Solo los montos mayores",
+      "El total de todas las categorías"
+    ],
+    "correctAnswer": 1,
+    "explanation": "WHERE conserva filas que cumplen la categoría indicada.",
+    "optionExplanations": [
+      "Elegiste «Una fila por cada categoría». La pregunta pide «Ventas de Tecnologia». WHERE conserva filas que cumplen la categoría indicada.",
+      "WHERE conserva filas que cumplen la categoría indicada.",
+      "Elegiste «Solo los montos mayores». La pregunta pide «Ventas de Tecnologia». WHERE conserva filas que cumplen la categoría indicada.",
+      "Elegiste «El total de todas las categorías». La pregunta pide «Ventas de Tecnologia». WHERE conserva filas que cumplen la categoría indicada."
+    ],
+    "memoryTip": "WHERE conserva filas que cumplen la categoría indicada.",
+    "source": "Semana 8 · Temario maestro proporcionado · where",
+    "highValue": true
+  },
+  {
+    "id": "w8-003",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "comparison",
+    "concept": "comparison",
+    "difficulty": "basic",
+    "type": "HiveQL",
+    "prompt": "¿Qué filtro selecciona montos estrictamente mayores que 1200000?",
+    "options": [
+      "WHERE monto >= 1200000",
+      "WHERE monto < 1200000",
+      "WHERE monto > 1200000",
+      "WHERE monto = 1200000"
+    ],
+    "correctAnswer": 2,
+    "explanation": "El símbolo > excluye el valor del límite.",
+    "optionExplanations": [
+      "Elegiste «WHERE monto >= 1200000». La pregunta pide «WHERE monto > 1200000». El símbolo > excluye el valor del límite.",
+      "Elegiste «WHERE monto < 1200000». La pregunta pide «WHERE monto > 1200000». El símbolo > excluye el valor del límite.",
+      "El símbolo > excluye el valor del límite.",
+      "Elegiste «WHERE monto = 1200000». La pregunta pide «WHERE monto > 1200000». El símbolo > excluye el valor del límite."
+    ],
+    "memoryTip": "El símbolo > excluye el valor del límite.",
+    "source": "Semana 8 · Temario maestro proporcionado · comparison",
+    "highValue": true
+  },
+  {
+    "id": "w8-004",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "and",
+    "concept": "and",
+    "difficulty": "intermediate",
+    "type": "HiveQL",
+    "prompt": "¿Qué filtro responde a ventas de Hogar realizadas en Valparaiso?",
+    "options": [
+      "WHERE categoria = 'Hogar' OR ciudad = 'Valparaiso'",
+      "WHERE ciudad = 'Hogar' AND categoria = 'Valparaiso'",
+      "WHERE categoria <> 'Hogar' AND ciudad = 'Valparaiso'",
+      "WHERE categoria = 'Hogar' AND ciudad = 'Valparaiso'"
+    ],
+    "correctAnswer": 3,
+    "explanation": "Se deben cumplir categoría y ciudad simultáneamente.",
+    "optionExplanations": [
+      "Elegiste «WHERE categoria = 'Hogar' OR ciudad = 'Valparaiso'». La pregunta pide «WHERE categoria = 'Hogar' AND ciudad = 'Valparaiso'». Se deben cumplir categoría y ciudad simultáneamente.",
+      "Elegiste «WHERE ciudad = 'Hogar' AND categoria = 'Valparaiso'». La pregunta pide «WHERE categoria = 'Hogar' AND ciudad = 'Valparaiso'». Se deben cumplir categoría y ciudad simultáneamente.",
+      "Elegiste «WHERE categoria <> 'Hogar' AND ciudad = 'Valparaiso'». La pregunta pide «WHERE categoria = 'Hogar' AND ciudad = 'Valparaiso'». Se deben cumplir categoría y ciudad simultáneamente.",
+      "Se deben cumplir categoría y ciudad simultáneamente."
+    ],
+    "memoryTip": "Se deben cumplir categoría y ciudad simultáneamente.",
+    "source": "Semana 8 · Temario maestro proporcionado · and",
+    "highValue": true
+  },
+  {
+    "id": "w8-005",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "and",
+    "concept": "and",
+    "difficulty": "basic",
+    "type": "HiveQL",
+    "prompt": "WHERE categoria = 'Deportes' AND ciudad = 'Santiago' devuelve ¿qué?",
+    "options": [
+      "Ventas que cumplen ambas condiciones",
+      "Toda venta de Deportes o de Santiago",
+      "Un promedio por ciudad",
+      "Solo ventas sin categoría"
+    ],
+    "correctAnswer": 0,
+    "explanation": "AND exige ambos requisitos en la misma fila.",
+    "optionExplanations": [
+      "AND exige ambos requisitos en la misma fila.",
+      "Elegiste «Toda venta de Deportes o de Santiago». La pregunta pide «Ventas que cumplen ambas condiciones». AND exige ambos requisitos en la misma fila.",
+      "Elegiste «Un promedio por ciudad». La pregunta pide «Ventas que cumplen ambas condiciones». AND exige ambos requisitos en la misma fila.",
+      "Elegiste «Solo ventas sin categoría». La pregunta pide «Ventas que cumplen ambas condiciones». AND exige ambos requisitos en la misma fila."
+    ],
+    "memoryTip": "AND exige ambos requisitos en la misma fila.",
+    "source": "Semana 8 · Temario maestro proporcionado · and",
+    "highValue": true
+  },
+  {
+    "id": "w8-006",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "limit",
+    "concept": "select",
+    "difficulty": "basic",
+    "type": "HiveQL",
+    "prompt": "SELECT * FROM ventas_hive LIMIT 5; ¿qué permite afirmar?",
+    "options": [
+      "Muestra siempre las cinco mayores ventas",
+      "Muestra como máximo cinco filas sin garantizar las mayores",
+      "Cuenta todas las ventas en cinco grupos",
+      "Selecciona cinco ciudades distintas"
+    ],
+    "correctAnswer": 1,
+    "explanation": "LIMIT limita cantidad; no ordena ni agrupa.",
+    "optionExplanations": [
+      "Elegiste «Muestra siempre las cinco mayores ventas». La pregunta pide «Muestra como máximo cinco filas sin garantizar las mayores». LIMIT limita cantidad; no ordena ni agrupa.",
+      "LIMIT limita cantidad; no ordena ni agrupa.",
+      "Elegiste «Cuenta todas las ventas en cinco grupos». La pregunta pide «Muestra como máximo cinco filas sin garantizar las mayores». LIMIT limita cantidad; no ordena ni agrupa.",
+      "Elegiste «Selecciona cinco ciudades distintas». La pregunta pide «Muestra como máximo cinco filas sin garantizar las mayores». LIMIT limita cantidad; no ordena ni agrupa."
+    ],
+    "memoryTip": "LIMIT limita cantidad",
+    "source": "Semana 8 · Temario maestro proporcionado · limit",
+    "highValue": true
+  },
+  {
+    "id": "w8-007",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "comparison",
+    "concept": "comparison",
+    "difficulty": "basic",
+    "type": "HiveQL",
+    "prompt": "¿Qué operador significa distinto de?",
+    "options": [
+      ">=",
+      "=",
+      "<>",
+      "<="
+    ],
+    "correctAnswer": 2,
+    "explanation": "<> excluye valores iguales al indicado.",
+    "optionExplanations": [
+      "Elegiste «>=». La pregunta pide «<>». <> excluye valores iguales al indicado.",
+      "Elegiste «=». La pregunta pide «<>». <> excluye valores iguales al indicado.",
+      "<> excluye valores iguales al indicado.",
+      "Elegiste «<=». La pregunta pide «<>». <> excluye valores iguales al indicado."
+    ],
+    "memoryTip": "<> excluye valores iguales al indicado.",
+    "source": "Semana 8 · Temario maestro proporcionado · comparison",
+    "highValue": true
+  },
+  {
+    "id": "w8-008",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "comparison",
+    "concept": "comparison",
+    "difficulty": "basic",
+    "type": "HiveQL",
+    "prompt": "¿Qué filtro incluye montos de 700000 y superiores?",
+    "options": [
+      "WHERE monto > 700000",
+      "WHERE monto <= 700000",
+      "WHERE monto <> 700000",
+      "WHERE monto >= 700000"
+    ],
+    "correctAnswer": 3,
+    "explanation": ">= incluye el límite; > lo excluiría.",
+    "optionExplanations": [
+      "Elegiste «WHERE monto > 700000». La pregunta pide «WHERE monto >= 700000». >= incluye el límite; > lo excluiría.",
+      "Elegiste «WHERE monto <= 700000». La pregunta pide «WHERE monto >= 700000». >= incluye el límite; > lo excluiría.",
+      "Elegiste «WHERE monto <> 700000». La pregunta pide «WHERE monto >= 700000». >= incluye el límite; > lo excluiría.",
+      ">= incluye el límite; > lo excluiría."
+    ],
+    "memoryTip": ">= incluye el límite",
+    "source": "Semana 8 · Temario maestro proporcionado · comparison",
+    "highValue": true
+  },
+  {
+    "id": "w8-009",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "in",
+    "concept": "in",
+    "difficulty": "basic",
+    "type": "HiveQL",
+    "prompt": "¿Qué filtro permite Santiago, Temuco o Rancagua?",
+    "options": [
+      "WHERE ciudad IN ('Santiago', 'Temuco', 'Rancagua')",
+      "WHERE ciudad = 'Santiago' AND ciudad = 'Temuco'",
+      "WHERE ciudad BETWEEN 'Santiago' AND 'Rancagua'",
+      "WHERE ciudad LIKE 'Santiago,Temuco,Rancagua'"
+    ],
+    "correctAnswer": 0,
+    "explanation": "IN expresa pertenencia al conjunto indicado.",
+    "optionExplanations": [
+      "IN expresa pertenencia al conjunto indicado.",
+      "Elegiste «WHERE ciudad = 'Santiago' AND ciudad = 'Temuco'». La pregunta pide «WHERE ciudad IN ('Santiago', 'Temuco', 'Rancagua')». IN expresa pertenencia al conjunto indicado.",
+      "Elegiste «WHERE ciudad BETWEEN 'Santiago' AND 'Rancagua'». La pregunta pide «WHERE ciudad IN ('Santiago', 'Temuco', 'Rancagua')». IN expresa pertenencia al conjunto indicado.",
+      "Elegiste «WHERE ciudad LIKE 'Santiago,Temuco,Rancagua'». La pregunta pide «WHERE ciudad IN ('Santiago', 'Temuco', 'Rancagua')». IN expresa pertenencia al conjunto indicado."
+    ],
+    "memoryTip": "IN expresa pertenencia al conjunto indicado.",
+    "source": "Semana 8 · Temario maestro proporcionado · in",
+    "highValue": true
+  },
+  {
+    "id": "w8-010",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "between",
+    "concept": "between",
+    "difficulty": "basic",
+    "type": "HiveQL",
+    "prompt": "monto BETWEEN 500000 AND 800000 incluye ¿qué?",
+    "options": [
+      "Solo valores mayores a 800000",
+      "Ambos límites y los valores entre ellos",
+      "Solo ambos límites sin valores intermedios",
+      "Valores inferiores a 500000"
+    ],
+    "correctAnswer": 1,
+    "explanation": "BETWEEN es un rango inclusivo.",
+    "optionExplanations": [
+      "Elegiste «Solo valores mayores a 800000». La pregunta pide «Ambos límites y los valores entre ellos». BETWEEN es un rango inclusivo.",
+      "BETWEEN es un rango inclusivo.",
+      "Elegiste «Solo ambos límites sin valores intermedios». La pregunta pide «Ambos límites y los valores entre ellos». BETWEEN es un rango inclusivo.",
+      "Elegiste «Valores inferiores a 500000». La pregunta pide «Ambos límites y los valores entre ellos». BETWEEN es un rango inclusivo."
+    ],
+    "memoryTip": "BETWEEN es un rango inclusivo.",
+    "source": "Semana 8 · Temario maestro proporcionado · between",
+    "highValue": true
+  },
+  {
+    "id": "w8-011",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "like",
+    "concept": "like",
+    "difficulty": "basic",
+    "type": "HiveQL",
+    "prompt": "¿Qué filtro busca clientes cuyo nombre comienza con Carlos?",
+    "options": [
+      "WHERE cliente LIKE '%Carlos'",
+      "WHERE cliente = 'Carlos%'",
+      "WHERE cliente LIKE 'Carlos%'",
+      "WHERE cliente IN ('Carlos%')"
+    ],
+    "correctAnswer": 2,
+    "explanation": "El comodín final permite cualquier continuación del nombre.",
+    "optionExplanations": [
+      "Elegiste «WHERE cliente LIKE '%Carlos'». La pregunta pide «WHERE cliente LIKE 'Carlos%'». El comodín final permite cualquier continuación del nombre.",
+      "Elegiste «WHERE cliente = 'Carlos%'». La pregunta pide «WHERE cliente LIKE 'Carlos%'». El comodín final permite cualquier continuación del nombre.",
+      "El comodín final permite cualquier continuación del nombre.",
+      "Elegiste «WHERE cliente IN ('Carlos%')». La pregunta pide «WHERE cliente LIKE 'Carlos%'». El comodín final permite cualquier continuación del nombre."
+    ],
+    "memoryTip": "El comodín final permite cualquier continuación del nombre.",
+    "source": "Semana 8 · Temario maestro proporcionado · like",
+    "highValue": true
+  },
+  {
+    "id": "w8-012",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "like",
+    "concept": "like",
+    "difficulty": "basic",
+    "type": "HiveQL",
+    "prompt": "¿Qué significa cliente LIKE '%Ana%'?",
+    "options": [
+      "Comienza obligatoriamente con Ana",
+      "Termina obligatoriamente con Ana",
+      "Es exactamente el nombre Ana",
+      "Contiene Ana en alguna posición"
+    ],
+    "correctAnswer": 3,
+    "explanation": "Los comodines a ambos lados permiten caracteres antes y después.",
+    "optionExplanations": [
+      "Elegiste «Comienza obligatoriamente con Ana». La pregunta pide «Contiene Ana en alguna posición». Los comodines a ambos lados permiten caracteres antes y después.",
+      "Elegiste «Termina obligatoriamente con Ana». La pregunta pide «Contiene Ana en alguna posición». Los comodines a ambos lados permiten caracteres antes y después.",
+      "Elegiste «Es exactamente el nombre Ana». La pregunta pide «Contiene Ana en alguna posición». Los comodines a ambos lados permiten caracteres antes y después.",
+      "Los comodines a ambos lados permiten caracteres antes y después."
+    ],
+    "memoryTip": "Los comodines a ambos lados permiten caracteres antes y después.",
+    "source": "Semana 8 · Temario maestro proporcionado · like",
+    "highValue": true
+  },
+  {
+    "id": "w8-013",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "or",
+    "concept": "and",
+    "difficulty": "intermediate",
+    "type": "HiveQL",
+    "prompt": "WHERE ciudad = 'Santiago' OR ciudad = 'Temuco' selecciona ¿qué?",
+    "options": [
+      "Filas de cualquiera de ambas ciudades",
+      "Solo filas con ambas ciudades simultáneamente",
+      "Grupos con promedio mayor a cero",
+      "Solo filas que no son de esas ciudades"
+    ],
+    "correctAnswer": 0,
+    "explanation": "OR permite al menos una condición verdadera.",
+    "optionExplanations": [
+      "OR permite al menos una condición verdadera.",
+      "Elegiste «Solo filas con ambas ciudades simultáneamente». La pregunta pide «Filas de cualquiera de ambas ciudades». OR permite al menos una condición verdadera.",
+      "Elegiste «Grupos con promedio mayor a cero». La pregunta pide «Filas de cualquiera de ambas ciudades». OR permite al menos una condición verdadera.",
+      "Elegiste «Solo filas que no son de esas ciudades». La pregunta pide «Filas de cualquiera de ambas ciudades». OR permite al menos una condición verdadera."
+    ],
+    "memoryTip": "OR permite al menos una condición verdadera.",
+    "source": "Semana 8 · Temario maestro proporcionado · or",
+    "highValue": true
+  },
+  {
+    "id": "w8-014",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "conditions",
+    "concept": "and",
+    "difficulty": "hard",
+    "type": "HiveQL",
+    "prompt": "¿Qué filtro aplica monto alto a Hogar o Tecnologia?",
+    "options": [
+      "WHERE categoria = 'Hogar' OR (categoria = 'Tecnologia' AND monto > 1200000)",
+      "WHERE (categoria = 'Hogar' OR categoria = 'Tecnologia') AND monto > 1200000",
+      "WHERE categoria = 'Hogar' AND categoria = 'Tecnologia' AND monto > 1200000",
+      "WHERE monto < 1200000 AND categoria IN ('Hogar','Tecnologia')"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Los paréntesis hacen que el monto se exija a cualquiera de las dos categorías.",
+    "optionExplanations": [
+      "Elegiste «WHERE categoria = 'Hogar' OR (categoria = 'Tecnologia' AND monto > 1200000)». La pregunta pide «WHERE (categoria = 'Hogar' OR categoria = 'Tecnologia') AND monto > 1200000». Los paréntesis hacen que el monto se exija a cualquiera de las dos categorías.",
+      "Los paréntesis hacen que el monto se exija a cualquiera de las dos categorías.",
+      "Elegiste «WHERE categoria = 'Hogar' AND categoria = 'Tecnologia' AND monto > 1200000». La pregunta pide «WHERE (categoria = 'Hogar' OR categoria = 'Tecnologia') AND monto > 1200000». Los paréntesis hacen que el monto se exija a cualquiera de las dos categorías.",
+      "Elegiste «WHERE monto < 1200000 AND categoria IN ('Hogar','Tecnologia')». La pregunta pide «WHERE (categoria = 'Hogar' OR categoria = 'Tecnologia') AND monto > 1200000». Los paréntesis hacen que el monto se exija a cualquiera de las dos categorías."
+    ],
+    "memoryTip": "Los paréntesis hacen que el monto se exija a cualquiera de las dos categorías.",
+    "source": "Semana 8 · Temario maestro proporcionado · conditions",
+    "highValue": true
+  },
+  {
+    "id": "w8-015",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "conditions",
+    "concept": "and",
+    "difficulty": "intermediate",
+    "type": "HiveQL",
+    "prompt": "WHERE categoria IN ('Hogar','Deportes') AND ciudad = 'Concepcion' ¿qué hace?",
+    "options": [
+      "Exige ambas categorías en la misma fila",
+      "Acepta todas las ciudades",
+      "Exige Concepcion y una de las dos categorías",
+      "Agrupa por ciudad y categoría"
+    ],
+    "correctAnswer": 2,
+    "explanation": "El conjunto define categorías permitidas y AND mantiene el requisito de ciudad.",
+    "optionExplanations": [
+      "Elegiste «Exige ambas categorías en la misma fila». La pregunta pide «Exige Concepcion y una de las dos categorías». El conjunto define categorías permitidas y AND mantiene el requisito de ciudad.",
+      "Elegiste «Acepta todas las ciudades». La pregunta pide «Exige Concepcion y una de las dos categorías». El conjunto define categorías permitidas y AND mantiene el requisito de ciudad.",
+      "El conjunto define categorías permitidas y AND mantiene el requisito de ciudad.",
+      "Elegiste «Agrupa por ciudad y categoría». La pregunta pide «Exige Concepcion y una de las dos categorías». El conjunto define categorías permitidas y AND mantiene el requisito de ciudad."
+    ],
+    "memoryTip": "El conjunto define categorías permitidas y AND mantiene el requisito de ciudad.",
+    "source": "Semana 8 · Temario maestro proporcionado · conditions",
+    "highValue": true
+  },
+  {
+    "id": "w8-016",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "count",
+    "concept": "count-sum",
+    "difficulty": "basic",
+    "type": "HiveQL",
+    "prompt": "SELECT COUNT(*) FROM ventas_hive; representa ¿qué?",
+    "options": [
+      "Monto total vendido",
+      "Número de columnas",
+      "Promedio por ciudad",
+      "Cantidad total de ventas registradas"
+    ],
+    "correctAnswer": 3,
+    "explanation": "Cada fila representa una venta; COUNT(*) cuenta filas.",
+    "optionExplanations": [
+      "Elegiste «Monto total vendido». La pregunta pide «Cantidad total de ventas registradas». Cada fila representa una venta; COUNT(*) cuenta filas.",
+      "Elegiste «Número de columnas». La pregunta pide «Cantidad total de ventas registradas». Cada fila representa una venta; COUNT(*) cuenta filas.",
+      "Elegiste «Promedio por ciudad». La pregunta pide «Cantidad total de ventas registradas». Cada fila representa una venta; COUNT(*) cuenta filas.",
+      "Cada fila representa una venta; COUNT(*) cuenta filas."
+    ],
+    "memoryTip": "Cada fila representa una venta",
+    "source": "Semana 8 · Temario maestro proporcionado · count",
+    "highValue": true
+  },
+  {
+    "id": "w8-017",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "sum",
+    "concept": "count-sum",
+    "difficulty": "basic",
+    "type": "HiveQL",
+    "prompt": "¿Qué consulta calcula el monto total vendido?",
+    "options": [
+      "SELECT SUM(monto) FROM ventas_hive;",
+      "SELECT COUNT(*) FROM ventas_hive;",
+      "SELECT AVG(monto) FROM ventas_hive;",
+      "SELECT MAX(monto) FROM ventas_hive;"
+    ],
+    "correctAnswer": 0,
+    "explanation": "El total es una suma, no una cantidad ni un promedio.",
+    "optionExplanations": [
+      "El total es una suma, no una cantidad ni un promedio.",
+      "Elegiste «SELECT COUNT(*) FROM ventas_hive;». La pregunta pide «SELECT SUM(monto) FROM ventas_hive;». El total es una suma, no una cantidad ni un promedio.",
+      "Elegiste «SELECT AVG(monto) FROM ventas_hive;». La pregunta pide «SELECT SUM(monto) FROM ventas_hive;». El total es una suma, no una cantidad ni un promedio.",
+      "Elegiste «SELECT MAX(monto) FROM ventas_hive;». La pregunta pide «SELECT SUM(monto) FROM ventas_hive;». El total es una suma, no una cantidad ni un promedio."
+    ],
+    "memoryTip": "El total es una suma, no una cantidad ni un promedio.",
+    "source": "Semana 8 · Temario maestro proporcionado · sum",
+    "highValue": true
+  },
+  {
+    "id": "w8-018",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "avg",
+    "concept": "count-sum",
+    "difficulty": "basic",
+    "type": "HiveQL",
+    "prompt": "¿Qué consulta responde al monto promedio por venta?",
+    "options": [
+      "SELECT SUM(monto) FROM ventas_hive;",
+      "SELECT AVG(monto) FROM ventas_hive;",
+      "SELECT COUNT(monto) FROM ventas_hive;",
+      "SELECT MIN(monto) FROM ventas_hive;"
+    ],
+    "correctAnswer": 1,
+    "explanation": "AVG calcula la media de los montos.",
+    "optionExplanations": [
+      "Elegiste «SELECT SUM(monto) FROM ventas_hive;». La pregunta pide «SELECT AVG(monto) FROM ventas_hive;». AVG calcula la media de los montos.",
+      "AVG calcula la media de los montos.",
+      "Elegiste «SELECT COUNT(monto) FROM ventas_hive;». La pregunta pide «SELECT AVG(monto) FROM ventas_hive;». AVG calcula la media de los montos.",
+      "Elegiste «SELECT MIN(monto) FROM ventas_hive;». La pregunta pide «SELECT AVG(monto) FROM ventas_hive;». AVG calcula la media de los montos."
+    ],
+    "memoryTip": "AVG calcula la media de los montos.",
+    "source": "Semana 8 · Temario maestro proporcionado · avg",
+    "highValue": true
+  },
+  {
+    "id": "w8-019",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "minmax",
+    "concept": "minmax",
+    "difficulty": "intermediate",
+    "type": "HiveQL",
+    "prompt": "SELECT MIN(monto), MAX(monto) FROM ventas_hive; ¿qué devuelve?",
+    "options": [
+      "Primera y última venta por fecha",
+      "Total y promedio del monto",
+      "Menor y mayor monto de venta",
+      "Cantidad por categoría"
+    ],
+    "correctAnswer": 2,
+    "explanation": "Extremos del monto no implican orden cronológico.",
+    "optionExplanations": [
+      "Elegiste «Primera y última venta por fecha». La pregunta pide «Menor y mayor monto de venta». Extremos del monto no implican orden cronológico.",
+      "Elegiste «Total y promedio del monto». La pregunta pide «Menor y mayor monto de venta». Extremos del monto no implican orden cronológico.",
+      "Extremos del monto no implican orden cronológico.",
+      "Elegiste «Cantidad por categoría». La pregunta pide «Menor y mayor monto de venta». Extremos del monto no implican orden cronológico."
+    ],
+    "memoryTip": "Extremos del monto no implican orden cronológico.",
+    "source": "Semana 8 · Temario maestro proporcionado · minmax",
+    "highValue": true
+  },
+  {
+    "id": "w8-020",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "group",
+    "concept": "group",
+    "difficulty": "intermediate",
+    "type": "HiveQL",
+    "prompt": "SELECT ciudad, COUNT(*) FROM ventas_hive GROUP BY ciudad; ¿qué representa?",
+    "options": [
+      "Monto promedio por cliente",
+      "Listado de ventas individuales",
+      "Cantidad de bloques por ciudad",
+      "Cantidad de ventas por ciudad"
+    ],
+    "correctAnswer": 3,
+    "explanation": "Las filas se agrupan por ciudad y se cuentan dentro de cada grupo.",
+    "optionExplanations": [
+      "Elegiste «Monto promedio por cliente». La pregunta pide «Cantidad de ventas por ciudad». Las filas se agrupan por ciudad y se cuentan dentro de cada grupo.",
+      "Elegiste «Listado de ventas individuales». La pregunta pide «Cantidad de ventas por ciudad». Las filas se agrupan por ciudad y se cuentan dentro de cada grupo.",
+      "Elegiste «Cantidad de bloques por ciudad». La pregunta pide «Cantidad de ventas por ciudad». Las filas se agrupan por ciudad y se cuentan dentro de cada grupo.",
+      "Las filas se agrupan por ciudad y se cuentan dentro de cada grupo."
+    ],
+    "memoryTip": "Las filas se agrupan por ciudad y se cuentan dentro de cada grupo.",
+    "source": "Semana 8 · Temario maestro proporcionado · group",
+    "highValue": true
+  },
+  {
+    "id": "w8-021",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "group",
+    "concept": "group",
+    "difficulty": "intermediate",
+    "type": "HiveQL",
+    "prompt": "¿Qué consulta calcula ventas totales por categoría?",
+    "options": [
+      "SELECT categoria, SUM(monto) FROM ventas_hive GROUP BY categoria;",
+      "SELECT categoria, COUNT(*) FROM ventas_hive GROUP BY categoria;",
+      "SELECT categoria, AVG(monto) FROM ventas_hive GROUP BY categoria;",
+      "SELECT categoria, MAX(monto) FROM ventas_hive GROUP BY categoria;"
+    ],
+    "correctAnswer": 0,
+    "explanation": "La necesidad es monto acumulado, por eso corresponde SUM por categoría.",
+    "optionExplanations": [
+      "La necesidad es monto acumulado, por eso corresponde SUM por categoría.",
+      "Elegiste «SELECT categoria, COUNT(*) FROM ventas_hive GROUP BY categoria;». La pregunta pide «SELECT categoria, SUM(monto) FROM ventas_hive GROUP BY categoria;». La necesidad es monto acumulado, por eso corresponde SUM por categoría.",
+      "Elegiste «SELECT categoria, AVG(monto) FROM ventas_hive GROUP BY categoria;». La pregunta pide «SELECT categoria, SUM(monto) FROM ventas_hive GROUP BY categoria;». La necesidad es monto acumulado, por eso corresponde SUM por categoría.",
+      "Elegiste «SELECT categoria, MAX(monto) FROM ventas_hive GROUP BY categoria;». La pregunta pide «SELECT categoria, SUM(monto) FROM ventas_hive GROUP BY categoria;». La necesidad es monto acumulado, por eso corresponde SUM por categoría."
+    ],
+    "memoryTip": "La necesidad es monto acumulado, por eso corresponde SUM por categoría.",
+    "source": "Semana 8 · Temario maestro proporcionado · group",
+    "highValue": true
+  },
+  {
+    "id": "w8-022",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "group",
+    "concept": "group",
+    "difficulty": "intermediate",
+    "type": "HiveQL",
+    "prompt": "SELECT ciudad, AVG(monto) FROM ventas_hive GROUP BY ciudad; muestra ¿qué?",
+    "options": [
+      "Total de ventas en cada ciudad",
+      "Monto medio de venta en cada ciudad",
+      "Una fila por venta",
+      "Solo la ciudad con mayor monto"
+    ],
+    "correctAnswer": 1,
+    "explanation": "AVG resume cada grupo con su promedio.",
+    "optionExplanations": [
+      "Elegiste «Total de ventas en cada ciudad». La pregunta pide «Monto medio de venta en cada ciudad». AVG resume cada grupo con su promedio.",
+      "AVG resume cada grupo con su promedio.",
+      "Elegiste «Una fila por venta». La pregunta pide «Monto medio de venta en cada ciudad». AVG resume cada grupo con su promedio.",
+      "Elegiste «Solo la ciudad con mayor monto». La pregunta pide «Monto medio de venta en cada ciudad». AVG resume cada grupo con su promedio."
+    ],
+    "memoryTip": "AVG resume cada grupo con su promedio.",
+    "source": "Semana 8 · Temario maestro proporcionado · group",
+    "highValue": true
+  },
+  {
+    "id": "w8-023",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "having",
+    "concept": "where-having",
+    "difficulty": "hard",
+    "type": "HiveQL",
+    "prompt": "¿Qué devuelve GROUP BY categoria HAVING AVG(monto) > 700000?",
+    "options": [
+      "Ventas individuales sobre 700000",
+      "Categorías con total mayor a 700000",
+      "Categorías cuyo monto medio supera 700000",
+      "Las primeras 700000 categorías"
+    ],
+    "correctAnswer": 2,
+    "explanation": "HAVING aplica la condición al promedio de cada grupo.",
+    "optionExplanations": [
+      "Elegiste «Ventas individuales sobre 700000». La pregunta pide «Categorías cuyo monto medio supera 700000». HAVING aplica la condición al promedio de cada grupo.",
+      "Elegiste «Categorías con total mayor a 700000». La pregunta pide «Categorías cuyo monto medio supera 700000». HAVING aplica la condición al promedio de cada grupo.",
+      "HAVING aplica la condición al promedio de cada grupo.",
+      "Elegiste «Las primeras 700000 categorías». La pregunta pide «Categorías cuyo monto medio supera 700000». HAVING aplica la condición al promedio de cada grupo."
+    ],
+    "memoryTip": "HAVING aplica la condición al promedio de cada grupo.",
+    "source": "Semana 8 · Temario maestro proporcionado · having",
+    "highValue": true
+  },
+  {
+    "id": "w8-024",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "where-having",
+    "concept": "where-having",
+    "difficulty": "hard",
+    "type": "HiveQL",
+    "prompt": "Necesitas excluir ventas menores a 100000 antes de calcular promedios. ¿Dónde filtras?",
+    "options": [
+      "HAVING AVG(monto) >= 100000",
+      "LIMIT 100000",
+      "ORDER BY monto",
+      "WHERE monto >= 100000"
+    ],
+    "correctAnswer": 3,
+    "explanation": "Se trata de filtrar filas individuales antes de agrupar.",
+    "optionExplanations": [
+      "Elegiste «HAVING AVG(monto) >= 100000». La pregunta pide «WHERE monto >= 100000». Se trata de filtrar filas individuales antes de agrupar.",
+      "Elegiste «LIMIT 100000». La pregunta pide «WHERE monto >= 100000». Se trata de filtrar filas individuales antes de agrupar.",
+      "Elegiste «ORDER BY monto». La pregunta pide «WHERE monto >= 100000». Se trata de filtrar filas individuales antes de agrupar.",
+      "Se trata de filtrar filas individuales antes de agrupar."
+    ],
+    "memoryTip": "WHERE = filas; HAVING = grupos.",
+    "source": "Semana 8 · Temario maestro proporcionado · where-having",
+    "highValue": true
+  },
+  {
+    "id": "w8-025",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "where-having",
+    "concept": "where-having",
+    "difficulty": "hard",
+    "type": "HiveQL",
+    "prompt": "Necesitas ciudades con monto total superior a 5000000. ¿Qué condición corresponde?",
+    "options": [
+      "HAVING SUM(monto) > 5000000",
+      "WHERE monto > 5000000",
+      "HAVING COUNT(*) > 5000000",
+      "LIMIT 5000000"
+    ],
+    "correctAnswer": 0,
+    "explanation": "El requisito se refiere al total del grupo, no a cada venta.",
+    "optionExplanations": [
+      "El requisito se refiere al total del grupo, no a cada venta.",
+      "Elegiste «WHERE monto > 5000000». La pregunta pide «HAVING SUM(monto) > 5000000». El requisito se refiere al total del grupo, no a cada venta.",
+      "Elegiste «HAVING COUNT(*) > 5000000». La pregunta pide «HAVING SUM(monto) > 5000000». El requisito se refiere al total del grupo, no a cada venta.",
+      "Elegiste «LIMIT 5000000». La pregunta pide «HAVING SUM(monto) > 5000000». El requisito se refiere al total del grupo, no a cada venta."
+    ],
+    "memoryTip": "WHERE = filas; HAVING = grupos.",
+    "source": "Semana 8 · Temario maestro proporcionado · where-having",
+    "highValue": true
+  },
+  {
+    "id": "w8-026",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "order",
+    "concept": "order",
+    "difficulty": "intermediate",
+    "type": "HiveQL",
+    "prompt": "ORDER BY monto DESC LIMIT 5 sobre ventas individuales muestra ¿qué?",
+    "options": [
+      "Hasta cinco de menor monto",
+      "Hasta cinco ventas de mayor monto",
+      "Cinco promedios por ciudad",
+      "Todas las ventas mayores a cinco"
+    ],
+    "correctAnswer": 1,
+    "explanation": "DESC ordena de mayor a menor antes de limitar.",
+    "optionExplanations": [
+      "Elegiste «Hasta cinco de menor monto». La pregunta pide «Hasta cinco ventas de mayor monto». DESC ordena de mayor a menor antes de limitar.",
+      "DESC ordena de mayor a menor antes de limitar.",
+      "Elegiste «Cinco promedios por ciudad». La pregunta pide «Hasta cinco ventas de mayor monto». DESC ordena de mayor a menor antes de limitar.",
+      "Elegiste «Todas las ventas mayores a cinco». La pregunta pide «Hasta cinco ventas de mayor monto». DESC ordena de mayor a menor antes de limitar."
+    ],
+    "memoryTip": "DESC ordena de mayor a menor antes de limitar.",
+    "source": "Semana 8 · Temario maestro proporcionado · order",
+    "highValue": true
+  },
+  {
+    "id": "w8-027",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "order",
+    "concept": "order",
+    "difficulty": "intermediate",
+    "type": "HiveQL",
+    "prompt": "¿Qué indica ORDER BY ciudad ASC?",
+    "options": [
+      "Agrupación por ciudad",
+      "Filtro por una ciudad",
+      "Orden ascendente de ciudad",
+      "Promedio de cada ciudad"
+    ],
+    "correctAnswer": 2,
+    "explanation": "Ordenar no crea grupos ni filtra.",
+    "optionExplanations": [
+      "Elegiste «Agrupación por ciudad». La pregunta pide «Orden ascendente de ciudad». Ordenar no crea grupos ni filtra.",
+      "Elegiste «Filtro por una ciudad». La pregunta pide «Orden ascendente de ciudad». Ordenar no crea grupos ni filtra.",
+      "Ordenar no crea grupos ni filtra.",
+      "Elegiste «Promedio de cada ciudad». La pregunta pide «Orden ascendente de ciudad». Ordenar no crea grupos ni filtra."
+    ],
+    "memoryTip": "Ordenar no crea grupos ni filtra.",
+    "source": "Semana 8 · Temario maestro proporcionado · order",
+    "highValue": true
+  },
+  {
+    "id": "w8-028",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "count-sum",
+    "concept": "count-sum",
+    "difficulty": "intermediate",
+    "type": "HiveQL",
+    "prompt": "Una campaña pregunta cuántas compras hizo cada cliente. ¿Qué agregado usarías?",
+    "options": [
+      "SUM(monto) por cliente",
+      "AVG(monto) por cliente",
+      "MAX(monto) por cliente",
+      "COUNT(*) por cliente"
+    ],
+    "correctAnswer": 3,
+    "explanation": "Cantidad de compras requiere contar ventas, no sumar dinero.",
+    "optionExplanations": [
+      "Elegiste «SUM(monto) por cliente». La pregunta pide «COUNT(*) por cliente». Cantidad de compras requiere contar ventas, no sumar dinero.",
+      "Elegiste «AVG(monto) por cliente». La pregunta pide «COUNT(*) por cliente». Cantidad de compras requiere contar ventas, no sumar dinero.",
+      "Elegiste «MAX(monto) por cliente». La pregunta pide «COUNT(*) por cliente». Cantidad de compras requiere contar ventas, no sumar dinero.",
+      "Cantidad de compras requiere contar ventas, no sumar dinero."
+    ],
+    "memoryTip": "Cantidad de compras requiere contar ventas, no sumar dinero.",
+    "source": "Semana 8 · Temario maestro proporcionado · count-sum",
+    "highValue": true
+  },
+  {
+    "id": "w8-029",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "count-sum",
+    "concept": "count-sum",
+    "difficulty": "intermediate",
+    "type": "HiveQL",
+    "prompt": "Un informe pregunta cuánto compró cada cliente. ¿Qué agregado usarías?",
+    "options": [
+      "SUM(monto) por cliente",
+      "COUNT(*) por cliente",
+      "MIN(monto) por cliente",
+      "MAX(monto) por cliente"
+    ],
+    "correctAnswer": 0,
+    "explanation": "El monto acumulado considera todas las compras del cliente.",
+    "optionExplanations": [
+      "El monto acumulado considera todas las compras del cliente.",
+      "Elegiste «COUNT(*) por cliente». La pregunta pide «SUM(monto) por cliente». El monto acumulado considera todas las compras del cliente.",
+      "Elegiste «MIN(monto) por cliente». La pregunta pide «SUM(monto) por cliente». El monto acumulado considera todas las compras del cliente.",
+      "Elegiste «MAX(monto) por cliente». La pregunta pide «SUM(monto) por cliente». El monto acumulado considera todas las compras del cliente."
+    ],
+    "memoryTip": "El monto acumulado considera todas las compras del cliente.",
+    "source": "Semana 8 · Temario maestro proporcionado · count-sum",
+    "highValue": true
+  },
+  {
+    "id": "w8-030",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "query-logic",
+    "concept": "query-logic",
+    "difficulty": "intermediate",
+    "type": "HiveQL",
+    "prompt": "Una consulta se ejecuta sin error. ¿Eso basta para resolver el desafío?",
+    "options": [
+      "Sí; toda consulta válida responde cualquier necesidad",
+      "No; debe responder la necesidad y permitir interpretar el resultado",
+      "Sí; si tiene LIMIT",
+      "No; siempre debe incluir JOIN"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Validez técnica y pertinencia analítica son requisitos distintos.",
+    "optionExplanations": [
+      "Elegiste «Sí; toda consulta válida responde cualquier necesidad». La pregunta pide «No; debe responder la necesidad y permitir interpretar el resultado». Validez técnica y pertinencia analítica son requisitos distintos.",
+      "Validez técnica y pertinencia analítica son requisitos distintos.",
+      "Elegiste «Sí; si tiene LIMIT». La pregunta pide «No; debe responder la necesidad y permitir interpretar el resultado». Validez técnica y pertinencia analítica son requisitos distintos.",
+      "Elegiste «No; siempre debe incluir JOIN». La pregunta pide «No; debe responder la necesidad y permitir interpretar el resultado». Validez técnica y pertinencia analítica son requisitos distintos."
+    ],
+    "memoryTip": "Validez técnica y pertinencia analítica son requisitos distintos.",
+    "source": "Semana 8 · Temario maestro proporcionado · query-logic",
+    "highValue": true
+  },
+  {
+    "id": "w8-031",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "year",
+    "concept": "year",
+    "difficulty": "intermediate",
+    "type": "HiveQL",
+    "prompt": "Para analizar solo 2026, ¿qué filtro de fechas corresponde?",
+    "options": [
+      "WHERE fecha BETWEEN '2025-01-01' AND '2025-12-31'",
+      "WHERE monto BETWEEN 2026 AND 2027",
+      "WHERE fecha BETWEEN '2026-01-01' AND '2026-12-31'",
+      "WHERE cliente = '2026'"
+    ],
+    "correctAnswer": 2,
+    "explanation": "El filtro debe aplicarse a fecha con el período solicitado.",
+    "optionExplanations": [
+      "Elegiste «WHERE fecha BETWEEN '2025-01-01' AND '2025-12-31'». La pregunta pide «WHERE fecha BETWEEN '2026-01-01' AND '2026-12-31'». El filtro debe aplicarse a fecha con el período solicitado.",
+      "Elegiste «WHERE monto BETWEEN 2026 AND 2027». La pregunta pide «WHERE fecha BETWEEN '2026-01-01' AND '2026-12-31'». El filtro debe aplicarse a fecha con el período solicitado.",
+      "El filtro debe aplicarse a fecha con el período solicitado.",
+      "Elegiste «WHERE cliente = '2026'». La pregunta pide «WHERE fecha BETWEEN '2026-01-01' AND '2026-12-31'». El filtro debe aplicarse a fecha con el período solicitado."
+    ],
+    "memoryTip": "El filtro debe aplicarse a fecha con el período solicitado.",
+    "source": "Semana 8 · Temario maestro proporcionado · year",
+    "highValue": true
+  },
+  {
+    "id": "w8-032",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "year",
+    "concept": "year",
+    "difficulty": "hard",
+    "type": "HiveQL",
+    "prompt": "Después de filtrar 2026, ¿cómo obtienes monto total por ciudad?",
+    "options": [
+      "GROUP BY cliente y COUNT(*)",
+      "ORDER BY fecha sin agregación",
+      "LIMIT 2026 sin agrupación",
+      "GROUP BY ciudad y SUM(monto)"
+    ],
+    "correctAnswer": 3,
+    "explanation": "Se debe conservar la dimensión ciudad y sumar el monto de las filas del período.",
+    "optionExplanations": [
+      "Elegiste «GROUP BY cliente y COUNT(*)». La pregunta pide «GROUP BY ciudad y SUM(monto)». Se debe conservar la dimensión ciudad y sumar el monto de las filas del período.",
+      "Elegiste «ORDER BY fecha sin agregación». La pregunta pide «GROUP BY ciudad y SUM(monto)». Se debe conservar la dimensión ciudad y sumar el monto de las filas del período.",
+      "Elegiste «LIMIT 2026 sin agrupación». La pregunta pide «GROUP BY ciudad y SUM(monto)». Se debe conservar la dimensión ciudad y sumar el monto de las filas del período.",
+      "Se debe conservar la dimensión ciudad y sumar el monto de las filas del período."
+    ],
+    "memoryTip": "Se debe conservar la dimensión ciudad y sumar el monto de las filas del período.",
+    "source": "Semana 8 · Temario maestro proporcionado · year",
+    "highValue": true
+  },
+  {
+    "id": "w8-033",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "campaign",
+    "concept": "campaign",
+    "difficulty": "hard",
+    "type": "HiveQL",
+    "prompt": "Quieres clientes con más de diez compras. ¿Qué combinación responde?",
+    "options": [
+      "GROUP BY cliente HAVING COUNT(*) > 10",
+      "WHERE monto > 10 GROUP BY ciudad",
+      "GROUP BY categoria HAVING SUM(monto) > 10",
+      "ORDER BY cliente LIMIT 10"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Se agrupa por cliente y se filtra su cantidad agregada de ventas.",
+    "optionExplanations": [
+      "Se agrupa por cliente y se filtra su cantidad agregada de ventas.",
+      "Elegiste «WHERE monto > 10 GROUP BY ciudad». La pregunta pide «GROUP BY cliente HAVING COUNT(*) > 10». Se agrupa por cliente y se filtra su cantidad agregada de ventas.",
+      "Elegiste «GROUP BY categoria HAVING SUM(monto) > 10». La pregunta pide «GROUP BY cliente HAVING COUNT(*) > 10». Se agrupa por cliente y se filtra su cantidad agregada de ventas.",
+      "Elegiste «ORDER BY cliente LIMIT 10». La pregunta pide «GROUP BY cliente HAVING COUNT(*) > 10». Se agrupa por cliente y se filtra su cantidad agregada de ventas."
+    ],
+    "memoryTip": "Se agrupa por cliente y se filtra su cantidad agregada de ventas.",
+    "source": "Semana 8 · Temario maestro proporcionado · campaign",
+    "highValue": true
+  },
+  {
+    "id": "w8-034",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "campaign",
+    "concept": "campaign",
+    "difficulty": "hard",
+    "type": "HiveQL",
+    "prompt": "Quieres clientes con gasto total alto, no una sola compra alta. ¿Qué usarías?",
+    "options": [
+      "WHERE monto > 5000000",
+      "GROUP BY cliente HAVING SUM(monto) > 5000000",
+      "GROUP BY ciudad HAVING MAX(monto) > 5000000",
+      "ORDER BY cliente LIMIT 5"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Una compra grande no es lo mismo que el acumulado del cliente.",
+    "optionExplanations": [
+      "Elegiste «WHERE monto > 5000000». La pregunta pide «GROUP BY cliente HAVING SUM(monto) > 5000000». Una compra grande no es lo mismo que el acumulado del cliente.",
+      "Una compra grande no es lo mismo que el acumulado del cliente.",
+      "Elegiste «GROUP BY ciudad HAVING MAX(monto) > 5000000». La pregunta pide «GROUP BY cliente HAVING SUM(monto) > 5000000». Una compra grande no es lo mismo que el acumulado del cliente.",
+      "Elegiste «ORDER BY cliente LIMIT 5». La pregunta pide «GROUP BY cliente HAVING SUM(monto) > 5000000». Una compra grande no es lo mismo que el acumulado del cliente."
+    ],
+    "memoryTip": "Una compra grande no es lo mismo que el acumulado del cliente.",
+    "source": "Semana 8 · Temario maestro proporcionado · campaign",
+    "highValue": true
+  },
+  {
+    "id": "w8-035",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "executive",
+    "concept": "query-logic",
+    "difficulty": "hard",
+    "type": "HiveQL",
+    "prompt": "¿Qué consulta obtiene categorías ordenadas por total vendido?",
+    "options": [
+      "SELECT categoria, AVG(monto) AS total FROM ventas_hive GROUP BY categoria ORDER BY total DESC;",
+      "SELECT categoria, COUNT(*) AS total FROM ventas_hive GROUP BY categoria ORDER BY total DESC;",
+      "SELECT categoria, SUM(monto) AS total FROM ventas_hive GROUP BY categoria ORDER BY total DESC;",
+      "SELECT categoria, MIN(monto) AS total FROM ventas_hive GROUP BY categoria ORDER BY total DESC;"
+    ],
+    "correctAnswer": 2,
+    "explanation": "El informe pide monto total: SUM y orden descendente.",
+    "optionExplanations": [
+      "Elegiste «SELECT categoria, AVG(monto) AS total FROM ventas_hive GROUP BY categoria ORDER BY total DESC;». La pregunta pide «SELECT categoria, SUM(monto) AS total FROM ventas_hive GROUP BY categoria ORDER BY total DESC;». El informe pide monto total: SUM y orden descendente.",
+      "Elegiste «SELECT categoria, COUNT(*) AS total FROM ventas_hive GROUP BY categoria ORDER BY total DESC;». La pregunta pide «SELECT categoria, SUM(monto) AS total FROM ventas_hive GROUP BY categoria ORDER BY total DESC;». El informe pide monto total: SUM y orden descendente.",
+      "El informe pide monto total: SUM y orden descendente.",
+      "Elegiste «SELECT categoria, MIN(monto) AS total FROM ventas_hive GROUP BY categoria ORDER BY total DESC;». La pregunta pide «SELECT categoria, SUM(monto) AS total FROM ventas_hive GROUP BY categoria ORDER BY total DESC;». El informe pide monto total: SUM y orden descendente."
+    ],
+    "memoryTip": "El informe pide monto total: SUM y orden descendente.",
+    "source": "Semana 8 · Temario maestro proporcionado · executive",
+    "highValue": false
+  },
+  {
+    "id": "w8-036",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "executive",
+    "concept": "query-logic",
+    "difficulty": "intermediate",
+    "type": "HiveQL",
+    "prompt": "Si agregas LIMIT 1 a un resultado ordenado por SUM(monto) DESC por categoría, ¿qué buscas?",
+    "options": [
+      "La venta individual más cara",
+      "La categoría con menor total",
+      "El promedio general",
+      "Una categoría con mayor total vendido"
+    ],
+    "correctAnswer": 3,
+    "explanation": "La fila corresponde a un grupo, no a una venta individual.",
+    "optionExplanations": [
+      "Elegiste «La venta individual más cara». La pregunta pide «Una categoría con mayor total vendido». La fila corresponde a un grupo, no a una venta individual.",
+      "Elegiste «La categoría con menor total». La pregunta pide «Una categoría con mayor total vendido». La fila corresponde a un grupo, no a una venta individual.",
+      "Elegiste «El promedio general». La pregunta pide «Una categoría con mayor total vendido». La fila corresponde a un grupo, no a una venta individual.",
+      "La fila corresponde a un grupo, no a una venta individual."
+    ],
+    "memoryTip": "La fila corresponde a un grupo, no a una venta individual.",
+    "source": "Semana 8 · Temario maestro proporcionado · executive",
+    "highValue": false
+  },
+  {
+    "id": "w8-037",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "interpretation",
+    "concept": "query-logic",
+    "difficulty": "intermediate",
+    "type": "HiveQL",
+    "prompt": "Una fila dice Santiago y COUNT(*) = 120. ¿Qué significa?",
+    "options": [
+      "120 ventas pertenecen a Santiago en el conjunto consultado",
+      "El monto total es 120",
+      "Hay 120 columnas en la tabla",
+      "El bloque ocupa 120 MiB"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Interpretar exige reconocer la dimensión y la función de agregación.",
+    "optionExplanations": [
+      "Interpretar exige reconocer la dimensión y la función de agregación.",
+      "Elegiste «El monto total es 120». La pregunta pide «120 ventas pertenecen a Santiago en el conjunto consultado». Interpretar exige reconocer la dimensión y la función de agregación.",
+      "Elegiste «Hay 120 columnas en la tabla». La pregunta pide «120 ventas pertenecen a Santiago en el conjunto consultado». Interpretar exige reconocer la dimensión y la función de agregación.",
+      "Elegiste «El bloque ocupa 120 MiB». La pregunta pide «120 ventas pertenecen a Santiago en el conjunto consultado». Interpretar exige reconocer la dimensión y la función de agregación."
+    ],
+    "memoryTip": "Interpretar exige reconocer la dimensión y la función de agregación.",
+    "source": "Semana 8 · Temario maestro proporcionado · interpretation",
+    "highValue": true
+  },
+  {
+    "id": "w8-038",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "interpretation",
+    "concept": "query-logic",
+    "difficulty": "intermediate",
+    "type": "HiveQL",
+    "prompt": "Una fila dice Hogar y AVG(monto) = 700000. ¿Qué significa?",
+    "options": [
+      "Todas las ventas Hogar valen 700000",
+      "El promedio por venta de Hogar es 700000 en la consulta",
+      "El total de Hogar es 700000",
+      "Hay 700000 ventas de Hogar"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Promedio no implica igualdad de valores individuales.",
+    "optionExplanations": [
+      "Elegiste «Todas las ventas Hogar valen 700000». La pregunta pide «El promedio por venta de Hogar es 700000 en la consulta». Promedio no implica igualdad de valores individuales.",
+      "Promedio no implica igualdad de valores individuales.",
+      "Elegiste «El total de Hogar es 700000». La pregunta pide «El promedio por venta de Hogar es 700000 en la consulta». Promedio no implica igualdad de valores individuales.",
+      "Elegiste «Hay 700000 ventas de Hogar». La pregunta pide «El promedio por venta de Hogar es 700000 en la consulta». Promedio no implica igualdad de valores individuales."
+    ],
+    "memoryTip": "Promedio no implica igualdad de valores individuales.",
+    "source": "Semana 8 · Temario maestro proporcionado · interpretation",
+    "highValue": true
+  },
+  {
+    "id": "w8-039",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "query-logic",
+    "concept": "query-logic",
+    "difficulty": "intermediate",
+    "type": "HiveQL",
+    "prompt": "SELECT COUNT(*) con WHERE ciudad = 'Temuco' responde ¿qué?",
+    "options": [
+      "Cuánto dinero se vendió en Temuco",
+      "Cuál venta fue mayor",
+      "Cuántas ventas cumplen ese filtro",
+      "Cuántas ciudades hay"
+    ],
+    "correctAnswer": 2,
+    "explanation": "COUNT cuenta las filas que permanecen tras el filtro.",
+    "optionExplanations": [
+      "Elegiste «Cuánto dinero se vendió en Temuco». La pregunta pide «Cuántas ventas cumplen ese filtro». COUNT cuenta las filas que permanecen tras el filtro.",
+      "Elegiste «Cuál venta fue mayor». La pregunta pide «Cuántas ventas cumplen ese filtro». COUNT cuenta las filas que permanecen tras el filtro.",
+      "COUNT cuenta las filas que permanecen tras el filtro.",
+      "Elegiste «Cuántas ciudades hay». La pregunta pide «Cuántas ventas cumplen ese filtro». COUNT cuenta las filas que permanecen tras el filtro."
+    ],
+    "memoryTip": "COUNT cuenta las filas que permanecen tras el filtro.",
+    "source": "Semana 8 · Temario maestro proporcionado · query-logic",
+    "highValue": true
+  },
+  {
+    "id": "w8-040",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "query-logic",
+    "concept": "query-logic",
+    "difficulty": "intermediate",
+    "type": "HiveQL",
+    "prompt": "SELECT SUM(monto) con WHERE categoria = 'Alimentos' responde ¿qué?",
+    "options": [
+      "Cantidad de categorías",
+      "Monto medio por todas las categorías",
+      "Lista completa de clientes",
+      "Monto total vendido en Alimentos"
+    ],
+    "correctAnswer": 3,
+    "explanation": "SUM aplica a los registros conservados por WHERE.",
+    "optionExplanations": [
+      "Elegiste «Cantidad de categorías». La pregunta pide «Monto total vendido en Alimentos». SUM aplica a los registros conservados por WHERE.",
+      "Elegiste «Monto medio por todas las categorías». La pregunta pide «Monto total vendido en Alimentos». SUM aplica a los registros conservados por WHERE.",
+      "Elegiste «Lista completa de clientes». La pregunta pide «Monto total vendido en Alimentos». SUM aplica a los registros conservados por WHERE.",
+      "SUM aplica a los registros conservados por WHERE."
+    ],
+    "memoryTip": "SUM aplica a los registros conservados por WHERE.",
+    "source": "Semana 8 · Temario maestro proporcionado · query-logic",
+    "highValue": true
+  },
+  {
+    "id": "w8-041",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "conditions",
+    "concept": "and",
+    "difficulty": "intermediate",
+    "type": "HiveQL",
+    "prompt": "¿Qué filtro excluye Vestuario?",
+    "options": [
+      "WHERE categoria <> 'Vestuario'",
+      "WHERE categoria = 'Vestuario'",
+      "WHERE categoria IN ('Vestuario')",
+      "WHERE categoria LIKE 'Vestuario'"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Distinto de excluye esa categoría.",
+    "optionExplanations": [
+      "Distinto de excluye esa categoría.",
+      "Elegiste «WHERE categoria = 'Vestuario'». La pregunta pide «WHERE categoria <> 'Vestuario'». Distinto de excluye esa categoría.",
+      "Elegiste «WHERE categoria IN ('Vestuario')». La pregunta pide «WHERE categoria <> 'Vestuario'». Distinto de excluye esa categoría.",
+      "Elegiste «WHERE categoria LIKE 'Vestuario'». La pregunta pide «WHERE categoria <> 'Vestuario'». Distinto de excluye esa categoría."
+    ],
+    "memoryTip": "Distinto de excluye esa categoría.",
+    "source": "Semana 8 · Temario maestro proporcionado · conditions",
+    "highValue": true
+  },
+  {
+    "id": "w8-042",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "group",
+    "concept": "group",
+    "difficulty": "intermediate",
+    "type": "HiveQL",
+    "prompt": "¿Qué agrupación calcula un total para cada combinación ciudad y categoría?",
+    "options": [
+      "GROUP BY monto",
+      "GROUP BY ciudad, categoria",
+      "ORDER BY ciudad, categoria",
+      "LIMIT 2"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Varias claves crean grupos por cada combinación de sus valores.",
+    "optionExplanations": [
+      "Elegiste «GROUP BY monto». La pregunta pide «GROUP BY ciudad, categoria». Varias claves crean grupos por cada combinación de sus valores.",
+      "Varias claves crean grupos por cada combinación de sus valores.",
+      "Elegiste «ORDER BY ciudad, categoria». La pregunta pide «GROUP BY ciudad, categoria». Varias claves crean grupos por cada combinación de sus valores.",
+      "Elegiste «LIMIT 2». La pregunta pide «GROUP BY ciudad, categoria». Varias claves crean grupos por cada combinación de sus valores."
+    ],
+    "memoryTip": "Varias claves crean grupos por cada combinación de sus valores.",
+    "source": "Semana 8 · Temario maestro proporcionado · group",
+    "highValue": true
+  },
+  {
+    "id": "w8-043",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "where-having",
+    "concept": "where-having",
+    "difficulty": "hard",
+    "type": "HiveQL",
+    "prompt": "WHERE ciudad = 'Santiago' GROUP BY categoria HAVING COUNT(*) > 5 hace ¿qué?",
+    "options": [
+      "Selecciona cinco ventas de cada ciudad",
+      "Filtra categorías por monto medio",
+      "Cuenta por categoría en Santiago y conserva grupos con más de cinco ventas",
+      "Ordena todas las ciudades por total"
+    ],
+    "correctAnswer": 2,
+    "explanation": "WHERE limita las filas, GROUP BY forma grupos y HAVING filtra sus conteos.",
+    "optionExplanations": [
+      "Elegiste «Selecciona cinco ventas de cada ciudad». La pregunta pide «Cuenta por categoría en Santiago y conserva grupos con más de cinco ventas». WHERE limita las filas, GROUP BY forma grupos y HAVING filtra sus conteos.",
+      "Elegiste «Filtra categorías por monto medio». La pregunta pide «Cuenta por categoría en Santiago y conserva grupos con más de cinco ventas». WHERE limita las filas, GROUP BY forma grupos y HAVING filtra sus conteos.",
+      "WHERE limita las filas, GROUP BY forma grupos y HAVING filtra sus conteos.",
+      "Elegiste «Ordena todas las ciudades por total». La pregunta pide «Cuenta por categoría en Santiago y conserva grupos con más de cinco ventas». WHERE limita las filas, GROUP BY forma grupos y HAVING filtra sus conteos."
+    ],
+    "memoryTip": "WHERE = filas; HAVING = grupos.",
+    "source": "Semana 8 · Temario maestro proporcionado · where-having",
+    "highValue": true
+  },
+  {
+    "id": "w8-044",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "query-logic",
+    "concept": "query-logic",
+    "difficulty": "intermediate",
+    "type": "HiveQL",
+    "prompt": "¿Qué falla si usas AVG cuando el informe pide monto acumulado?",
+    "options": [
+      "El archivo se vuelve corrupto",
+      "Se eliminan las tablas",
+      "Se cambia la replicación",
+      "Responde promedio en vez de total"
+    ],
+    "correctAnswer": 3,
+    "explanation": "Una consulta puede ejecutarse y aun responder una medida diferente.",
+    "optionExplanations": [
+      "Elegiste «El archivo se vuelve corrupto». La pregunta pide «Responde promedio en vez de total». Una consulta puede ejecutarse y aun responder una medida diferente.",
+      "Elegiste «Se eliminan las tablas». La pregunta pide «Responde promedio en vez de total». Una consulta puede ejecutarse y aun responder una medida diferente.",
+      "Elegiste «Se cambia la replicación». La pregunta pide «Responde promedio en vez de total». Una consulta puede ejecutarse y aun responder una medida diferente.",
+      "Una consulta puede ejecutarse y aun responder una medida diferente."
+    ],
+    "memoryTip": "Una consulta puede ejecutarse y aun responder una medida diferente.",
+    "source": "Semana 8 · Temario maestro proporcionado · query-logic",
+    "highValue": true
+  },
+  {
+    "id": "w8-045",
+    "week": 8,
+    "topic": "HiveQL",
+    "subtopic": "planning",
+    "concept": "query-logic",
+    "difficulty": "intermediate",
+    "type": "HiveQL",
+    "prompt": "Para pasar de necesidad analítica a HiveQL, ¿qué decides primero?",
+    "options": [
+      "Qué datos, filtros y medida requiere la pregunta",
+      "Qué cantidad de filas limitar sin definir la medida",
+      "Qué comando modifica réplicas",
+      "Cuántas réplicas físicas tienen los bloques"
+    ],
+    "correctAnswer": 0,
+    "explanation": "La consulta debe construirse desde la necesidad y luego interpretarse.",
+    "optionExplanations": [
+      "La consulta debe construirse desde la necesidad y luego interpretarse.",
+      "Elegiste «Qué cantidad de filas limitar sin definir la medida». La pregunta pide «Qué datos, filtros y medida requiere la pregunta». La consulta debe construirse desde la necesidad y luego interpretarse.",
+      "Elegiste «Qué comando modifica réplicas». La pregunta pide «Qué datos, filtros y medida requiere la pregunta». La consulta debe construirse desde la necesidad y luego interpretarse.",
+      "Elegiste «Cuántas réplicas físicas tienen los bloques». La pregunta pide «Qué datos, filtros y medida requiere la pregunta». La consulta debe construirse desde la necesidad y luego interpretarse."
+    ],
+    "memoryTip": "La consulta debe construirse desde la necesidad y luego interpretarse.",
+    "source": "Semana 8 · Temario maestro proporcionado · planning",
+    "highValue": true
+  }
+]
