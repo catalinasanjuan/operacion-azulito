@@ -1,0 +1,1350 @@
+[
+  {
+    "id": "spark-w9-001",
+    "week": 9,
+    "concept": "architecture",
+    "title": "¿Quién almacena?",
+    "language": "PySpark",
+    "level": 0,
+    "task": "read",
+    "prompt": "Spark lee ventas desde HDFS. ¿Qué componente conserva el archivo? Escribe HDFS o Spark.",
+    "starter": "",
+    "expected": "El sistema de archivos distribuido.",
+    "solution": "HDFS",
+    "explanation": "HDFS almacena; Spark procesa. Spark no reemplaza al sistema de archivos.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicios 9–10",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "answer",
+      "values": [
+        "hdfs"
+      ]
+    },
+    "hints": [
+      "Distingue almacenamiento de procesamiento.",
+      "El archivo permanece fuera de la aplicación Spark."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w9-002",
+    "week": 9,
+    "concept": "partitions",
+    "title": "Cuatro particiones",
+    "language": "Scala",
+    "level": 0,
+    "task": "read",
+    "prompt": "val datos = sc.parallelize(1 to 100, 4)\n¿Qué número devuelve datos.getNumPartitions?",
+    "starter": "",
+    "expected": "Un número de divisiones lógicas.",
+    "solution": "4",
+    "explanation": "El segundo argumento solicita particiones; no crea Workers.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicio 2",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "answer",
+      "values": [
+        4
+      ]
+    },
+    "hints": [
+      "Mira el segundo argumento.",
+      "Particiones y máquinas son cantidades diferentes."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w9-003",
+    "week": 9,
+    "concept": "rdd",
+    "title": "Contar sin sumar",
+    "language": "Scala",
+    "level": 0,
+    "task": "read",
+    "prompt": "val datos = sc.parallelize(1 to 100, 4)\n¿Qué devuelve datos.count()?",
+    "starter": "",
+    "expected": "Cantidad de elementos, no la suma.",
+    "solution": "100",
+    "explanation": "El rango Scala incluye 100; count cuenta los cien elementos.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicio 2",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "answer",
+      "values": [
+        100
+      ]
+    },
+    "hints": [
+      "count no agrega los valores.",
+      "Desde 1 hasta 100, ambos incluidos."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w9-004",
+    "week": 9,
+    "concept": "transformations",
+    "title": "Transformación o acción",
+    "language": "PySpark",
+    "level": 0,
+    "task": "read",
+    "prompt": "pares = datos.filter(lambda x: x % 2 == 0)\n¿filter es transformación o acción?",
+    "starter": "",
+    "expected": "Clasificación de filter.",
+    "solution": "transformación",
+    "explanation": "filter describe un nuevo RDD; count o take solicitan un resultado.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicio 4",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "answer",
+      "values": [
+        "transformación",
+        "transformacion"
+      ]
+    },
+    "hints": [
+      "¿Devuelve un nuevo RDD o un resultado al Driver?",
+      "Todavía no se ha pedido contar."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w9-005",
+    "week": 9,
+    "concept": "rdd",
+    "title": "Crear una colección distribuida",
+    "language": "PySpark",
+    "level": 1,
+    "task": "complete",
+    "prompt": "Completa la creación de datos de 1 a 100 con cuatro particiones y cuenta sus elementos.",
+    "starter": "datos = sc.____(range(1, 101), 4)\ndatos.count()",
+    "expected": "100",
+    "solution": "datos = sc.parallelize(range(1, 101), 4)\ndatos.count()",
+    "explanation": "parallelize parte de una colección local. range no incluye su límite superior.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicio 5",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "rdd",
+      "expected": 100,
+      "operations": [
+        "parallelize",
+        "count"
+      ]
+    },
+    "hints": [
+      "El método pertenece a SparkContext.",
+      "El método es parallelize."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w9-006",
+    "week": 9,
+    "concept": "map",
+    "title": "Duplicar sin mutar",
+    "language": "Scala",
+    "level": 1,
+    "task": "complete",
+    "prompt": "datos ya contiene 1 a 100 en cuatro particiones. Completa map y muestra los tres primeros valores.",
+    "starter": "val dobles = datos.____(x => x * 2)\ndobles.take(3)",
+    "expected": "[2, 4, 6]",
+    "solution": "val dobles = datos.map(x => x * 2)\ndobles.take(3)",
+    "explanation": "map transforma cada elemento y devuelve un RDD nuevo; datos queda intacto.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicio 3",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "rdd",
+      "expected": [
+        2,
+        4,
+        6
+      ],
+      "operations": [
+        "map",
+        "take"
+      ]
+    },
+    "hints": [
+      "La operación aplica una función a cada elemento.",
+      "take(3) es la acción final."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w9-007",
+    "week": 9,
+    "concept": "filter",
+    "title": "Conservar los pares",
+    "language": "PySpark",
+    "level": 1,
+    "task": "complete",
+    "prompt": "datos contiene 1 a 100. Completa el método para contar los pares.",
+    "starter": "pares = datos.____(lambda x: x % 2 == 0)\npares.count()",
+    "expected": "50",
+    "solution": "pares = datos.filter(lambda x: x % 2 == 0)\npares.count()",
+    "explanation": "filter conserva los valores cuyo predicado es verdadero. count es la acción.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicios 4–5",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "rdd",
+      "expected": 50,
+      "operations": [
+        "filter",
+        "count"
+      ]
+    },
+    "hints": [
+      "No necesitas cambiar los valores.",
+      "El residuo módulo 2 distingue pares."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w9-008",
+    "week": 9,
+    "concept": "languages",
+    "title": "Una lambda en el lenguaje correcto",
+    "language": "PySpark",
+    "level": 2,
+    "task": "fix",
+    "prompt": "Corrige esta mezcla de Scala y Python. datos contiene 1 a 100.",
+    "starter": "datos.filter(x => x > 50).count()",
+    "expected": "50",
+    "solution": "datos.filter(lambda x: x > 50).count()",
+    "explanation": "En PySpark la función anónima se escribe lambda x: ...; x => ... corresponde a Scala.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicio 5",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "rdd",
+      "expected": 50,
+      "operations": [
+        "filter",
+        "count"
+      ]
+    },
+    "hints": [
+      "El problema está en la función anónima.",
+      "Python usa lambda y dos puntos."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w9-009",
+    "week": 9,
+    "concept": "map",
+    "title": "map no es filter",
+    "language": "PySpark",
+    "level": 2,
+    "task": "fix",
+    "prompt": "Queremos duplicar y mostrar los primeros cuatro números de datos (1 a 100). Corrige el método.",
+    "starter": "datos.filter(lambda x: x * 2).take(4)",
+    "expected": "[2, 4, 6, 8]",
+    "solution": "datos.map(lambda x: x * 2).take(4)",
+    "explanation": "filter no transforma los valores; map sí aplica la multiplicación.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicios 3–5",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "rdd",
+      "expected": [
+        2,
+        4,
+        6,
+        8
+      ],
+      "operations": [
+        "map",
+        "take"
+      ]
+    },
+    "hints": [
+      "¿Quieres seleccionar o transformar?",
+      "Cambia filter por map."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w9-010",
+    "week": 9,
+    "concept": "actions",
+    "title": "No encadenes sobre un número",
+    "language": "PySpark",
+    "level": 2,
+    "task": "fix",
+    "prompt": "Corrige el orden para contar los mayores que 50 de datos (1 a 100).",
+    "starter": "datos.count().filter(lambda x: x > 50)",
+    "expected": "50",
+    "solution": "datos.filter(lambda x: x > 50).count()",
+    "explanation": "count devuelve un número al Driver; ese número no tiene filter de RDD. Primero filtra.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicios 4–6",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "rdd",
+      "expected": 50,
+      "operations": [
+        "filter",
+        "count"
+      ]
+    },
+    "hints": [
+      "La acción termina el flujo RDD.",
+      "Mueve count al final."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w9-011",
+    "week": 9,
+    "concept": "filter",
+    "title": "Pares por diez",
+    "language": "PySpark",
+    "level": 3,
+    "task": "build",
+    "prompt": "datos contiene 1 a 100. Filtra los pares, multiplica por 10 y suma. Puedes usar variables intermedias.",
+    "starter": "",
+    "expected": "25500",
+    "solution": "pares = datos.filter(lambda x: x % 2 == 0)\ndecenas = pares.map(lambda x: x * 10)\ndecenas.reduce(lambda a, b: a + b)",
+    "explanation": "Hay dos transformaciones y una acción. La suma de los pares es 2550, multiplicada por 10 da 25500.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicio 8",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "rdd",
+      "expected": 25500,
+      "operations": [
+        "filter",
+        "map"
+      ]
+    },
+    "hints": [
+      "Selecciona antes de transformar.",
+      "Puedes sumar con sum() o reduce(lambda a, b: a + b)."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w9-012",
+    "week": 9,
+    "concept": "map",
+    "title": "Cuadrados de pares",
+    "language": "PySpark",
+    "level": 3,
+    "task": "build",
+    "prompt": "datos contiene 1 a 100. Filtra pares, elévalos al cuadrado y muestra los primeros tres.",
+    "starter": "",
+    "expected": "[4, 16, 36]",
+    "solution": "pares = datos.filter(lambda x: x % 2 == 0)\npares.map(lambda x: x * x).take(3)",
+    "explanation": "Las transformaciones construyen el plan. take solicita una muestra pequeña.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicio 6",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "rdd",
+      "expected": [
+        4,
+        16,
+        36
+      ],
+      "operations": [
+        "filter",
+        "map",
+        "take"
+      ]
+    },
+    "hints": [
+      "Una operación selecciona, otra calcula.",
+      "x * x y x ** 2 son equivalentes en este subconjunto PySpark."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w9-013",
+    "week": 9,
+    "concept": "partitions",
+    "title": "Particiones no son Workers",
+    "language": "PySpark",
+    "level": 2,
+    "task": "fix",
+    "prompt": "Corrige la creación: necesitamos ocho particiones con 100 elementos. La versión actual solo usa dos.",
+    "starter": "rdd8 = sc.parallelize(range(1, 101), 2)\nrdd8.getNumPartitions()",
+    "expected": "8",
+    "solution": "rdd8 = sc.parallelize(range(1, 101), 8)\nrdd8.getNumPartitions()",
+    "explanation": "El número de particiones es independiente del total de elementos y de Workers.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicio 7",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "rdd",
+      "expected": 8,
+      "operations": [
+        "parallelize",
+        "getNumPartitions"
+      ]
+    },
+    "hints": [
+      "El segundo argumento controla la división lógica.",
+      "getNumPartitions no cuenta filas."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w9-014",
+    "week": 9,
+    "concept": "lazy",
+    "title": "¿Qué dispara el trabajo?",
+    "language": "PySpark",
+    "level": 0,
+    "task": "read",
+    "prompt": "pares = datos.filter(lambda x: x % 2 == 0)\ncuadrados = pares.map(lambda x: x * x)\ncuadrados.count()\nEscribe el método que solicita el resultado.",
+    "starter": "",
+    "expected": "Un nombre de método.",
+    "solution": "count",
+    "explanation": "filter y map registran transformaciones; count es la acción que necesita calcular el resultado.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicio 6",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "answer",
+      "values": [
+        "count",
+        "count()"
+      ]
+    },
+    "hints": [
+      "Busca la acción.",
+      "La última instrucción pide una cantidad."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w9-015",
+    "week": 9,
+    "concept": "hdfs",
+    "title": "Del archivo a los campos",
+    "language": "PySpark",
+    "level": 3,
+    "task": "build",
+    "prompt": "Lee ventas_hive.csv de HDFS y separa cada línea por comas. Muestra tres registros. Escribe código.",
+    "starter": "",
+    "expected": "Tres listas de seis campos, conservando las ventas originales.",
+    "solution": "ventas = sc.textFile(\"hdfs://namenode:8020/curso/hive/datos_ventas/ventas_hive.csv\")\ncampos = ventas.map(lambda linea: linea.split(\",\"))\ncampos.take(3)",
+    "explanation": "split produce campos de texto. Todavía son elementos de RDD, no un DataFrame.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicios 10–11",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "rubric",
+      "criteria": [
+        "Usa sc.textFile con la URI HDFS de la guía.",
+        "Aplica map y split(\",\") sin modificar ventas.",
+        "Solicita una muestra con take(3)."
+      ]
+    },
+    "hints": [
+      "Cada línea es texto.",
+      "map aplica split a cada línea."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w9-016",
+    "week": 9,
+    "concept": "sales-rdd",
+    "title": "El monto es texto",
+    "language": "PySpark",
+    "level": 2,
+    "task": "fix",
+    "prompt": "campos contiene seis campos de texto: id, fecha, cliente, ciudad, categoria, monto. Corrige el filtro.",
+    "starter": "campos.filter(lambda x: x[5] > 400000).count()",
+    "expected": "Cantidad de ventas con monto numérico > 400000; depende del archivo.",
+    "solution": "campos.filter(lambda x: float(x[5]) > 400000).count()",
+    "explanation": "Convierte monto antes de comparar. El índice 5 es la sexta columna; no conocemos aquí el conteo real.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicio 12",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "rubric",
+      "criteria": [
+        "Convierte x[5] a float antes de comparar.",
+        "Utiliza > 400000, no >=.",
+        "Cuenta después del filtro."
+      ]
+    },
+    "hints": [
+      "split deja todos los campos como cadenas.",
+      "float convierte el sexto campo."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w9-017",
+    "week": 9,
+    "concept": "sales-rdd",
+    "title": "Totales por categoría en Scala",
+    "language": "Scala",
+    "level": 3,
+    "task": "build",
+    "prompt": "campos es el RDD de seis campos. Forma pares (categoria, monto numérico), suma por clave y muestra resultados.",
+    "starter": "",
+    "expected": "Un total por categoría; no un conteo de filas.",
+    "solution": "val pares = campos.map(x => (x(4), x(5).toDouble))\nval totales = pares.reduceByKey((a, b) => a + b)\ntotales.collect().foreach(println)",
+    "explanation": "La clave es categoria, el valor monto. reduceByKey combina valores por clave y puede implicar shuffle. collect solo es razonable para este resultado pequeño.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicio 13",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "rubric",
+      "criteria": [
+        "Forma pares x(4), x(5).toDouble.",
+        "Usa reduceByKey con suma, no count.",
+        "Obtiene y visualiza el resultado agregado."
+      ]
+    },
+    "hints": [
+      "Scala indexa con paréntesis.",
+      "La categoría está en posición 4."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w9-018",
+    "week": 9,
+    "concept": "sales-rdd",
+    "title": "Ventas de alto valor por ciudad",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Construye el análisis completo: leer HDFS, separar campos, filtrar monto > 300000 y sumar por ciudad.",
+    "starter": "",
+    "expected": "ciudad → suma de montos de ventas que superan 300000.",
+    "solution": "ventas = sc.textFile(\"hdfs://namenode:8020/curso/hive/datos_ventas/ventas_hive.csv\")\ncampos = ventas.map(lambda linea: linea.split(\",\"))\naltas = campos.filter(lambda x: float(x[5]) > 300000)\npares = altas.map(lambda x: (x[3], float(x[5])))\npares.reduceByKey(lambda a, b: a + b).collect()",
+    "explanation": "La ciudad es la cuarta columna. Filtra antes de agregar; la respuesta numérica debe contrastarse con los datos reales.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicio 15",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Lee HDFS y separa los seis campos.",
+        "Filtra float(x[5]) > 300000 antes de agregar.",
+        "Forma pares ciudad, monto y suma por clave.",
+        "Contrasta la salida con una ejecución real."
+      ]
+    },
+    "hints": [
+      "Planifica leer → separar → filtrar → pares → sumar.",
+      "Ciudad es x[3], monto es x[5]."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w9-019",
+    "week": 9,
+    "concept": "architecture",
+    "title": "Reconocer el clúster Standalone",
+    "language": "Scala",
+    "level": 4,
+    "task": "case",
+    "prompt": "En el entorno del profesor, inicia spark-shell sobre el Master y registra sc.master, sc.version, Worker y aplicación. Escribe comandos y observaciones reales.",
+    "starter": "",
+    "expected": "Master spark://spark-master:7077 y evidencia de la aplicación; no se ejecuta desde esta web.",
+    "solution": "./spark-shell --master spark://spark-master:7077\n// Dentro de Scala:\nsc.master\nsc.version",
+    "explanation": "Master administra recursos; Worker los aporta; Executor ejecuta tareas. El Driver coordina. Usa la interfaz Master del entorno del curso para observarlos.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicio 1",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Inicia spark-shell apuntando al Master, no a modo local.",
+        "Registra sc.master y sc.version reales.",
+        "Identifica Worker, aplicación y recursos observados."
+      ]
+    },
+    "hints": [
+      "El comando se ejecuta dentro de /spark/bin.",
+      "El puerto de conexión Standalone en la guía es 7077."
+    ],
+    "fundamental": false
+  },
+  {
+    "id": "spark-w9-020",
+    "week": 9,
+    "concept": "actions",
+    "title": "Muestra pequeña, Driver protegido",
+    "language": "Scala",
+    "level": 3,
+    "task": "build",
+    "prompt": "datos contiene 1 a 100. Obtén solo los cinco primeros mayores que 95, sin collect.",
+    "starter": "",
+    "expected": "[96, 97, 98, 99, 100]",
+    "solution": "datos.filter(x => x > 95).take(5)",
+    "explanation": "take limita lo que llega al Driver. Evita traer colecciones grandes mediante collect.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicios 4–5; teoría §6.15",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "rdd",
+      "expected": [
+        96,
+        97,
+        98,
+        99,
+        100
+      ],
+      "operations": [
+        "filter",
+        "take"
+      ]
+    },
+    "hints": [
+      "Usa filter y una acción limitada.",
+      "take(5) basta."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w10-001",
+    "week": 10,
+    "concept": "dataframe",
+    "title": "Contar filas del ejemplo",
+    "language": "PySpark",
+    "level": 0,
+    "task": "read",
+    "prompt": "El DataFrame de la guía contiene Ana, Luis, Carla, Pedro y Maria, con columnas id, cliente, ciudad y monto. ¿Cuántas filas tiene?",
+    "starter": "",
+    "expected": "Un número.",
+    "solution": "5",
+    "explanation": "Cada tupla es una fila. Hay cinco clientes y cuatro columnas.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicio 1",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "answer",
+      "values": [
+        5
+      ]
+    },
+    "hints": [
+      "No confundas columnas con filas.",
+      "Cuenta los clientes."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w10-002",
+    "week": 10,
+    "concept": "schema",
+    "title": "Leer el schema",
+    "language": "PySpark",
+    "level": 0,
+    "task": "read",
+    "prompt": "root\n |-- id: long\n |-- cliente: string\n |-- ciudad: string\n |-- monto: double\n¿Qué tipo tiene monto?",
+    "starter": "",
+    "expected": "Nombre del tipo.",
+    "solution": "double",
+    "explanation": "El schema describe nombres y tipos; show presenta filas, printSchema presenta la estructura.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicio 2",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "answer",
+      "values": [
+        "double"
+      ]
+    },
+    "hints": [
+      "Busca la línea monto.",
+      "No es una cadena de texto."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w10-003",
+    "week": 10,
+    "concept": "select",
+    "title": "Elegir dos columnas",
+    "language": "PySpark",
+    "level": 1,
+    "task": "complete",
+    "prompt": "df es el DataFrame del ejemplo. Completa para mostrar cliente y ciudad, en ese orden.",
+    "starter": "df.____(\"cliente\", \"ciudad\").show()",
+    "expected": "Columnas cliente, ciudad.",
+    "solution": "df.select(\"cliente\", \"ciudad\").show()",
+    "explanation": "select proyecta columnas sin cambiar df. show solicita la visualización.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicio 3",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "projection",
+      "columns": [
+        "cliente",
+        "ciudad"
+      ]
+    },
+    "hints": [
+      "Para columnas usamos select.",
+      "Puedes usar nombres o df.cliente, df.ciudad."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w10-004",
+    "week": 10,
+    "concept": "select",
+    "title": "Una selección con objetos Column",
+    "language": "PySpark",
+    "level": 3,
+    "task": "build",
+    "prompt": "Muestra cliente y monto de df, en ese orden. Usa nombres de columnas u objetos Column.",
+    "starter": "",
+    "expected": "Columnas cliente, monto.",
+    "solution": "df.select(df.cliente, df.monto).show()",
+    "explanation": "El validador analiza la proyección y acepta ambas formas documentadas; no ejecuta Spark.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicio 3",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "projection",
+      "columns": [
+        "cliente",
+        "monto"
+      ]
+    },
+    "hints": [
+      "Seleccionar no elimina filas.",
+      "df.select(\"cliente\", \"monto\").show() es otra solución."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w10-005",
+    "week": 10,
+    "concept": "select",
+    "title": "Filas o columnas",
+    "language": "PySpark",
+    "level": 2,
+    "task": "fix",
+    "prompt": "Queremos mostrar solo las columnas ciudad y monto. Corrige la instrucción.",
+    "starter": "df.filter(\"ciudad\", \"monto\").show()",
+    "expected": "Columnas ciudad, monto.",
+    "solution": "df.select(\"ciudad\", \"monto\").show()",
+    "explanation": "filter espera una condición para filas; select elige columnas.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicios 3–4",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "projection",
+      "columns": [
+        "ciudad",
+        "monto"
+      ]
+    },
+    "hints": [
+      "No estás imponiendo una condición sobre filas.",
+      "La operación correcta es select."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w10-006",
+    "week": 10,
+    "concept": "filter-df",
+    "title": "Filtrar montos",
+    "language": "PySpark",
+    "level": 1,
+    "task": "complete",
+    "prompt": "df es el DataFrame de cinco clientes de la guía. Completa para mostrar los montos > 100000.",
+    "starter": "df.____(df.monto > 100000).show()",
+    "expected": "Ana, Carla y Maria.",
+    "solution": "df.filter(df.monto > 100000).show()",
+    "explanation": "Las tres filas superan 100000. El predicado trabaja con una columna numérica.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicio 4",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "rubric",
+      "criteria": [
+        "Usa filter sobre df.",
+        "Compara monto > 100000.",
+        "Solicita show y comprueba Ana, Carla y Maria."
+      ]
+    },
+    "hints": [
+      "Se conservan las filas que cumplen una condición.",
+      "No uses lambda de RDD en esta API."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w10-007",
+    "week": 10,
+    "concept": "filter-df",
+    "title": "Combinar condiciones Column",
+    "language": "PySpark",
+    "level": 2,
+    "task": "fix",
+    "prompt": "Corrige la condición de Santiago con monto > 100000.",
+    "starter": "df.filter(df.ciudad == \"Santiago\" and df.monto > 100000).show()",
+    "expected": "Solo Ana en los cinco datos del ejemplo.",
+    "solution": "df.filter((df.ciudad == \"Santiago\") & (df.monto > 100000)).show()",
+    "explanation": "Los objetos Column usan & y cada comparación entre paréntesis. and intenta evaluar una columna como booleano de Python.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicio 4",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "rubric",
+      "criteria": [
+        "Usa & entre condiciones Column.",
+        "Encierra ambas comparaciones entre paréntesis.",
+        "Conserva ciudad Santiago y monto > 100000."
+      ]
+    },
+    "hints": [
+      "and no combina Column de Spark.",
+      "Usa (condición) & (condición)."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w10-008",
+    "week": 10,
+    "concept": "withColumn",
+    "title": "Monto en miles",
+    "language": "PySpark",
+    "level": 3,
+    "task": "build",
+    "prompt": "Crea df_miles con monto_miles = monto / 1000 y muestra cliente, monto, monto_miles. col está importado.",
+    "starter": "",
+    "expected": "Ana:150; Luis:85; Carla:210; Pedro:95; Maria:180 en monto_miles.",
+    "solution": "df_miles = df.withColumn(\"monto_miles\", col(\"monto\") / 1000)\ndf_miles.select(\"cliente\", \"monto\", \"monto_miles\").show()",
+    "explanation": "withColumn devuelve un DataFrame nuevo; df no adquiere esa columna automáticamente.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicio 5 — desafío breve",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "rubric",
+      "criteria": [
+        "Guarda el nuevo DataFrame devuelto por withColumn.",
+        "Deriva monto_miles dividiendo monto por 1000.",
+        "Muestra las tres columnas solicitadas."
+      ]
+    },
+    "hints": [
+      "La columna se calcula por fila.",
+      "Conserva el retorno de withColumn."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w10-009",
+    "week": 10,
+    "concept": "withColumn",
+    "title": "El original no cambia",
+    "language": "PySpark",
+    "level": 0,
+    "task": "read",
+    "prompt": "df_recargo = df.withColumn(\"monto_recargo\", col(\"monto\") * 1.10)\n¿df.show() incluye monto_recargo? Escribe sí o no.",
+    "starter": "",
+    "expected": "Una respuesta sobre el df original.",
+    "solution": "no",
+    "explanation": "La columna pertenece a df_recargo. Las transformaciones no modifican df.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicio 5",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "answer",
+      "values": [
+        "no"
+      ]
+    },
+    "hints": [
+      "Mira en qué variable guardaste el resultado.",
+      "Los DataFrames son inmutables."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w10-010",
+    "week": 10,
+    "concept": "schema",
+    "title": "Inspeccionar estructura",
+    "language": "PySpark",
+    "level": 1,
+    "task": "complete",
+    "prompt": "Completa para consultar el esquema, no las filas.",
+    "starter": "df.____()",
+    "expected": "Nombres y tipos de columnas.",
+    "solution": "df.printSchema()",
+    "explanation": "printSchema muestra la estructura. show muestra datos.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicio 2",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "rubric",
+      "criteria": [
+        "Utiliza printSchema() con mayúscula S.",
+        "Distingue esquema de contenido de filas."
+      ]
+    },
+    "hints": [
+      "El método contiene la palabra Schema.",
+      "La mayúscula importa."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w10-011",
+    "week": 10,
+    "concept": "csv",
+    "title": "El CSV no tiene encabezado",
+    "language": "PySpark",
+    "level": 2,
+    "task": "fix",
+    "prompt": "Corrige la lectura: ventas_hive.csv NO tiene encabezado.",
+    "starter": "ventas_df = spark.read.option(\"header\", \"true\").option(\"inferSchema\", \"true\").csv(\"hdfs://namenode:8020/curso/hive/datos_ventas/ventas_hive.csv\")",
+    "expected": "Se conserva la primera venta; nombres iniciales _c0 a _c5.",
+    "solution": "ventas_df = spark.read.option(\"header\", \"false\").option(\"inferSchema\", \"true\").csv(\"hdfs://namenode:8020/curso/hive/datos_ventas/ventas_hive.csv\")",
+    "explanation": "header=true consumiría la primera venta como nombres. inferSchema intenta determinar tipos; no crea los nombres semánticos.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicio 7",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "rubric",
+      "criteria": [
+        "Configura header como false.",
+        "Conserva la URI HDFS.",
+        "Reconoce que toDF asigna los seis nombres después."
+      ]
+    },
+    "hints": [
+      "La primera línea es una venta.",
+      "header y schema cumplen funciones diferentes."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w10-012",
+    "week": 10,
+    "concept": "schema",
+    "title": "Definir tipos conocidos",
+    "language": "PySpark",
+    "level": 3,
+    "task": "build",
+    "prompt": "Define un StructType para id_venta integer, fecha/cliente/ciudad/categoria string y monto double; permite nulos. Los tipos ya están importados.",
+    "starter": "",
+    "expected": "Seis campos en el orden del CSV.",
+    "solution": "schema_ventas = StructType([\n    StructField(\"id_venta\", IntegerType(), True),\n    StructField(\"fecha\", StringType(), True),\n    StructField(\"cliente\", StringType(), True),\n    StructField(\"ciudad\", StringType(), True),\n    StructField(\"categoria\", StringType(), True),\n    StructField(\"monto\", DoubleType(), True)\n])",
+    "explanation": "Un esquema explícito entrega los tipos esperados y evita depender de inferencia. No inventa ni corrige datos inválidos por sí solo.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicio 8",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "rubric",
+      "criteria": [
+        "Declara los seis nombres en el orden del archivo.",
+        "Usa IntegerType, cuatro StringType y DoubleType.",
+        "Usa StructType/StructField y permite nulos con True."
+      ]
+    },
+    "hints": [
+      "Cada columna necesita nombre, tipo y nulabilidad.",
+      "monto debe ser numérico."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w10-013",
+    "week": 10,
+    "concept": "aggregation",
+    "title": "Conteo por categoría",
+    "language": "PySpark",
+    "level": 3,
+    "task": "build",
+    "prompt": "ventas_schema_df ya está cargado. Muestra cuántas ventas existen por categoría.",
+    "starter": "",
+    "expected": "categoria y count, sin totales monetarios inventados.",
+    "solution": "ventas_schema_df.groupBy(\"categoria\").count().show()",
+    "explanation": "El count agrupado cuenta filas por clave; sum(\"monto\") responde otra pregunta.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicio 9",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "rubric",
+      "criteria": [
+        "Agrupa por categoria.",
+        "Cuenta filas por grupo.",
+        "Muestra el resultado."
+      ]
+    },
+    "hints": [
+      "Primero define grupos.",
+      "groupBy(\"categoria\").count() responde la pregunta."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w10-014",
+    "week": 10,
+    "concept": "aggregation",
+    "title": "Total y promedio",
+    "language": "PySpark",
+    "level": 3,
+    "task": "build",
+    "prompt": "Calcula total_ventas y promedio_venta por categoría. sum y avg están importados.",
+    "starter": "",
+    "expected": "categoria, total_ventas, promedio_venta.",
+    "solution": "ventas_schema_df.groupBy(\"categoria\").agg(sum(\"monto\").alias(\"total_ventas\"), avg(\"monto\").alias(\"promedio_venta\")).show()",
+    "explanation": "agg permite varias medidas; alias asigna nombres al resultado.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicio 9",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "rubric",
+      "criteria": [
+        "Agrupa por categoria.",
+        "Usa sum y avg sobre monto.",
+        "Asigna ambos alias y muestra el resultado."
+      ]
+    },
+    "hints": [
+      "La agrupación es compartida por ambas medidas.",
+      "Separa las expresiones dentro de agg con coma."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w10-015",
+    "week": 10,
+    "concept": "sql",
+    "title": "Una vista no es una tabla Hive",
+    "language": "PySpark",
+    "level": 0,
+    "task": "read",
+    "prompt": "ventas_schema_df.createOrReplaceTempView(\"ventas\")\n¿Esto crea automáticamente una tabla en Hive? Escribe sí o no.",
+    "starter": "",
+    "expected": "Distinguir vista temporal de tabla Hive.",
+    "solution": "no",
+    "explanation": "La vista pertenece a la sesión Spark. En la infraestructura del curso Spark no está conectado al Hive Metastore.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicios 10 y 14",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "answer",
+      "values": [
+        "no"
+      ]
+    },
+    "hints": [
+      "Compartir HDFS no significa compartir catálogo.",
+      "Una vista temporal no es persistente como tabla Hive."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w10-016",
+    "week": 10,
+    "concept": "sql",
+    "title": "Promedio por ciudad en SQL",
+    "language": "PySpark",
+    "level": 3,
+    "task": "build",
+    "prompt": "Registra ventas_schema_df como ventas y consulta el monto promedio por ciudad con Spark SQL.",
+    "starter": "",
+    "expected": "Una fila por ciudad con su promedio.",
+    "solution": "ventas_schema_df.createOrReplaceTempView(\"ventas\")\nspark.sql(\"SELECT ciudad, AVG(monto) AS promedio FROM ventas GROUP BY ciudad\").show()",
+    "explanation": "La vista hace que Spark SQL conozca el DataFrame. No cambia el motor a Hive.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicios 10 y 14",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "rubric",
+      "criteria": [
+        "Registra la vista ventas.",
+        "Selecciona ciudad y AVG(monto).",
+        "Consulta ventas y agrupa por ciudad.",
+        "Solicita visualización."
+      ]
+    },
+    "hints": [
+      "Una consulta SQL necesita un nombre registrado.",
+      "GROUP BY ciudad conserva el detalle por ciudad."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w10-017",
+    "week": 10,
+    "concept": "aggregation",
+    "title": "Tecnología por ciudad",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Usa DataFrame API para sumar por ciudad solo la categoria Tecnologia y ordenar de mayor a menor. sum y desc están importados.",
+    "starter": "",
+    "expected": "ciudad, total_ventas descendente.",
+    "solution": "ventas_schema_df.filter(ventas_schema_df.categoria == \"Tecnologia\").groupBy(\"ciudad\").agg(sum(\"monto\").alias(\"total_ventas\")).orderBy(desc(\"total_ventas\")).show()",
+    "explanation": "Filtrar antes de agrupar excluye las demás categorías. Ordena el total calculado.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicio 11",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "rubric",
+      "criteria": [
+        "Filtra categoria == \"Tecnologia\".",
+        "Agrupa por ciudad y suma monto.",
+        "Asigna total_ventas y ordena descendente.",
+        "Muestra resultados."
+      ]
+    },
+    "hints": [
+      "El filtro reduce filas antes de agregarlas.",
+      "desc se aplica al alias calculado."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w10-018",
+    "week": 10,
+    "concept": "dates",
+    "title": "Meses de venta",
+    "language": "PySpark",
+    "level": 3,
+    "task": "build",
+    "prompt": "fecha es texto yyyy-MM-dd. Crea fecha_date, luego mes; suma monto por mes y ordena cronológicamente. to_date, month y sum están importados. El conjunto corresponde a 2025.",
+    "starter": "",
+    "expected": "mes y total_ventas, mes ascendente.",
+    "solution": "ventas_fecha_df = ventas_schema_df.withColumn(\"fecha_date\", to_date(\"fecha\", \"yyyy-MM-dd\"))\nventas_mes_df = ventas_fecha_df.withColumn(\"mes\", month(\"fecha_date\"))\nventas_mes_df.groupBy(\"mes\").agg(sum(\"monto\").alias(\"total_ventas\")).orderBy(\"mes\").show()",
+    "explanation": "Convierte fecha antes de extraer el mes. Si hubiera varios años, agrupar solo por mes los mezclaría.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicio 13",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "rubric",
+      "criteria": [
+        "Convierte fecha usando el patrón yyyy-MM-dd.",
+        "Extrae month de fecha_date.",
+        "Agrupa por mes y suma monto.",
+        "Ordena por mes ascendente."
+      ]
+    },
+    "hints": [
+      "La función to_date produce una columna date.",
+      "month devuelve el número de mes."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w10-019",
+    "week": 10,
+    "concept": "sql",
+    "title": "El filtro va antes del grupo",
+    "language": "PySpark",
+    "level": 2,
+    "task": "fix",
+    "prompt": "Corrige la consulta para totalizar solo ventas > 250000 por categoría. La vista ventas existe.",
+    "starter": "spark.sql(\"SELECT categoria, SUM(monto) AS total FROM ventas GROUP BY categoria WHERE monto > 250000\").show()",
+    "expected": "Totales por categoría de ventas individuales superiores a 250000.",
+    "solution": "spark.sql(\"SELECT categoria, SUM(monto) AS total FROM ventas WHERE monto > 250000 GROUP BY categoria\").show()",
+    "explanation": "WHERE filtra filas antes de GROUP BY; no se escribe después de la agrupación.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicio 15",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "rubric",
+      "criteria": [
+        "Sitúa WHERE antes de GROUP BY.",
+        "Filtra monto > 250000.",
+        "Agrupa por categoria y suma monto."
+      ]
+    },
+    "hints": [
+      "Piensa en el orden lógico filtrar → agrupar.",
+      "HAVING filtraría grupos, no las ventas originales."
+    ],
+    "fundamental": true
+  },
+  {
+    "id": "spark-w10-020",
+    "week": 10,
+    "concept": "sales-df",
+    "title": "Caso integrador de categorías",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Desde HDFS y con schema explícito, calcula cantidad, total y promedio por categoría para ventas > 250000, ordenadas por total descendente. Contrasta API y SQL.",
+    "starter": "",
+    "expected": "Las dos soluciones coinciden sobre el mismo archivo; los valores deben medirse.",
+    "solution": "ventas_schema_df = spark.read.option(\"header\", \"false\").schema(schema_ventas).csv(\"hdfs://namenode:8020/curso/hive/datos_ventas/ventas_hive.csv\")\nventas_schema_df.filter(ventas_schema_df.monto > 250000).groupBy(\"categoria\").agg(count(\"*\").alias(\"cantidad\"), sum(\"monto\").alias(\"total\"), avg(\"monto\").alias(\"promedio\")).orderBy(desc(\"total\")).show()\nventas_schema_df.createOrReplaceTempView(\"ventas\")\nspark.sql(\"SELECT categoria, COUNT(*) AS cantidad, SUM(monto) AS total, AVG(monto) AS promedio FROM ventas WHERE monto > 250000 GROUP BY categoria ORDER BY total DESC\").show()",
+    "explanation": "Define schema_ventas como en el ejercicio de esquema e importa count, sum, avg, desc. Contrasta ambos resultados en Spark; esta web no dispone del archivo de cien mil ventas.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicio 15",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Lee HDFS con los seis campos y schema explícito.",
+        "Filtra filas con monto > 250000.",
+        "Calcula count, sum y avg por categoria.",
+        "Ordena por total descendente y contrasta ambas API."
+      ]
+    },
+    "hints": [
+      "Reutiliza schema_ventas del ejercicio 8.",
+      "WHERE corresponde al filter anterior a groupBy."
+    ],
+    "fundamental": false
+  },
+  {
+    "id": "spark-w10-021",
+    "week": 10,
+    "concept": "program",
+    "title": "Un programa que puedes guardar",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Escribe un programa .py para los cinco montos 150000, 85000, 210000, 95000, 180000: inicia SparkSession, crea df(cliente,monto), muestra promedio y cierra Spark. Añade una decisión y una interpretación como comentarios.",
+    "starter": "",
+    "expected": "Promedio 144000.0. Ejecuta con spark-submit en el clúster del curso.",
+    "solution": "from pyspark.sql import SparkSession\nfrom pyspark.sql.functions import avg\nspark = SparkSession.builder.appName(\"Ejercicio16_Guia2\").getOrCreate()\ndatos = [(\"Ana\", 150000.0), (\"Luis\", 85000.0), (\"Carla\", 210000.0), (\"Pedro\", 95000.0), (\"Maria\", 180000.0)]\n# DECISIÓN: columnas nombradas permiten agregar monto.\ndf = spark.createDataFrame(datos, [\"cliente\", \"monto\"])\ndf.show()\ndf.agg(avg(\"monto\").alias(\"monto_promedio\")).show()\n# INTERPRETACIÓN: el promedio de estos cinco montos es 144000.\nspark.stop()",
+    "explanation": "Guarda el archivo y ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 archivo.py en el entorno del profesor con Python 3 configurado. No confundir pyspark con un editor.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicios 16–17",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Inicia SparkSession y crea los cinco registros con nombres de columnas.",
+        "Muestra el DataFrame y calcula avg(monto).",
+        "Incluye spark.stop().",
+        "Documenta una decisión y una interpretación coherentes."
+      ]
+    },
+    "hints": [
+      "Trabaja por bloques y guarda antes de ejecutar.",
+      "SparkSession.builder...getOrCreate() inicia la sesión."
+    ],
+    "fundamental": false
+  },
+  {
+    "id": "spark-w10-022",
+    "week": 10,
+    "concept": "filter-df",
+    "title": "Interpretar una condición",
+    "language": "PySpark",
+    "level": 0,
+    "task": "read",
+    "prompt": "Con Ana 150000, Luis 85000, Carla 210000, Pedro 95000 y Maria 180000, ¿cuántas filas devuelve df.filter(df.monto > 100000)?",
+    "starter": "",
+    "expected": "Cantidad de filas seleccionadas.",
+    "solution": "3",
+    "explanation": "Superan el umbral Ana, Carla y Maria. No se está sumando el dinero.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicio 4",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "answer",
+      "values": [
+        3
+      ]
+    },
+    "hints": [
+      "Compara cada monto con 100000.",
+      "Pedro y Luis quedan fuera."
+    ],
+    "fundamental": true
+  }
+]

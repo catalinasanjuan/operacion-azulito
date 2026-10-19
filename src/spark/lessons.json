@@ -1,0 +1,409 @@
+[
+  {
+    "id": "architecture",
+    "week": 9,
+    "title": "Spark procesa; HDFS almacena",
+    "explanation": "Spark nació en Berkeley en 2009 para facilitar flujos distribuidos y reutilizar datos intermedios. MapReduce puede escribir y leer mucho disco entre etapas; Spark puede reutilizar memoria cuando conviene. También usa disco y no siempre será más rápido. Hive ofrece consultas estructuradas sobre datos.",
+    "analogy": "HDFS es la despensa; Spark es la cocina. Cambiar la cocina no elimina la despensa.",
+    "code": "ventas = sc.textFile(\"hdfs://namenode:8020/curso/hive/datos_ventas/ventas_hive.csv\")\nventas.take(3)",
+    "lines": [
+      "textFile define un RDD cuyo origen es HDFS.",
+      "take pide tres registros al Driver."
+    ],
+    "check": "¿Dónde permanece el archivo?",
+    "answers": [
+      "En HDFS",
+      "En una nueva base Spark"
+    ],
+    "correct": 0,
+    "remember": "Spark es un motor, no un lenguaje ni un reemplazo de HDFS.",
+    "source": {
+      "file": "Semana_09_SPARK.md",
+      "section": "§1–2 y §9"
+    }
+  },
+  {
+    "id": "cluster",
+    "week": 9,
+    "title": "Reconocer Master, Worker y aplicación",
+    "explanation": "En Standalone, Master administra recursos y Worker los aporta. El Driver coordina una aplicación y sus Executors ejecutan Tasks. Worker y Executor no son lo mismo; tampoco equivalen a NameNode o DataNode.",
+    "analogy": "El Driver organiza la receta; Master asigna cocina; Workers aportan mesas; Executors realizan el trabajo.",
+    "code": "./spark-shell --master spark://spark-master:7077\nsc.master\nsc.version",
+    "lines": [
+      "En la terminal del contenedor spark-master, inicia Scala en el clúster.",
+      "Dentro de Scala, consulta la dirección Master.",
+      "Consulta la versión realmente instalada."
+    ],
+    "check": "¿Quién coordina la aplicación?",
+    "answers": [
+      "Driver",
+      "DataNode"
+    ],
+    "correct": 0,
+    "remember": "La conexión 7077 apunta al Master; la interfaz web 8080 permite observar el entorno del curso.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicio 1; teoría §3–4"
+    }
+  },
+  {
+    "id": "rdd",
+    "week": 9,
+    "title": "Tu primer RDD",
+    "explanation": "Un RDD es una colección distribuida e inmutable. Se divide en particiones lógicas; cuatro particiones no requieren cuatro Workers. El lineage conserva las transformaciones para poder reconstruir particiones perdidas.",
+    "analogy": "Repartir cien fichas en cuatro bandejas no significa disponer de cuatro personas.",
+    "code": "val datos = sc.parallelize(1 to 100, 4)\ndatos.getNumPartitions\ndatos.count()",
+    "lines": [
+      "parallelize distribuye los cien números de Scala en cuatro particiones.",
+      "Consulta divisiones lógicas, no máquinas.",
+      "count solicita la cantidad de elementos."
+    ],
+    "check": "¿Qué devuelve count?",
+    "answers": [
+      "4",
+      "100"
+    ],
+    "correct": 1,
+    "remember": "Partición Spark ≠ bloque HDFS ≠ Worker.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicio 2; teoría §5"
+    }
+  },
+  {
+    "id": "map",
+    "week": 9,
+    "title": "Transformar sin cambiar el original",
+    "explanation": "map aplica una función a cada elemento y devuelve un nuevo RDD. No altera los datos originales.",
+    "analogy": "Fotocopiar una lista y duplicar sus precios no cambia la lista original.",
+    "code": "val dobles = datos.map(x => x * 2)\ndobles.take(3)\ndatos.take(3)",
+    "lines": [
+      "Crea otro RDD con valores duplicados.",
+      "Pide una muestra: 2, 4, 6.",
+      "El original conserva 1, 2, 3."
+    ],
+    "check": "¿Qué operación transforma cada valor?",
+    "answers": [
+      "map",
+      "count"
+    ],
+    "correct": 0,
+    "remember": "Transformar produce una colección nueva.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicio 3"
+    }
+  },
+  {
+    "id": "filter",
+    "week": 9,
+    "title": "Seleccionar y cambiar de lenguaje",
+    "explanation": "filter conserva elementos que cumplen una condición. Scala usa x => expresión; PySpark usa lambda x: expresión. El motor distribuido y las ideas permanecen. No todo programa Python se distribuye automáticamente.",
+    "analogy": "Un portero deja pasar solo a quienes cumplen una regla; no cambia sus identidades.",
+    "code": "datos = sc.parallelize(range(1, 101), 4)\nmayores = datos.filter(lambda x: x > 50)\nmayores.count()",
+    "lines": [
+      "Python excluye 101: crea números de 1 a 100.",
+      "Conserva los mayores que 50.",
+      "La acción devuelve 50."
+    ],
+    "check": "¿La lambda de PySpark usa =>?",
+    "answers": [
+      "Sí",
+      "No, usa lambda y dos puntos"
+    ],
+    "correct": 1,
+    "remember": "Scala: x => x > 50. PySpark: lambda x: x > 50.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicios 4–5; teoría §10"
+    }
+  },
+  {
+    "id": "lazy",
+    "week": 9,
+    "title": "Planificar antes de pedir resultados",
+    "explanation": "filter y map son transformaciones diferidas. Una acción como count, take o reduce solicita un resultado. Spark organiza dependencias en un DAG. Una acción desencadena un Job; puede haber Stages separados por shuffle y Tasks por partición.",
+    "analogy": "Primero escribes una receta; al pedir el plato comienza el trabajo necesario.",
+    "code": "pares = datos.filter(lambda x: x % 2 == 0)\ncuadrados = pares.map(lambda x: x * x)\ncuadrados.count()",
+    "lines": [
+      "Registra el filtro de pares.",
+      "Registra el cálculo del cuadrado.",
+      "Solicita un resultado y desencadena el procesamiento necesario."
+    ],
+    "check": "¿Qué línea pide el resultado?",
+    "answers": [
+      "filter",
+      "count"
+    ],
+    "correct": 1,
+    "remember": "Transformaciones describen; acciones solicitan resultados. collect puede saturar el Driver: prefiere muestras pequeñas.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicios 6–8; teoría §4 y §6"
+    }
+  },
+  {
+    "id": "sales-rdd",
+    "week": 9,
+    "title": "Ventas: del texto a las claves",
+    "explanation": "El CSV del curso no tiene encabezado: id_venta, fecha, cliente, ciudad, categoria, monto. split deja texto; convierte monto antes de comparar o sumar. reduceByKey agrega por clave y puede redistribuir datos (shuffle).",
+    "analogy": "Separar una boleta permite leer cada casilla; agrupar boletas por ciudad permite sumar su dinero.",
+    "code": "campos = ventas.map(lambda linea: linea.split(\",\"))\naltas = campos.filter(lambda x: float(x[5]) > 300000)\npares = altas.map(lambda x: (x[3], float(x[5])))\npares.reduceByKey(lambda a, b: a + b).collect()",
+    "lines": [
+      "Separa las seis columnas en un nuevo RDD.",
+      "Convierte el sexto campo y filtra montos.",
+      "Usa ciudad como clave y monto como valor.",
+      "Suma por ciudad y trae solo el resultado agregado pequeño."
+    ],
+    "check": "¿Qué índice representa monto?",
+    "answers": [
+      "4",
+      "5"
+    ],
+    "correct": 1,
+    "remember": "Separar campos no crea un DataFrame. HDFS conserva el archivo.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicios 9–15"
+    }
+  },
+  {
+    "id": "ecosystem",
+    "week": 9,
+    "title": "Ubicar el ecosistema sin adelantarse",
+    "explanation": "Spark Core sostiene RDD, tareas y recursos. Spark SQL permite datos estructurados y su optimizador Catalyst usa el esquema. La teoría también presenta Datasets tipados de Scala/Java, Structured Streaming, MLlib y GraphX como panorama. Aquí la práctica se centra en RDD, DataFrames y SQL, sin inventar semanas futuras.",
+    "analogy": "Un taller tiene varias herramientas; aprender a cortar no exige usar todas a la vez.",
+    "code": "val datos = sc.parallelize(1 to 100, 4)\ndatos.take(5)",
+    "lines": [
+      "La API RDD se apoya en Spark Core.",
+      "Una acción obtiene una muestra sin estudiar todavía otras bibliotecas."
+    ],
+    "check": "¿PySpark convierte cualquier bucle Python en distribuido?",
+    "answers": [
+      "Sí",
+      "No"
+    ],
+    "correct": 1,
+    "remember": "Elige la abstracción adecuada. Conocer el panorama no supone un formato oficial de evaluación.",
+    "source": {
+      "file": "Semana_09_SPARK.md",
+      "section": "§7–8 y §10"
+    }
+  },
+  {
+    "id": "dataframe",
+    "week": 10,
+    "title": "Filas, columnas y nombres",
+    "explanation": "Un DataFrame añade estructura tabular y un schema a datos distribuidos. Un RDD permite objetos más generales; el DataFrame permite referirse a columnas por nombre.",
+    "analogy": "Una tabla de gastos con encabezados evita recordar qué significa cada casilla por posición.",
+    "code": "datos = [(1, \"Ana\", \"Santiago\", 150000.0), (2, \"Luis\", \"Valparaiso\", 85000.0)]\ndf = spark.createDataFrame(datos, [\"id\", \"cliente\", \"ciudad\", \"monto\"])\ndf.show()",
+    "lines": [
+      "Prepara dos registros locales del ejemplo.",
+      "Crea un DataFrame con cuatro columnas.",
+      "Muestra sus filas."
+    ],
+    "check": "¿show muestra filas o tipos?",
+    "answers": [
+      "Filas",
+      "Tipos"
+    ],
+    "correct": 0,
+    "remember": "Las filas siguen distribuidas aunque la salida parezca una tabla local.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicio 1"
+    }
+  },
+  {
+    "id": "schema",
+    "week": 10,
+    "title": "El schema explica los tipos",
+    "explanation": "printSchema muestra nombres, tipos y nulabilidad. columns entrega nombres y dtypes combina nombres con tipos. Inferir observa los datos; un schema explícito declara la estructura que ya conoces.",
+    "analogy": "El schema es la ficha de cada casilla: aquí va texto; aquí, un número.",
+    "code": "df.printSchema()\ndf.columns\ndf.dtypes",
+    "lines": [
+      "Inspecciona tipos, por ejemplo monto double.",
+      "Consulta la lista de nombres.",
+      "Consulta nombres y tipos juntos."
+    ],
+    "check": "¿Renombrar columnas convierte texto a número?",
+    "answers": [
+      "Sí",
+      "No"
+    ],
+    "correct": 1,
+    "remember": "toDF asigna nombres; un schema explícito controla la estructura esperada.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicios 2 y 8"
+    }
+  },
+  {
+    "id": "select",
+    "week": 10,
+    "title": "Seleccionar columnas y filtrar filas",
+    "explanation": "select elige columnas. filter elige filas según una condición Column. Combina condiciones con & y cada comparación entre paréntesis; no uses and de Python.",
+    "analogy": "Escoger casillas de una ficha es seleccionar; quedarte solo con ciertas fichas es filtrar.",
+    "code": "df.select(\"cliente\", \"monto\").show()\ndf.filter((df.ciudad == \"Santiago\") & (df.monto > 100000)).show()",
+    "lines": [
+      "Muestra solo cliente y monto.",
+      "Conserva filas de Santiago con monto superior a 100000."
+    ],
+    "check": "¿Qué operación reduce filas según una condición?",
+    "answers": [
+      "select",
+      "filter"
+    ],
+    "correct": 1,
+    "remember": "Ambas transformaciones devuelven nuevos DataFrames; df no cambia.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicios 3–4"
+    }
+  },
+  {
+    "id": "withColumn",
+    "week": 10,
+    "title": "Derivar una columna",
+    "explanation": "withColumn crea una columna calculada y devuelve un DataFrame. col permite construir una expresión sobre una columna identificada por nombre.",
+    "analogy": "Añadir una casilla de recargo en una copia de la planilla conserva la original.",
+    "code": "from pyspark.sql.functions import col\ndf_recargo = df.withColumn(\"monto_recargo\", col(\"monto\") * 1.10)\ndf_recargo.show()",
+    "lines": [
+      "Importa la función de columnas.",
+      "Guarda el nuevo DataFrame con recargo hipotético de 10%.",
+      "Muestra también la nueva columna."
+    ],
+    "check": "¿df original gana monto_recargo?",
+    "answers": [
+      "Sí",
+      "No"
+    ],
+    "correct": 1,
+    "remember": "Guarda el retorno de una transformación si quieres reutilizarlo.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicio 5"
+    }
+  },
+  {
+    "id": "csv",
+    "week": 10,
+    "title": "Volver al CSV de Hive",
+    "explanation": "El mismo archivo HDFS puede servir a Hive y Spark. No tiene encabezado; header=false conserva la primera venta. inferSchema intenta deducir tipos. toDF da nombres. Para control explícito, usa StructType y StructField (integer, string, double).",
+    "analogy": "La misma caja de boletas alimenta dos equipos de análisis, cada uno con su propia mesa.",
+    "code": "ventas_df = spark.read.option(\"header\", \"false\").option(\"inferSchema\", \"true\").csv(\"hdfs://namenode:8020/curso/hive/datos_ventas/ventas_hive.csv\")\nventas_df = ventas_df.toDF(\"id_venta\", \"fecha\", \"cliente\", \"ciudad\", \"categoria\", \"monto\")\nventas_df.printSchema()",
+    "lines": [
+      "Lee las ventas sin consumir una fila como encabezado.",
+      "Reemplaza _c0…_c5 por los nombres del curso.",
+      "Comprueba los tipos inferidos: no los supongas."
+    ],
+    "check": "¿header debe ser true?",
+    "answers": [
+      "Sí",
+      "No"
+    ],
+    "correct": 1,
+    "remember": "La guía espera 100000 registros en su archivo real; esta web no lo incorpora.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicios 6–8"
+    }
+  },
+  {
+    "id": "aggregation",
+    "week": 10,
+    "title": "Agrupar y medir",
+    "explanation": "groupBy forma grupos; agg calcula sum o avg dentro de cada grupo. alias nombra resultados. orderBy ordena, con desc para mayor a menor.",
+    "analogy": "Agrupa boletas por categoría antes de sumar lo vendido en cada una.",
+    "code": "from pyspark.sql.functions import sum, avg, desc\ntotales = ventas_schema_df.groupBy(\"categoria\").agg(sum(\"monto\").alias(\"total\"), avg(\"monto\").alias(\"promedio\"))\ntotales.orderBy(desc(\"total\")).show()",
+    "lines": [
+      "Importa las medidas y el orden descendente.",
+      "Agrupa por categoria y calcula dos medidas.",
+      "Muestra las categorías ordenadas por total."
+    ],
+    "check": "¿count de filas y sum de montos responden lo mismo?",
+    "answers": [
+      "Sí",
+      "No"
+    ],
+    "correct": 1,
+    "remember": "Filtra antes de agrupar cuando la condición corresponde a ventas individuales.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicios 9 y 11"
+    }
+  },
+  {
+    "id": "sql",
+    "week": 10,
+    "title": "Spark SQL sobre una vista temporal",
+    "explanation": "Registra el DataFrame para consultarlo con SQL. DataFrame API y SQL usan Spark. En el entorno del curso Spark no está conectado al Hive Metastore; registrar una vista no crea una tabla Hive.",
+    "analogy": "Poner un nombre a la planilla deja que el equipo la cite en sus consultas; no la registra en otro catálogo.",
+    "code": "ventas_schema_df.createOrReplaceTempView(\"ventas\")\nspark.sql(\"SELECT ciudad, AVG(monto) AS promedio FROM ventas GROUP BY ciudad\").show()",
+    "lines": [
+      "Registra una vista durante esta sesión.",
+      "Agrupa y promedia usando el motor Spark."
+    ],
+    "check": "¿La consulta corre en Hive por parecerse a HiveQL?",
+    "answers": [
+      "Sí",
+      "No"
+    ],
+    "correct": 1,
+    "remember": "SELECT / WHERE / GROUP BY / ORDER BY corresponden a seleccionar, filtrar, agrupar y ordenar.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicios 10, 12 y 14–15"
+    }
+  },
+  {
+    "id": "dates",
+    "week": 10,
+    "title": "De fecha textual a mes",
+    "explanation": "to_date interpreta un texto según su patrón. month extrae el mes de una fecha. En el conjunto de 2025 de la guía puedes agrupar por mes; con varios años debes distinguirlos.",
+    "analogy": "Convertir una etiqueta en fecha permite ordenar y agrupar como calendario, no como texto arbitrario.",
+    "code": "from pyspark.sql.functions import to_date, month\nfechas = ventas_schema_df.withColumn(\"fecha_date\", to_date(\"fecha\", \"yyyy-MM-dd\"))\nmeses = fechas.withColumn(\"mes\", month(\"fecha_date\"))",
+    "lines": [
+      "Importa conversión y extracción.",
+      "Crea una columna date a partir del texto.",
+      "Deriva el número de mes para agrupar y sumar después."
+    ],
+    "check": "¿month necesita el texto original sin interpretar?",
+    "answers": [
+      "Es mejor convertir a date",
+      "Siempre compara cadenas"
+    ],
+    "correct": 0,
+    "remember": "Comprueba printSchema después de convertir.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicio 13"
+    }
+  },
+  {
+    "id": "program",
+    "week": 10,
+    "title": "Guardar, probar y explicar",
+    "explanation": "pyspark es una consola interactiva, no un editor. Conserva programas en .py y ejecútalos con spark-submit. Trabaja por bloques: guardar, ejecutar, observar y corregir. Cada nueva ejecución comienza desde el inicio.",
+    "analogy": "Una receta escrita se puede volver a cocinar; una conversación con la cocina no guarda automáticamente un recetario.",
+    "code": "from pyspark.sql import SparkSession\nspark = SparkSession.builder.appName(\"MiAnalisis\").getOrCreate()\n# DECISIÓN: conservar nombres de columnas para agregar monto.\n# Aquí crea los datos y calcula el análisis.\nspark.stop()",
+    "lines": [
+      "Importa el punto de entrada de una aplicación.",
+      "Crea o recupera una sesión.",
+      "Explica la decisión con un comentario.",
+      "Añade el análisis antes del cierre; la plantilla no lo implementa.",
+      "Libera los recursos de la sesión al terminar."
+    ],
+    "check": "¿Qué ejecuta un archivo guardado?",
+    "answers": [
+      "vi",
+      "spark-submit"
+    ],
+    "correct": 1,
+    "remember": "Documenta decisiones e interpretaciones observadas; no inventes salidas.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicios 16–17"
+    }
+  }
+]

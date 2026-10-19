@@ -1,6 +1,8 @@
 # Operación Azulito
 
-Aplicación funcional de estudio adaptativo para Prueba 2 de Big Data. Parte desde conceptos esenciales de **HDFS y Hive de las semanas 5–8**, entrena selección múltiple y transforma los errores en prioridades de refuerzo.
+Aplicación de estudio adaptativo para Big Data, con **Misión Hadoop + Hive** (evaluación 2) y **Misión Spark ⚡** (evaluación 3). [Contenido, fuentes, validación y arquitectura Spark](docs/SPARK.md).
+
+La misión original parte desde conceptos esenciales de **HDFS y Hive de las semanas 5–8**, entrena selección múltiple y transforma los errores en prioridades de refuerzo.
 
 Meta académica mínima: **4,0**. Margen de entrenamiento deseado: **5,0–5,5 consistente**. El entrenamiento no garantiza la nota de una evaluación real.
 
@@ -25,7 +27,11 @@ npm run preview
 
 `npm run build` comprueba TypeScript y genera `dist/`. `preview` sirve el build localmente, normalmente en **http://localhost:4173**. Para alojamiento estático, publica `dist/`; la navegación de la aplicación no requiere rutas de servidor adicionales.
 
-## Qué incluye
+## Misión Spark ⚡
+
+17 lecciones y 42 ejercicios de las semanas 9–10: laboratorio con escritura de código, detective, simulaciones prácticas, Modo 4,0, glosario y progreso separado. 23 ejercicios tienen comprobación automática local, 15 usan rúbrica y 4 requieren Spark real. La web no ejecuta PySpark/Scala. La exportación incluye ambas misiones y admite los archivos antiguos. Consulta [docs/SPARK.md](docs/SPARK.md) para fuentes, límites y ampliación a nuevas semanas.
+
+## Qué incluye Hadoop + Hive
 
 - **Aprender:** 45 unidades breves, analogías, laboratorio, trampas, explicación más sencilla predefinida, «Entendido» y «Todavía me cuesta».
 - **Practicar:** preguntas individuales, corrección inmediata, explicación de la alternativa, regla de memoria y fuente.
@@ -42,7 +48,7 @@ npm run preview
 
 El repositorio original estaba vacío. No se encontraron los archivos `Semana_05_HDFS_Ejercicios.md`, `Semana_06_HIVE.md`, `Semana_06_HIVE_Ejercicios.md`, `Semana_07_HIVE_Ejercicios.md` o `Semana_08_HIVE_Ejercicios.md`, ni PPT/PDF asociados.
 
-**El temario maestro proporcionado por la usuaria es la fuente del banco y las lecciones.** Cada pregunta lo indica; no se atribuyen páginas o secciones inexistentes. No se consultó contenido académico externo. No se añadieron Spark, Kafka o Machine Learning.
+**El temario maestro proporcionado por la usuaria es la fuente del banco y las lecciones.** Cada pregunta lo indica; no se atribuyen páginas o secciones inexistentes. No se consultó contenido académico externo. Ese banco original no incorpora Spark, Kafka ni Machine Learning. Misión Spark agrega por separado el contenido de las guías originales de semanas 9–10; no modifica ese banco.
 
 Los casos incluyen bloques de 128 MiB, archivos de 29/155/305 MiB, un DataNode y replicación objetivo 3, HEALTHY con réplicas insuficientes, tablas externas y LOCATION, DROP externo con archivos persistentes, copias locales/HDFS, RAW/PROCESSED/ARCHIVE y bloques antiguos sin namespace recuperable.
 

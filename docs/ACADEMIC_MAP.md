@@ -31,3 +31,8 @@ El mini-mapa visual expresa relaciones, no un pipeline físico literal: Hive uti
 ## Pendiente académico real
 
 Contrastar con guías originales cuando se incorporen. No se afirma aprobación por el docente ni equivalencia exacta con la prueba real.
+
+
+## Ampliación Spark (evaluación 3)
+
+Misión Spark mantiene independiente el banco de evaluación 2. Las semanas 9 y 10 se basan en las tres guías originales de `juliopez/Hadoop`, fijadas al commit 6dbb5edb023d218b50b9d2494676ceb0de51ecb5. Véase [SPARK.md](SPARK.md) para la relación entre guías, lecciones, ejercicios y mecanismos de revisión. No se publica contenido de semanas futuras.

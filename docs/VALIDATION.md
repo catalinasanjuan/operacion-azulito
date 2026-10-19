@@ -1,4 +1,20 @@
-# Verificación — 2026-10-05
+# Verificación
+
+## Misión Spark — 2026-10-19
+
+- Estado inicial antes de cambios: 15/15 pruebas aprobadas, TypeScript y Vite correctos, checkout limpio.
+- Estado final: `npm test` ejecutó **30 pruebas: 30 aprobadas, 0 fallidas, 0 omitidas**. Incluye las 15 originales sin cambiar sus expectativas.
+- `npm run build`: TypeScript correcto y compilación estática generada en `dist/`. React se separa como vendor para mantener los bundles debajo del umbral de aviso de Vite.
+- Banco: 42 ejercicios únicos (20 semana 9 / 22 semana 10), 17 lecciones; referencias comprobadas en todos los validadores automáticos y revisión explícita para rúbricas/runtime.
+- Nuevas pruebas: integridad, equivalencias de código, rechazo de resultados incorrectos y mezclas de sintaxis, gramática acotada sin ejecución arbitraria, migración antigua, módulos independientes, importación inválida, persistencia, adaptación/espaciamiento, dominio sin ayudas y simulaciones sin duplicados.
+- Flujos DOM: navegación entre misiones, lecciones, código, pistas, rúbrica, borradores, reanudación tras desmontar, entrega, exportación conjunta e importación; JSON corrupto preservado.
+- Chromium real: `scripts/smoke-browser.cjs` pasó en el servidor de desarrollo y en el build servido por `npm run preview`. Comprobó escritura/validación, respuesta guardada tras recarga, entrega y regreso a Hadoop/Hive, sin errores de página.
+- Revisión de capturas a 1440 px (escritorio) y 390 px (móvil): navegación y editor visibles; sin desbordamiento horizontal de la página. Capturas temporales en `/tmp/azulito-spark-*.png`.
+- Node 24.19.0 / npm 11.9.0. Sin nuevas dependencias de aplicación ni cambios en el lockfile.
+
+Limitaciones: no se ejecutaron PySpark, Scala ni el clúster del profesor; sus cuatro actividades se marcan como pendientes de Spark real. La validación local comprueba los casos cerrados documentados, no código Spark general. No se certifican Firefox/Safari ni accesibilidad completa. No se realizó despliegue externo. Fuentes y extensión de semanas en [SPARK.md](SPARK.md).
+
+## Registro original de Hadoop/Hive — 2026-10-05
 
 ## Resultados reproducibles
 

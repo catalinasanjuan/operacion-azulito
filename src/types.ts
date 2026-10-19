@@ -1,3 +1,4 @@
+import type {SparkProgress} from './spark/types';
 export type Week = 5 | 6 | 7 | 8;
 export type Difficulty = 'basic' | 'intermediate' | 'hard';
 export type Question = { id:string; week:Week; topic:string; subtopic:string; concept:string; difficulty:Difficulty; type:string; prompt:string; options:string[]; correctAnswer:number; explanation:string; optionExplanations:string[]; memoryTip:string; source:string; highValue:boolean };
@@ -8,4 +9,4 @@ export type Presented = Question & {originalIndices:number[]};
 export type Session = {mode:'practice'|'exam'; questions:Presented[]; answers:(number|null)[]; index:number; revealed:boolean; started:number; done:boolean; recorded:boolean; label:string; poolIds?:string[]; scale:Scale};
 export type Scale = {min:number; pass:number; max:number; threshold:number};
 export type Exam = {id:string; at:number; grade:number; percentage:number; valid:boolean; session:Session};
-export type Progress = {version:1; studied:string[]; difficult:string[]; attempts:Attempt[]; exams:Exam[]; scale:Scale; session:Session|null; lastPage:string; lastWeek?:Week; lessonCursor:Partial<Record<Week,number>>};
+export type Progress = {version:1; spark?:SparkProgress; mission?:'hadoop'|'spark'; studied:string[]; difficult:string[]; attempts:Attempt[]; exams:Exam[]; scale:Scale; session:Session|null; lastPage:string; lastWeek?:Week; lessonCursor:Partial<Record<Week,number>>};
