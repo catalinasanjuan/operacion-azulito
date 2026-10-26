@@ -1,0 +1,50 @@
+[
+  {
+    "id_venta": 1,
+    "fecha": "2025-01-05",
+    "cliente": "Ana",
+    "ciudad": "Santiago",
+    "categoria": "Tecnologia",
+    "monto": 150000.0
+  },
+  {
+    "id_venta": 2,
+    "fecha": "2025-01-06",
+    "cliente": "Luis",
+    "ciudad": "Valparaiso",
+    "categoria": "Hogar",
+    "monto": 85000.0
+  },
+  {
+    "id_venta": 3,
+    "fecha": "2025-02-07",
+    "cliente": "Carla",
+    "ciudad": "Concepcion",
+    "categoria": "Tecnologia",
+    "monto": 210000.0
+  },
+  {
+    "id_venta": 4,
+    "fecha": "2025-02-08",
+    "cliente": "Pedro",
+    "ciudad": "Santiago",
+    "categoria": "Tecnologia",
+    "monto": 95000.0
+  },
+  {
+    "id_venta": 5,
+    "fecha": "2025-03-09",
+    "cliente": "Maria",
+    "ciudad": "Temuco",
+    "categoria": "Tecnologia",
+    "monto": 180000.0
+  },
+  {
+    "id_venta": 6,
+    "fecha": "2025-03-10",
+    "cliente": "Diego",
+    "ciudad": "Santiago",
+    "categoria": "Hogar",
+    "monto": 120000.0
+  }
+]

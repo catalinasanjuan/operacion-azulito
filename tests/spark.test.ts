@@ -10,7 +10,7 @@ import type {SparkAttempt,SparkExam} from '../src/spark/types.ts';
 const byId=(id:string)=>exercises.find(e=>e.id===id)!;
 const attempt=(id:string,outcome:SparkAttempt['outcome']='correct',hints=0):SparkAttempt=>({id:crypto.randomUUID(),exerciseId:id,at:Date.now(),answer:outcome==='correct'?byId(id).solution:'0',outcome,hints,solutionSeen:false,mode:'lab',criteria:[]});
 test('Spark bank: stable unique content, complete metadata, published weeks and significant writing coverage',()=>{
- assert.equal(exercises.length,42);assert.equal(sparkLessons.length,17);assert.equal(new Set(exercises.map(e=>e.id)).size,42);assert.equal(new Set(exercises.map(e=>e.prompt)).size,42);
+ assert.equal(exercises.filter(e=>!e.training).length,42);assert.equal(exercises.length,56);assert.equal(sparkLessons.length,17);assert.equal(new Set(exercises.map(e=>e.id)).size,56);assert.equal(new Set(exercises.map(e=>e.prompt)).size,56);
  assert.deepEqual(sparkWeeks.map(w=>w.id),[9,10]);assert.ok(exercises.filter(e=>e.level>0).length>=30);assert.ok(exercises.some(e=>e.source.origin==='original'));
  for(const e of exercises){assert.ok(sparkWeeks.some(w=>w.id===e.week&&w.status==='published'&&w.concepts.includes(e.concept)));for(const k of ['id','title','prompt','solution','expected','explanation'] as const)assert.ok(e[k].trim(),e.id+' '+k);assert.ok(e.hints.length>=2);assert.ok(e.source.file.startsWith('Semana_'));assert.ok(e.source.section);if(e.validation.kind==='runtime'||e.validation.kind==='rubric')assert.ok(e.validation.criteria.length>=2);}
  for(const l of sparkLessons){assert.ok(l.code&&l.lines.length&&l.analogy&&l.remember&&l.source.file);assert.ok(l.correct>=0&&l.correct<l.answers.length);assert.ok([9,10].includes(l.week));}

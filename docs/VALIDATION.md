@@ -1,5 +1,14 @@
 # Verificación
 
+## Desarrollo de la prueba — 2026-10-26
+
+- Estado inicial de esta ampliación: 30/30 pruebas aprobadas; checkout sin cambios.
+- Guías contrastadas en el repositorio del profesor: semana 10, nivel 3, ejercicio 12 y nivel 4 completo; se comprobó que las semanas Spark publicadas en presentaciones son 9/10. Mismo commit académico fijado.
+- 14 casos nuevos (10 Scala / 4 PySpark), conservando los 42 anteriores: total 56. Se comprueban referencias, datos y resultados esperados de la muestra; no se afirma ejecución Spark.
+- `npm test`: **36 pruebas aprobadas, 0 fallos ni omisiones**. Incluye selección de casos sin alternativas, focos/lenguajes, cobertura nivel 4, resultados de la muestra, formato de sesiones, compatibilidad, código propio descargable y todos los flujos anteriores.
+- `npm run build`: TypeScript/Vite correctos. Prueba Chromium sobre la compilación servida por preview: recorrido focalizado, lenguajes, descarga, recarga/entrega de simulación y escritorio/móvil. No se certifica ejecución Scala/PySpark ni compatibilidad de clúster.
+
+
 ## Misión Spark — 2026-10-19
 
 - Estado inicial antes de cambios: 15/15 pruebas aprobadas, TypeScript y Vite correctos, checkout limpio.

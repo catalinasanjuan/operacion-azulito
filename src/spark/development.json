@@ -1,0 +1,781 @@
+[
+  {
+    "id": "spark-dev-12-scala",
+    "week": 10,
+    "concept": "sql",
+    "title": "Ejercicio 12 · Spark SQL en Scala",
+    "language": "Scala",
+    "level": 3,
+    "task": "case",
+    "prompt": "El área comercial pide el monto total por ciudad, considerando solo Tecnologia. Escribe en Scala la creación del DataFrame, la vista temporal y la consulta Spark SQL. Resuelve también con DataFrame API y explica por qué coinciden.",
+    "starter": "// Planifica → escribe → comprueba → interpreta.\n",
+    "expected": "ciudad | total_ventas\nSantiago | 245000.0\nConcepcion | 210000.0\nTemuco | 180000.0",
+    "hints": [
+      "Escribe primero entrada, condición, agrupación, medida y salida en tus palabras.",
+      "Construye y comprueba un bloque a la vez; guarda el resultado de cada transformación.",
+      "Revisa nombres, tipos y orden de las operaciones antes de consultar la referencia."
+    ],
+    "solution": "import spark.implicits._\nimport org.apache.spark.sql.functions._\nval datos = Seq(\n  (1, \"2025-01-05\", \"Ana\", \"Santiago\", \"Tecnologia\", 150000.0),\n  (2, \"2025-01-06\", \"Luis\", \"Valparaiso\", \"Hogar\", 85000.0),\n  (3, \"2025-02-07\", \"Carla\", \"Concepcion\", \"Tecnologia\", 210000.0),\n  (4, \"2025-02-08\", \"Pedro\", \"Santiago\", \"Tecnologia\", 95000.0),\n  (5, \"2025-03-09\", \"Maria\", \"Temuco\", \"Tecnologia\", 180000.0),\n  (6, \"2025-03-10\", \"Diego\", \"Santiago\", \"Hogar\", 120000.0)\n)\nval ventas = datos.toDF(\"id_venta\", \"fecha\", \"cliente\", \"ciudad\", \"categoria\", \"monto\")\nventas.createOrReplaceTempView(\"ventas\")\nval porSQL = spark.sql(\"\"\"\nSELECT ciudad, SUM(monto) AS total_ventas\nFROM ventas\nWHERE categoria = 'Tecnologia'\nGROUP BY ciudad\nORDER BY total_ventas DESC, ciudad ASC\n\"\"\")\nporSQL.show()\nval porAPI = ventas.filter(col(\"categoria\") === \"Tecnologia\").groupBy(\"ciudad\").agg(sum(\"monto\").alias(\"total_ventas\")).orderBy(desc(\"total_ventas\"), asc(\"ciudad\"))\nporAPI.show()",
+    "explanation": "La referencia es una solución posible, no una cadena que debas copiar. Contrasta cada criterio y ejecuta tu código en Spark real. No se conoce la pauta oficial de calificación.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Nivel 3 · Ejercicio 12 (relación con ejercicio 11)",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Construye la muestra y registra la vista ventas.",
+        "Filtra categoria = Tecnologia antes de agrupar.",
+        "Agrupa por ciudad y calcula SUM(monto).",
+        "Ordena el total descendente y muestra el resultado.",
+        "Compara con DataFrame API e interpreta por qué coinciden."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "exercise12",
+      "context": "Muestra de entrenamiento ORIGINAL, no el CSV completo del profesor. Campos: id_venta, fecha, cliente, ciudad, categoria, monto\n1,2025-01-05,Ana,Santiago,Tecnologia,150000.0\n2,2025-01-06,Luis,Valparaiso,Hogar,85000.0\n3,2025-02-07,Carla,Concepcion,Tecnologia,210000.0\n4,2025-02-08,Pedro,Santiago,Tecnologia,95000.0\n5,2025-03-09,Maria,Temuco,Tecnologia,180000.0\n6,2025-03-10,Diego,Santiago,Hogar,120000.0",
+      "steps": [
+        {
+          "title": "Traducir el caso",
+          "body": "Se necesitan ventas de Tecnologia, una fila por ciudad y suma de monto, ordenada de mayor a menor."
+        },
+        {
+          "title": "Registrar los datos",
+          "body": "Crea el DataFrame y registra una vista temporal ventas. Eso no crea una tabla Hive."
+        },
+        {
+          "title": "Programar",
+          "body": "WHERE filtra antes de GROUP BY; SUM suma dinero. Usa el alias para ordenar."
+        },
+        {
+          "title": "Comparar",
+          "body": "Resuelve también con DataFrame API. Santiago suma 245000 porque cuenta las dos ventas de Tecnologia; Hogar queda fuera."
+        }
+      ],
+      "run": "Dentro del contenedor spark-master: cd /spark/bin; ./spark-shell --master spark://spark-master:7077. Para instrucciones de script usa :load /ruta/analisis.scala dentro de scala>. Para un object con main, compila un JAR con versiones compatibles de Scala/Spark y envíalo desde la terminal: /spark/bin/spark-submit --class NombreDelObjeto --master spark://spark-master:7077 analisis.jar. spark-submit no ejecuta directamente un archivo .scala. Comprueba sc.version en el clúster antes de elegir versiones de compilación."
+    }
+  },
+  {
+    "id": "spark-dev-12-python",
+    "week": 10,
+    "concept": "sql",
+    "title": "Ejercicio 12 · contraste con la guía PySpark",
+    "language": "PySpark",
+    "level": 3,
+    "task": "case",
+    "prompt": "Resuelve Tecnologia por ciudad con una vista temporal y Spark SQL en PySpark. Escribe también la API DataFrame equivalente y una interpretación de la salida.",
+    "starter": "# Planifica → escribe → comprueba → interpreta.\n",
+    "expected": "ciudad | total_ventas\nSantiago | 245000.0\nConcepcion | 210000.0\nTemuco | 180000.0",
+    "hints": [
+      "Escribe primero entrada, condición, agrupación, medida y salida en tus palabras.",
+      "Construye y comprueba un bloque a la vez; guarda el resultado de cada transformación.",
+      "Revisa nombres, tipos y orden de las operaciones antes de consultar la referencia."
+    ],
+    "solution": "from pyspark.sql.functions import sum, avg, count, desc\ndatos = [(1, '2025-01-05', 'Ana', 'Santiago', 'Tecnologia', 150000.0), (2, '2025-01-06', 'Luis', 'Valparaiso', 'Hogar', 85000.0), (3, '2025-02-07', 'Carla', 'Concepcion', 'Tecnologia', 210000.0), (4, '2025-02-08', 'Pedro', 'Santiago', 'Tecnologia', 95000.0), (5, '2025-03-09', 'Maria', 'Temuco', 'Tecnologia', 180000.0), (6, '2025-03-10', 'Diego', 'Santiago', 'Hogar', 120000.0)]\nventas = spark.createDataFrame(datos, ['id_venta', 'fecha', 'cliente', 'ciudad', 'categoria', 'monto'])\nventas.createOrReplaceTempView(\"ventas\")\npor_sql = spark.sql(\"\"\"\nSELECT ciudad, SUM(monto) AS total_ventas\nFROM ventas\nWHERE categoria = 'Tecnologia'\nGROUP BY ciudad\nORDER BY total_ventas DESC, ciudad ASC\n\"\"\")\npor_sql.show()\npor_api = ventas.filter(ventas.categoria == \"Tecnologia\").groupBy(\"ciudad\").agg(sum(\"monto\").alias(\"total_ventas\")).orderBy(desc(\"total_ventas\"), \"ciudad\")\npor_api.show()",
+    "explanation": "La referencia es una solución posible, no una cadena que debas copiar. Contrasta cada criterio y ejecuta tu código en Spark real. No se conoce la pauta oficial de calificación.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Nivel 3 · Ejercicio 12 (relación con ejercicio 11)",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Construye la muestra y registra la vista ventas.",
+        "Filtra categoria = Tecnologia antes de agrupar.",
+        "Agrupa por ciudad y calcula SUM(monto).",
+        "Ordena el total descendente y muestra el resultado.",
+        "Compara con DataFrame API e interpreta por qué coinciden."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "exercise12",
+      "context": "Muestra de entrenamiento ORIGINAL, no el CSV completo del profesor. Campos: id_venta, fecha, cliente, ciudad, categoria, monto\n1,2025-01-05,Ana,Santiago,Tecnologia,150000.0\n2,2025-01-06,Luis,Valparaiso,Hogar,85000.0\n3,2025-02-07,Carla,Concepcion,Tecnologia,210000.0\n4,2025-02-08,Pedro,Santiago,Tecnologia,95000.0\n5,2025-03-09,Maria,Temuco,Tecnologia,180000.0\n6,2025-03-10,Diego,Santiago,Hogar,120000.0",
+      "steps": [
+        {
+          "title": "Traducir el caso",
+          "body": "Se necesitan ventas de Tecnologia, una fila por ciudad y suma de monto, ordenada de mayor a menor."
+        },
+        {
+          "title": "Registrar los datos",
+          "body": "Crea el DataFrame y registra una vista temporal ventas. Eso no crea una tabla Hive."
+        },
+        {
+          "title": "Programar",
+          "body": "WHERE filtra antes de GROUP BY; SUM suma dinero. Usa el alias para ordenar."
+        },
+        {
+          "title": "Comparar",
+          "body": "Resuelve también con DataFrame API. Santiago suma 245000 porque cuenta las dos ventas de Tecnologia; Hogar queda fuera."
+        }
+      ],
+      "run": "Guarda analisis.py en el contenedor spark-master. En la terminal configura PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 analisis.py. No escribas comandos de terminal dentro de >>>. Cada ejecución comienza desde el primer bloque."
+    }
+  },
+  {
+    "id": "spark-dev-16-python",
+    "week": 10,
+    "concept": "program",
+    "title": "Nivel 4 · programa PySpark por bloques",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Escribe un archivo .py completo para los cinco clientes. Desarrolla los tres bloques del ejercicio 16: sesión/datos, DataFrame y promedio/cierre. Indica cómo lo guardarías y ejecutarías desde la terminal.",
+    "starter": "# Planifica → escribe → comprueba → interpreta.\n",
+    "expected": "Cinco filas y monto_promedio = 144000.0.",
+    "hints": [
+      "Escribe primero entrada, condición, agrupación, medida y salida en tus palabras.",
+      "Construye y comprueba un bloque a la vez; guarda el resultado de cada transformación.",
+      "Revisa nombres, tipos y orden de las operaciones antes de consultar la referencia."
+    ],
+    "solution": "from pyspark.sql import SparkSession\nfrom pyspark.sql.functions import avg\nspark = SparkSession.builder.appName(\"Entrenamiento16\").getOrCreate()\ndatos = [(\"Ana\", 150000.0), (\"Luis\", 85000.0), (\"Carla\", 210000.0), (\"Pedro\", 95000.0), (\"Maria\", 180000.0)]\ndf = spark.createDataFrame(datos, [\"cliente\", \"monto\"])\ndf.show()\ndf.agg(avg(\"monto\").alias(\"monto_promedio\")).show()\nspark.stop()",
+    "explanation": "La referencia es una solución posible, no una cadena que debas copiar. Contrasta cada criterio y ejecuta tu código en Spark real. No se conoce la pauta oficial de calificación.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Nivel 4 · Ejercicio 16 · bloques 1–3 y pasos 1–3",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Inicia SparkSession y crea los cinco clientes con monto numérico.",
+        "Crea las columnas cliente/monto y muestra las filas.",
+        "Calcula AVG(monto), asigna un alias y muestra el promedio.",
+        "Cierra con spark.stop después del análisis.",
+        "Distingue edición y ejecución; usa el comando apropiado para el lenguaje."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "level4",
+      "context": "Datos originales del ejercicio 16: Ana 150000.0, Luis 85000.0, Carla 210000.0, Pedro 95000.0, Maria 180000.0. Columnas cliente y monto.",
+      "steps": [
+        {
+          "title": "Bloque 1 · sesión y datos",
+          "body": "Inicia SparkSession y define los cinco registros. Guarda el archivo."
+        },
+        {
+          "title": "Bloque 2 · DataFrame",
+          "body": "Crea cliente y monto y muestra las cinco filas antes de agregar."
+        },
+        {
+          "title": "Bloque 3 · análisis",
+          "body": "Calcula avg(monto), nombra la salida y muestra el resultado. Deja spark.stop al final."
+        },
+        {
+          "title": "Guardar y ejecutar",
+          "body": "Edita, guarda, ejecuta y observa. Cada ejecución vuelve a recorrer todos los bloques."
+        }
+      ],
+      "run": "Guarda analisis.py en el contenedor spark-master. En la terminal configura PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 analisis.py. No escribas comandos de terminal dentro de >>>. Cada ejecución comienza desde el primer bloque."
+    }
+  },
+  {
+    "id": "spark-dev-16-scala",
+    "week": 10,
+    "concept": "program",
+    "title": "Nivel 4 · programa equivalente en Scala",
+    "language": "Scala",
+    "level": 4,
+    "task": "case",
+    "prompt": "Adapta los tres bloques del ejercicio 16 a una aplicación Scala con object AnalisisVentas y main. Inicia sesión, crea los cinco clientes y el DataFrame, calcula promedio y cierra. Explica cómo entregarías el JAR.",
+    "starter": "// Planifica → escribe → comprueba → interpreta.\n",
+    "expected": "Cinco filas y monto_promedio = 144000.0. Aplicación compilada: usa --class AnalisisVentas.",
+    "hints": [
+      "Escribe primero entrada, condición, agrupación, medida y salida en tus palabras.",
+      "Construye y comprueba un bloque a la vez; guarda el resultado de cada transformación.",
+      "Revisa nombres, tipos y orden de las operaciones antes de consultar la referencia."
+    ],
+    "solution": "import org.apache.spark.sql.SparkSession\nimport org.apache.spark.sql.functions._\nobject AnalisisVentas {\n  def main(args: Array[String]): Unit = {\n    val spark = SparkSession.builder().appName(\"Entrenamiento16Scala\").getOrCreate()\n    import spark.implicits._\n    val datos = Seq((\"Ana\", 150000.0), (\"Luis\", 85000.0), (\"Carla\", 210000.0), (\"Pedro\", 95000.0), (\"Maria\", 180000.0))\n    val df = datos.toDF(\"cliente\", \"monto\")\n    df.show()\n    df.agg(avg(\"monto\").alias(\"monto_promedio\")).show()\n    spark.stop()\n  }\n}",
+    "explanation": "La referencia es una solución posible, no una cadena que debas copiar. Contrasta cada criterio y ejecuta tu código en Spark real. El nivel 4 original enseña PySpark; esta es una adaptación educativa explícita a Scala.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Nivel 4 · Ejercicio 16 · adaptación educativa a Scala",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Inicia SparkSession y crea los cinco clientes con monto numérico.",
+        "Crea las columnas cliente/monto y muestra las filas.",
+        "Calcula AVG(monto), asigna un alias y muestra el promedio.",
+        "Cierra con spark.stop después del análisis.",
+        "Distingue edición y ejecución; usa el comando apropiado para el lenguaje."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "level4",
+      "context": "Datos originales del ejercicio 16: Ana 150000.0, Luis 85000.0, Carla 210000.0, Pedro 95000.0, Maria 180000.0. Columnas cliente y monto.",
+      "steps": [
+        {
+          "title": "Bloque 1 · sesión y datos",
+          "body": "Inicia SparkSession y define los cinco registros. Guarda el archivo."
+        },
+        {
+          "title": "Bloque 2 · DataFrame",
+          "body": "Crea cliente y monto y muestra las cinco filas antes de agregar."
+        },
+        {
+          "title": "Bloque 3 · análisis",
+          "body": "Calcula avg(monto), nombra la salida y muestra el resultado. Deja spark.stop al final."
+        },
+        {
+          "title": "Guardar y ejecutar",
+          "body": "Edita, guarda, ejecuta y observa. Cada ejecución vuelve a recorrer todos los bloques."
+        }
+      ],
+      "run": "En el contenedor spark-master inicia /spark/bin/spark-shell --master spark://spark-master:7077. Dentro de scala>, carga tu archivo con :load /ruta/spark-dev-16-scala.scala y luego invoca AnalisisVentas.main(Array.empty[String]). Al terminar, spark.stop cierra la sesión usada por la aplicación. Para una entrega compilada, genera un JAR con versiones compatibles y desde la terminal usa /spark/bin/spark-submit --class AnalisisVentas --master spark://spark-master:7077 analisis.jar. No envíes directamente el .scala a spark-submit. Comprueba sc.version antes de elegir versiones de compilación."
+    }
+  },
+  {
+    "id": "spark-dev-16-cambio-scala",
+    "week": 10,
+    "concept": "program",
+    "title": "Nivel 4 · modificar y volver a ejecutar en Scala",
+    "language": "Scala",
+    "level": 4,
+    "task": "case",
+    "prompt": "Escribe la nueva versión completa de AnalisisVentas con Diego 120000.0. Explica en comentarios cómo cambió el promedio y qué bloques vuelven a ejecutarse.",
+    "starter": "// Planifica → escribe → comprueba → interpreta.\n",
+    "expected": "Seis filas y promedio 140000.0.",
+    "hints": [
+      "Escribe primero entrada, condición, agrupación, medida y salida en tus palabras.",
+      "Construye y comprueba un bloque a la vez; guarda el resultado de cada transformación.",
+      "Revisa nombres, tipos y orden de las operaciones antes de consultar la referencia."
+    ],
+    "solution": "import org.apache.spark.sql.SparkSession\nimport org.apache.spark.sql.functions._\nobject AnalisisVentas {\n  def main(args: Array[String]): Unit = {\n    val spark = SparkSession.builder().appName(\"Entrenamiento16Scala\").getOrCreate()\n    import spark.implicits._\n    val datos = Seq((\"Ana\", 150000.0), (\"Luis\", 85000.0), (\"Carla\", 210000.0), (\"Pedro\", 95000.0), (\"Maria\", 180000.0), (\"Diego\", 120000.0))\n    val df = datos.toDF(\"cliente\", \"monto\")\n    df.show()\n    df.agg(avg(\"monto\").alias(\"monto_promedio\")).show()\n    // INTERPRETACIÓN: el promedio esperado baja de 144000 a 140000.\n    // El archivo vuelve a ejecutarse desde su inicio.\n    spark.stop()\n  }\n}",
+    "explanation": "La referencia es una solución posible, no una cadena que debas copiar. Contrasta cada criterio y ejecuta tu código en Spark real. El nivel 4 original enseña PySpark; esta es una adaptación educativa explícita a Scala.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Nivel 4 · Ejercicio 16 · paso 4, adaptación a Scala",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Conserva cinco registros y añade Diego 120000.0.",
+        "Recalcula el promedio sobre los seis datos, no sobre promedios previos.",
+        "Guarda y ejecuta todos los bloques de nuevo.",
+        "Compara 144000 antes y 140000 después, explicando por qué baja."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "level4",
+      "context": "Datos originales del ejercicio 16: Ana 150000.0, Luis 85000.0, Carla 210000.0, Pedro 95000.0, Maria 180000.0. Columnas cliente y monto. Añade Diego 120000.0.",
+      "steps": [
+        {
+          "title": "Conservar la primera evidencia",
+          "body": "Cinco registros suman 720000; el promedio esperado es 144000."
+        },
+        {
+          "title": "Modificar el conjunto",
+          "body": "Añade Diego 120000 sin borrar los cinco anteriores, guarda y vuelve a ejecutar el archivo completo."
+        },
+        {
+          "title": "Interpretar el cambio",
+          "body": "Seis registros suman 840000; el nuevo promedio esperado es 140000. Distingue cálculo esperado de salida observada."
+        }
+      ],
+      "run": "En el contenedor spark-master inicia /spark/bin/spark-shell --master spark://spark-master:7077. Dentro de scala>, carga tu archivo con :load /ruta/spark-dev-16-cambio-scala.scala y luego invoca AnalisisVentas.main(Array.empty[String]). Al terminar, spark.stop cierra la sesión usada por la aplicación. Para una entrega compilada, genera un JAR con versiones compatibles y desde la terminal usa /spark/bin/spark-submit --class AnalisisVentas --master spark://spark-master:7077 analisis.jar. No envíes directamente el .scala a spark-submit. Comprueba sc.version antes de elegir versiones de compilación."
+    }
+  },
+  {
+    "id": "spark-dev-16-cambio-python",
+    "week": 10,
+    "concept": "program",
+    "title": "Nivel 4 · guardar y comparar en PySpark",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Reescribe el .py completo con Diego 120000.0 como sexto registro. Interpreta el cambio y explica cómo volverías a ejecutarlo sin confundir pyspark con un editor.",
+    "starter": "# Planifica → escribe → comprueba → interpreta.\n",
+    "expected": "Seis filas y promedio 140000.0.",
+    "hints": [
+      "Escribe primero entrada, condición, agrupación, medida y salida en tus palabras.",
+      "Construye y comprueba un bloque a la vez; guarda el resultado de cada transformación.",
+      "Revisa nombres, tipos y orden de las operaciones antes de consultar la referencia."
+    ],
+    "solution": "from pyspark.sql import SparkSession\nfrom pyspark.sql.functions import avg\nspark = SparkSession.builder.appName(\"Entrenamiento16\").getOrCreate()\ndatos = [(\"Ana\", 150000.0), (\"Luis\", 85000.0), (\"Carla\", 210000.0), (\"Pedro\", 95000.0), (\"Maria\", 180000.0), (\"Diego\", 120000.0)]\ndf = spark.createDataFrame(datos, [\"cliente\", \"monto\"])\ndf.show()\ndf.agg(avg(\"monto\").alias(\"monto_promedio\")).show()\n# INTERPRETACIÓN: el promedio esperado pasa de 144000 a 140000.\nspark.stop()",
+    "explanation": "La referencia es una solución posible, no una cadena que debas copiar. Contrasta cada criterio y ejecuta tu código en Spark real. No se conoce la pauta oficial de calificación.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Nivel 4 · Ejercicio 16 · paso 4",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Conserva cinco registros y añade Diego 120000.0.",
+        "Recalcula el promedio sobre los seis datos, no sobre promedios previos.",
+        "Guarda y ejecuta todos los bloques de nuevo.",
+        "Compara 144000 antes y 140000 después, explicando por qué baja."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "level4",
+      "context": "Datos originales del ejercicio 16: Ana 150000.0, Luis 85000.0, Carla 210000.0, Pedro 95000.0, Maria 180000.0. Columnas cliente y monto. Añade Diego 120000.0.",
+      "steps": [
+        {
+          "title": "Conservar la primera evidencia",
+          "body": "Cinco registros suman 720000; el promedio esperado es 144000."
+        },
+        {
+          "title": "Modificar el conjunto",
+          "body": "Añade Diego 120000 sin borrar los cinco anteriores, guarda y vuelve a ejecutar el archivo completo."
+        },
+        {
+          "title": "Interpretar el cambio",
+          "body": "Seis registros suman 840000; el nuevo promedio esperado es 140000. Distingue cálculo esperado de salida observada."
+        }
+      ],
+      "run": "Guarda analisis.py en el contenedor spark-master. En la terminal configura PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 analisis.py. No escribas comandos de terminal dentro de >>>. Cada ejecución comienza desde el primer bloque."
+    }
+  },
+  {
+    "id": "spark-dev-17-python",
+    "week": 10,
+    "concept": "program",
+    "title": "Nivel 4 · documentar decisiones e interpretaciones",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Conserva el programa de los cinco clientes y añade comentarios DECISIÓN, INTERPRETACIÓN y RESPUESTA sobre schema explícito. Explica razonamiento específico; no solo describas el método.",
+    "starter": "# Planifica → escribe → comprueba → interpreta.\n",
+    "expected": "Cinco filas, promedio esperado 144000.0 y tres comentarios coherentes.",
+    "hints": [
+      "Escribe primero entrada, condición, agrupación, medida y salida en tus palabras.",
+      "Construye y comprueba un bloque a la vez; guarda el resultado de cada transformación.",
+      "Revisa nombres, tipos y orden de las operaciones antes de consultar la referencia."
+    ],
+    "solution": "from pyspark.sql import SparkSession\nfrom pyspark.sql.functions import avg\nspark = SparkSession.builder.appName(\"Entrenamiento16\").getOrCreate()\ndatos = [(\"Ana\", 150000.0), (\"Luis\", 85000.0), (\"Carla\", 210000.0), (\"Pedro\", 95000.0), (\"Maria\", 180000.0)]\n# DECISIÓN: columnas nombradas evitan depender de posiciones al agregar monto.\ndf = spark.createDataFrame(datos, [\"cliente\", \"monto\"])\ndf.show()\ndf.agg(avg(\"monto\").alias(\"monto_promedio\")).show()\n# INTERPRETACIÓN: se espera 144000.0; contrastar con la salida real.\n# RESPUESTA: un schema explícito fija nombres y tipos conocidos y evita inferencia.\nspark.stop()",
+    "explanation": "La referencia es una solución posible, no una cadena que debas copiar. Contrasta cada criterio y ejecuta tu código en Spark real. No se conoce la pauta oficial de calificación.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Nivel 4 · Ejercicio 17 · pasos 1–4",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Conserva el programa completo y el cálculo.",
+        "Añade un comentario DECISIÓN específico.",
+        "Incluye INTERPRETACIÓN coherente y diferencia esperado/observado.",
+        "Responde en comentario por qué usar schema explícito.",
+        "Usa la sintaxis de comentarios del lenguaje y comprueba nuevamente el programa."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "level4",
+      "context": "Datos originales del ejercicio 16: Ana 150000.0, Luis 85000.0, Carla 210000.0, Pedro 95000.0, Maria 180000.0. Columnas cliente y monto.",
+      "steps": [
+        {
+          "title": "Decidir",
+          "body": "Antes del DataFrame explica por qué usar columnas nombradas para agregar monto. No repitas solo el método."
+        },
+        {
+          "title": "Interpretar",
+          "body": "Después del cálculo escribe qué significa el valor. Si no ejecutaste, identifícalo como esperado."
+        },
+        {
+          "title": "Responder sobre schema",
+          "body": "Explica que nombres y tipos conocidos evitan depender de inferencia; el esquema no corrige por sí solo datos inválidos."
+        },
+        {
+          "title": "Volver a ejecutar",
+          "body": "Guarda y comprueba que los comentarios no alteran el resultado."
+        }
+      ],
+      "run": "Guarda analisis.py en el contenedor spark-master. En la terminal configura PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 analisis.py. No escribas comandos de terminal dentro de >>>. Cada ejecución comienza desde el primer bloque."
+    }
+  },
+  {
+    "id": "spark-dev-17-scala",
+    "week": 10,
+    "concept": "program",
+    "title": "Nivel 4 · explicar una solución Scala",
+    "language": "Scala",
+    "level": 4,
+    "task": "case",
+    "prompt": "Escribe AnalisisVentas completo con los cinco clientes y los comentarios DECISIÓN, INTERPRETACIÓN y RESPUESTA sobre schema explícito. Distingue lo esperado de lo observado en una ejecución.",
+    "starter": "// Planifica → escribe → comprueba → interpreta.\n",
+    "expected": "Cinco filas, promedio esperado 144000.0 y tres comentarios justificados.",
+    "hints": [
+      "Escribe primero entrada, condición, agrupación, medida y salida en tus palabras.",
+      "Construye y comprueba un bloque a la vez; guarda el resultado de cada transformación.",
+      "Revisa nombres, tipos y orden de las operaciones antes de consultar la referencia."
+    ],
+    "solution": "import org.apache.spark.sql.SparkSession\nimport org.apache.spark.sql.functions._\nobject AnalisisVentas {\n  def main(args: Array[String]): Unit = {\n    val spark = SparkSession.builder().appName(\"Entrenamiento16Scala\").getOrCreate()\n    import spark.implicits._\n    val datos = Seq((\"Ana\", 150000.0), (\"Luis\", 85000.0), (\"Carla\", 210000.0), (\"Pedro\", 95000.0), (\"Maria\", 180000.0))\n    // DECISIÓN: columnas nombradas evitan depender de posiciones al agregar monto.\n    val df = datos.toDF(\"cliente\", \"monto\")\n    df.show()\n    df.agg(avg(\"monto\").alias(\"monto_promedio\")).show()\n    // INTERPRETACIÓN: se espera 144000.0; contrastar con la salida real.\n    // RESPUESTA: un schema explícito fija nombres y tipos conocidos y evita inferencia.\n    spark.stop()\n  }\n}",
+    "explanation": "La referencia es una solución posible, no una cadena que debas copiar. Contrasta cada criterio y ejecuta tu código en Spark real. El nivel 4 original enseña PySpark; esta es una adaptación educativa explícita a Scala.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Nivel 4 · Ejercicio 17 · adaptación educativa a Scala",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Conserva el programa completo y el cálculo.",
+        "Añade un comentario DECISIÓN específico.",
+        "Incluye INTERPRETACIÓN coherente y diferencia esperado/observado.",
+        "Responde en comentario por qué usar schema explícito.",
+        "Usa la sintaxis de comentarios del lenguaje y comprueba nuevamente el programa."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "level4",
+      "context": "Datos originales del ejercicio 16: Ana 150000.0, Luis 85000.0, Carla 210000.0, Pedro 95000.0, Maria 180000.0. Columnas cliente y monto.",
+      "steps": [
+        {
+          "title": "Decidir",
+          "body": "Antes del DataFrame explica por qué usar columnas nombradas para agregar monto. No repitas solo el método."
+        },
+        {
+          "title": "Interpretar",
+          "body": "Después del cálculo escribe qué significa el valor. Si no ejecutaste, identifícalo como esperado."
+        },
+        {
+          "title": "Responder sobre schema",
+          "body": "Explica que nombres y tipos conocidos evitan depender de inferencia; el esquema no corrige por sí solo datos inválidos."
+        },
+        {
+          "title": "Volver a ejecutar",
+          "body": "Guarda y comprueba que los comentarios no alteran el resultado."
+        }
+      ],
+      "run": "En el contenedor spark-master inicia /spark/bin/spark-shell --master spark://spark-master:7077. Dentro de scala>, carga tu archivo con :load /ruta/spark-dev-17-scala.scala y luego invoca AnalisisVentas.main(Array.empty[String]). Al terminar, spark.stop cierra la sesión usada por la aplicación. Para una entrega compilada, genera un JAR con versiones compatibles y desde la terminal usa /spark/bin/spark-submit --class AnalisisVentas --master spark://spark-master:7077 analisis.jar. No envíes directamente el .scala a spark-submit. Comprueba sc.version antes de elegir versiones de compilación."
+    }
+  },
+  {
+    "id": "spark-dev-caso-umbral",
+    "week": 10,
+    "concept": "aggregation",
+    "title": "Caso · categorías de alto valor",
+    "language": "Scala",
+    "level": 4,
+    "task": "case",
+    "prompt": "Una tienda necesita cantidad, total y promedio por categoría, solo de ventas individuales >100000. Escribe una solución Scala completa con DataFrame API, ordenada por total descendente, e interpreta sus resultados.",
+    "starter": "// Planifica → escribe → comprueba → interpreta.\n",
+    "expected": "Tecnologia: cantidad 3, total 540000.0, promedio 180000.0. Hogar: cantidad 1, total 120000.0, promedio 120000.0.",
+    "hints": [
+      "Escribe primero entrada, condición, agrupación, medida y salida en tus palabras.",
+      "Construye y comprueba un bloque a la vez; guarda el resultado de cada transformación.",
+      "Revisa nombres, tipos y orden de las operaciones antes de consultar la referencia."
+    ],
+    "solution": "import spark.implicits._\nimport org.apache.spark.sql.functions._\nval datos = Seq(\n  (1, \"2025-01-05\", \"Ana\", \"Santiago\", \"Tecnologia\", 150000.0),\n  (2, \"2025-01-06\", \"Luis\", \"Valparaiso\", \"Hogar\", 85000.0),\n  (3, \"2025-02-07\", \"Carla\", \"Concepcion\", \"Tecnologia\", 210000.0),\n  (4, \"2025-02-08\", \"Pedro\", \"Santiago\", \"Tecnologia\", 95000.0),\n  (5, \"2025-03-09\", \"Maria\", \"Temuco\", \"Tecnologia\", 180000.0),\n  (6, \"2025-03-10\", \"Diego\", \"Santiago\", \"Hogar\", 120000.0)\n)\nval ventas = datos.toDF(\"id_venta\", \"fecha\", \"cliente\", \"ciudad\", \"categoria\", \"monto\")\nval resumen = ventas.filter(col(\"monto\") > 100000).groupBy(\"categoria\").agg(count(\"*\").alias(\"cantidad\"), sum(\"monto\").alias(\"total\"), avg(\"monto\").alias(\"promedio\")).orderBy(desc(\"total\"))\nresumen.show()",
+    "explanation": "La referencia es una solución posible, no una cadena que debas copiar. Contrasta cada criterio y ejecuta tu código en Spark real. No se conoce la pauta oficial de calificación.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Nivel 3 · Ejercicio 15 · caso original con muestra y umbral distintos",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Crea los seis registros y columnas correctas.",
+        "Filtra monto >100000 antes de agrupar.",
+        "Calcula COUNT, SUM y AVG por categoria con alias.",
+        "Ordena por total descendente e interpreta qué excluyes."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "transfer",
+      "context": "Muestra de entrenamiento ORIGINAL, no el CSV completo del profesor. Campos: id_venta, fecha, cliente, ciudad, categoria, monto\n1,2025-01-05,Ana,Santiago,Tecnologia,150000.0\n2,2025-01-06,Luis,Valparaiso,Hogar,85000.0\n3,2025-02-07,Carla,Concepcion,Tecnologia,210000.0\n4,2025-02-08,Pedro,Santiago,Tecnologia,95000.0\n5,2025-03-09,Maria,Temuco,Tecnologia,180000.0\n6,2025-03-10,Diego,Santiago,Hogar,120000.0",
+      "steps": [
+        {
+          "title": "Planificar",
+          "body": "La condición es sobre cada venta, no sobre el total del grupo."
+        },
+        {
+          "title": "Programar",
+          "body": "Filtra, agrupa y calcula las tres medidas."
+        },
+        {
+          "title": "Interpretar",
+          "body": "El conteo mide registros; la suma mide dinero."
+        }
+      ],
+      "run": "Dentro del contenedor spark-master: cd /spark/bin; ./spark-shell --master spark://spark-master:7077. Para instrucciones de script usa :load /ruta/analisis.scala dentro de scala>. Para un object con main, compila un JAR con versiones compatibles de Scala/Spark y envíalo desde la terminal: /spark/bin/spark-submit --class NombreDelObjeto --master spark://spark-master:7077 analisis.jar. spark-submit no ejecuta directamente un archivo .scala. Comprueba sc.version en el clúster antes de elegir versiones de compilación."
+    }
+  },
+  {
+    "id": "spark-dev-caso-sql",
+    "week": 10,
+    "concept": "sql",
+    "title": "Caso · dos condiciones y una decisión",
+    "language": "Scala",
+    "level": 4,
+    "task": "case",
+    "prompt": "La jefatura solo considera Tecnologia con monto >100000. Escribe desde Scala una consulta SQL con total por ciudad descendente. Explica por qué Santiago ya no suma 245000.",
+    "starter": "// Planifica → escribe → comprueba → interpreta.\n",
+    "expected": "Concepcion 210000.0; Temuco 180000.0; Santiago 150000.0.",
+    "hints": [
+      "Escribe primero entrada, condición, agrupación, medida y salida en tus palabras.",
+      "Construye y comprueba un bloque a la vez; guarda el resultado de cada transformación.",
+      "Revisa nombres, tipos y orden de las operaciones antes de consultar la referencia."
+    ],
+    "solution": "import spark.implicits._\nimport org.apache.spark.sql.functions._\nval datos = Seq(\n  (1, \"2025-01-05\", \"Ana\", \"Santiago\", \"Tecnologia\", 150000.0),\n  (2, \"2025-01-06\", \"Luis\", \"Valparaiso\", \"Hogar\", 85000.0),\n  (3, \"2025-02-07\", \"Carla\", \"Concepcion\", \"Tecnologia\", 210000.0),\n  (4, \"2025-02-08\", \"Pedro\", \"Santiago\", \"Tecnologia\", 95000.0),\n  (5, \"2025-03-09\", \"Maria\", \"Temuco\", \"Tecnologia\", 180000.0),\n  (6, \"2025-03-10\", \"Diego\", \"Santiago\", \"Hogar\", 120000.0)\n)\nval ventas = datos.toDF(\"id_venta\", \"fecha\", \"cliente\", \"ciudad\", \"categoria\", \"monto\")\nventas.createOrReplaceTempView(\"ventas\")\nspark.sql(\"\"\"\nSELECT ciudad, SUM(monto) AS total FROM ventas\nWHERE categoria = 'Tecnologia' AND monto > 100000\nGROUP BY ciudad ORDER BY total DESC, ciudad ASC\n\"\"\").show()\n// Pedro (95000) se excluye; Santiago queda en 150000.",
+    "explanation": "La referencia es una solución posible, no una cadena que debas copiar. Contrasta cada criterio y ejecuta tu código en Spark real. No se conoce la pauta oficial de calificación.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Nivel 3 · Ejercicio 12 · variante original",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Registra la vista.",
+        "Combina las dos condiciones con AND en WHERE.",
+        "Agrupa por ciudad y suma monto.",
+        "Ordena total descendente y explica la exclusión de Pedro."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "transfer",
+      "context": "Muestra de entrenamiento ORIGINAL, no el CSV completo del profesor. Campos: id_venta, fecha, cliente, ciudad, categoria, monto\n1,2025-01-05,Ana,Santiago,Tecnologia,150000.0\n2,2025-01-06,Luis,Valparaiso,Hogar,85000.0\n3,2025-02-07,Carla,Concepcion,Tecnologia,210000.0\n4,2025-02-08,Pedro,Santiago,Tecnologia,95000.0\n5,2025-03-09,Maria,Temuco,Tecnologia,180000.0\n6,2025-03-10,Diego,Santiago,Hogar,120000.0",
+      "steps": [
+        {
+          "title": "Traducir el caso",
+          "body": "Se necesitan ventas de Tecnologia, una fila por ciudad y suma de monto, ordenada de mayor a menor."
+        },
+        {
+          "title": "Registrar los datos",
+          "body": "Crea el DataFrame y registra una vista temporal ventas. Eso no crea una tabla Hive."
+        },
+        {
+          "title": "Programar",
+          "body": "WHERE filtra antes de GROUP BY; SUM suma dinero. Usa el alias para ordenar."
+        },
+        {
+          "title": "Comparar",
+          "body": "Resuelve también con DataFrame API. Santiago suma 245000 porque cuenta las dos ventas de Tecnologia; Hogar queda fuera."
+        }
+      ],
+      "run": "Dentro del contenedor spark-master: cd /spark/bin; ./spark-shell --master spark://spark-master:7077. Para instrucciones de script usa :load /ruta/analisis.scala dentro de scala>. Para un object con main, compila un JAR con versiones compatibles de Scala/Spark y envíalo desde la terminal: /spark/bin/spark-submit --class NombreDelObjeto --master spark://spark-master:7077 analisis.jar. spark-submit no ejecuta directamente un archivo .scala. Comprueba sc.version en el clúster antes de elegir versiones de compilación."
+    }
+  },
+  {
+    "id": "spark-dev-caso-fechas",
+    "week": 10,
+    "concept": "dates",
+    "title": "Caso · meses y columnas derivadas",
+    "language": "Scala",
+    "level": 4,
+    "task": "case",
+    "prompt": "El equipo pide monto_miles por venta y un resumen mensual de 2025. Escribe Scala para convertir fecha, derivar mes y monto_miles, mostrar cliente/monto/monto_miles y agrupar el total por mes en orden cronológico.",
+    "starter": "// Planifica → escribe → comprueba → interpreta.\n",
+    "expected": "Totales: mes 1 = 235000.0; mes 2 = 305000.0; mes 3 = 300000.0. monto_miles: 150, 85, 210, 95, 180, 120.",
+    "hints": [
+      "Escribe primero entrada, condición, agrupación, medida y salida en tus palabras.",
+      "Construye y comprueba un bloque a la vez; guarda el resultado de cada transformación.",
+      "Revisa nombres, tipos y orden de las operaciones antes de consultar la referencia."
+    ],
+    "solution": "import spark.implicits._\nimport org.apache.spark.sql.functions._\nval datos = Seq(\n  (1, \"2025-01-05\", \"Ana\", \"Santiago\", \"Tecnologia\", 150000.0),\n  (2, \"2025-01-06\", \"Luis\", \"Valparaiso\", \"Hogar\", 85000.0),\n  (3, \"2025-02-07\", \"Carla\", \"Concepcion\", \"Tecnologia\", 210000.0),\n  (4, \"2025-02-08\", \"Pedro\", \"Santiago\", \"Tecnologia\", 95000.0),\n  (5, \"2025-03-09\", \"Maria\", \"Temuco\", \"Tecnologia\", 180000.0),\n  (6, \"2025-03-10\", \"Diego\", \"Santiago\", \"Hogar\", 120000.0)\n)\nval ventas = datos.toDF(\"id_venta\", \"fecha\", \"cliente\", \"ciudad\", \"categoria\", \"monto\")\nval derivadas = ventas.withColumn(\"fecha_date\", to_date(col(\"fecha\"), \"yyyy-MM-dd\")).withColumn(\"mes\", month(col(\"fecha_date\"))).withColumn(\"monto_miles\", col(\"monto\") / 1000)\nderivadas.select(\"cliente\", \"monto\", \"monto_miles\").show()\nderivadas.printSchema()\nderivadas.groupBy(\"mes\").agg(sum(\"monto\").alias(\"total\")).orderBy(\"mes\").show()",
+    "explanation": "La referencia es una solución posible, no una cadena que debas copiar. Contrasta cada criterio y ejecuta tu código en Spark real. No se conoce la pauta oficial de calificación.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicios 3, 5 y 13 · caso original integrado",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Convierte fecha con to_date y yyyy-MM-dd.",
+        "Deriva mes y monto_miles=monto/1000.",
+        "Selecciona las columnas solicitadas y examina schema.",
+        "Suma monto por mes y ordena; reconoce que varios años necesitarían distinguirse."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "transfer",
+      "context": "Muestra de entrenamiento ORIGINAL, no el CSV completo del profesor. Campos: id_venta, fecha, cliente, ciudad, categoria, monto\n1,2025-01-05,Ana,Santiago,Tecnologia,150000.0\n2,2025-01-06,Luis,Valparaiso,Hogar,85000.0\n3,2025-02-07,Carla,Concepcion,Tecnologia,210000.0\n4,2025-02-08,Pedro,Santiago,Tecnologia,95000.0\n5,2025-03-09,Maria,Temuco,Tecnologia,180000.0\n6,2025-03-10,Diego,Santiago,Hogar,120000.0",
+      "steps": [
+        {
+          "title": "Preparar tipos",
+          "body": "fecha es texto; crea una columna date antes de extraer el mes."
+        },
+        {
+          "title": "Derivar",
+          "body": "Guarda el retorno de withColumn; no muta el original."
+        },
+        {
+          "title": "Separar salidas",
+          "body": "La proyección por cliente y el resumen por mes tienen granularidades distintas."
+        }
+      ],
+      "run": "Dentro del contenedor spark-master: cd /spark/bin; ./spark-shell --master spark://spark-master:7077. Para instrucciones de script usa :load /ruta/analisis.scala dentro de scala>. Para un object con main, compila un JAR con versiones compatibles de Scala/Spark y envíalo desde la terminal: /spark/bin/spark-submit --class NombreDelObjeto --master spark://spark-master:7077 analisis.jar. spark-submit no ejecuta directamente un archivo .scala. Comprueba sc.version en el clúster antes de elegir versiones de compilación."
+    }
+  },
+  {
+    "id": "spark-dev-caso-hdfs",
+    "week": 10,
+    "concept": "csv",
+    "title": "Caso · del CSV HDFS al informe Scala",
+    "language": "Scala",
+    "level": 4,
+    "task": "case",
+    "prompt": "Usa el archivo real del profesor, sin encabezado. Escribe un schema explícito de seis campos, lee HDFS, examina schema y muestra y resuelve el ejercicio 12 en Spark SQL. No inventes totales del archivo real.",
+    "starter": "// Planifica → escribe → comprueba → interpreta.\n",
+    "expected": "Una fila por ciudad con el total de Tecnologia. Los montos deben obtenerse ejecutando sobre el archivo real.",
+    "hints": [
+      "Escribe primero entrada, condición, agrupación, medida y salida en tus palabras.",
+      "Construye y comprueba un bloque a la vez; guarda el resultado de cada transformación.",
+      "Revisa nombres, tipos y orden de las operaciones antes de consultar la referencia."
+    ],
+    "solution": "import org.apache.spark.sql.types._\nval schemaVentas = StructType(Seq(\n  StructField(\"id_venta\", IntegerType, true),\n  StructField(\"fecha\", StringType, true),\n  StructField(\"cliente\", StringType, true),\n  StructField(\"ciudad\", StringType, true),\n  StructField(\"categoria\", StringType, true),\n  StructField(\"monto\", DoubleType, true)\n))\nval ventas = spark.read.option(\"header\", \"false\").schema(schemaVentas).csv(\"hdfs://namenode:8020/curso/hive/datos_ventas/ventas_hive.csv\")\nventas.printSchema()\nventas.show(5)\nventas.createOrReplaceTempView(\"ventas\")\nspark.sql(\"\"\"\nSELECT ciudad, SUM(monto) AS total_ventas\nFROM ventas\nWHERE categoria = 'Tecnologia'\nGROUP BY ciudad\nORDER BY total_ventas DESC, ciudad ASC\n\"\"\").show()",
+    "explanation": "La referencia es una solución posible, no una cadena que debas copiar. Contrasta cada criterio y ejecuta tu código en Spark real. No se conoce la pauta oficial de calificación.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicios 6–8 y nivel 3 · Ejercicio 12 · caso integrado",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Declara seis campos en orden, id IntegerType y monto DoubleType.",
+        "Usa la URI correcta, header=false y schema explícito.",
+        "Examina schema y muestra antes de analizar.",
+        "Registra vista, filtra, suma por ciudad y ordena.",
+        "Interpreta la ejecución real sin extrapolar la muestra pequeña."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "transfer",
+      "context": "CSV real: hdfs://namenode:8020/curso/hive/datos_ventas/ventas_hive.csv. Campos: id_venta,fecha,cliente,ciudad,categoria,monto. Requiere el clúster del curso.",
+      "steps": [
+        {
+          "title": "Verificar origen",
+          "body": "HDFS almacena; Spark procesa. No necesitas crear una tabla Hive."
+        },
+        {
+          "title": "Controlar estructura",
+          "body": "El CSV no tiene encabezado: fija nombres y tipos en su orden."
+        },
+        {
+          "title": "Reutilizar",
+          "body": "La consulta del ejercicio 12 sirve sobre la vista con esos nombres."
+        }
+      ],
+      "run": "Dentro del contenedor spark-master: cd /spark/bin; ./spark-shell --master spark://spark-master:7077. Para instrucciones de script usa :load /ruta/analisis.scala dentro de scala>. Para un object con main, compila un JAR con versiones compatibles de Scala/Spark y envíalo desde la terminal: /spark/bin/spark-submit --class NombreDelObjeto --master spark://spark-master:7077 analisis.jar. spark-submit no ejecuta directamente un archivo .scala. Comprueba sc.version en el clúster antes de elegir versiones de compilación."
+    }
+  },
+  {
+    "id": "spark-dev-caso-rdd",
+    "week": 9,
+    "concept": "sales-rdd",
+    "title": "Caso · fundamentos de semana 9 en Scala",
+    "language": "Scala",
+    "level": 4,
+    "task": "case",
+    "prompt": "Recibes tres líneas: Ana,Santiago,150000; Pedro,Santiago,95000; Carla,Concepcion,210000. Crea un RDD con dos particiones y suma por ciudad solo montos >100000. Muestra el agregado y explica transformaciones, acción y particiones.",
+    "starter": "// Planifica → escribe → comprueba → interpreta.\n",
+    "expected": "Concepcion → 210000.0; Santiago → 150000.0. El orden no está garantizado.",
+    "hints": [
+      "Escribe primero entrada, condición, agrupación, medida y salida en tus palabras.",
+      "Construye y comprueba un bloque a la vez; guarda el resultado de cada transformación.",
+      "Revisa nombres, tipos y orden de las operaciones antes de consultar la referencia."
+    ],
+    "solution": "val lineas = sc.parallelize(Seq(\"Ana,Santiago,150000\", \"Pedro,Santiago,95000\", \"Carla,Concepcion,210000\"), 2)\nval campos = lineas.map(linea => linea.split(\",\"))\nval altas = campos.filter(x => x(2).toDouble > 100000)\nval pares = altas.map(x => (x(1), x(2).toDouble))\nval totales = pares.reduceByKey((a, b) => a + b)\ntotales.collect().foreach(println)\n// map/filter/reduceByKey: transformaciones; collect: acción.\n// Dos particiones no significan dos Workers.",
+    "explanation": "La referencia es una solución posible, no una cadena que debas copiar. Contrasta cada criterio y ejecuta tu código en Spark real. No se conoce la pauta oficial de calificación.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicios 7, 11–13 y 15 · caso original simplificado",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Crea las tres líneas con dos particiones.",
+        "Separa los tres campos y convierte monto a Double.",
+        "Filtra y forma pares ciudad,monto.",
+        "Suma por clave y utiliza una acción.",
+        "Distingue particiones/Workers y no supone orden en collect."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "transfer",
+      "context": "CSV ORIGINAL de tres campos cliente,ciudad,monto:\nAna,Santiago,150000\nPedro,Santiago,95000\nCarla,Concepcion,210000",
+      "steps": [
+        {
+          "title": "Reconocer formato",
+          "body": "Esta muestra tiene TRES campos, no los seis del CSV del curso."
+        },
+        {
+          "title": "Procesar",
+          "body": "Monto está en posición 2; ciudad en 1. Scala indexa con paréntesis."
+        },
+        {
+          "title": "Explicar",
+          "body": "La acción solicita el resultado; las transformaciones son inmutables."
+        }
+      ],
+      "run": "Dentro del contenedor spark-master: cd /spark/bin; ./spark-shell --master spark://spark-master:7077. Para instrucciones de script usa :load /ruta/analisis.scala dentro de scala>. Para un object con main, compila un JAR con versiones compatibles de Scala/Spark y envíalo desde la terminal: /spark/bin/spark-submit --class NombreDelObjeto --master spark://spark-master:7077 analisis.jar. spark-submit no ejecuta directamente un archivo .scala. Comprueba sc.version en el clúster antes de elegir versiones de compilación."
+    }
+  },
+  {
+    "id": "spark-dev-caso-programa",
+    "week": 10,
+    "concept": "program",
+    "title": "Caso · entregar una aplicación completa",
+    "language": "Scala",
+    "level": 4,
+    "task": "case",
+    "prompt": "Entrega un programa Scala que calcule promedio por ciudad solo de Tecnologia usando los seis datos. Incluye object/main, sesión, DataFrame, vista, SQL, cierre, decisión e interpretación; indica cómo enviar el JAR.",
+    "starter": "// Planifica → escribe → comprueba → interpreta.\n",
+    "expected": "Promedios esperados: Concepcion 210000.0; Temuco 180000.0; Santiago 122500.0. JAR con --class InformeCiudades.",
+    "hints": [
+      "Escribe primero entrada, condición, agrupación, medida y salida en tus palabras.",
+      "Construye y comprueba un bloque a la vez; guarda el resultado de cada transformación.",
+      "Revisa nombres, tipos y orden de las operaciones antes de consultar la referencia."
+    ],
+    "solution": "import org.apache.spark.sql.SparkSession\nobject InformeCiudades {\n  def main(args: Array[String]): Unit = {\n    val spark = SparkSession.builder().appName(\"InformeCiudades\").getOrCreate()\n    import spark.implicits._\n    val datos = Seq(\n      (1, \"2025-01-05\", \"Ana\", \"Santiago\", \"Tecnologia\", 150000.0),\n      (2, \"2025-01-06\", \"Luis\", \"Valparaiso\", \"Hogar\", 85000.0),\n      (3, \"2025-02-07\", \"Carla\", \"Concepcion\", \"Tecnologia\", 210000.0),\n      (4, \"2025-02-08\", \"Pedro\", \"Santiago\", \"Tecnologia\", 95000.0),\n      (5, \"2025-03-09\", \"Maria\", \"Temuco\", \"Tecnologia\", 180000.0),\n      (6, \"2025-03-10\", \"Diego\", \"Santiago\", \"Hogar\", 120000.0)\n    )\n    val ventas = datos.toDF(\"id_venta\", \"fecha\", \"cliente\", \"ciudad\", \"categoria\", \"monto\")\n    ventas.createOrReplaceTempView(\"ventas\")\n    // DECISIÓN: filtrar antes de promediar por ciudad.\n    spark.sql(\"\"\"SELECT ciudad, AVG(monto) AS promedio FROM ventas WHERE categoria = 'Tecnologia' GROUP BY ciudad ORDER BY promedio DESC\"\"\").show()\n    // INTERPRETACIÓN: se esperan Concepcion 210000, Temuco 180000 y Santiago 122500.\n    spark.stop()\n  }\n}",
+    "explanation": "La referencia es una solución posible, no una cadena que debas copiar. Contrasta cada criterio y ejecuta tu código en Spark real. No se conoce la pauta oficial de calificación.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Nivel 3 · Ejercicios 12 y 14; nivel 4 · Ejercicios 16–17 · caso original",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Declara InformeCiudades.main y crea/cierra SparkSession.",
+        "Construye los seis datos con nombres de columnas.",
+        "Registra ventas y calcula AVG por ciudad solo de Tecnologia.",
+        "Muestra y documenta decisión/interpretación.",
+        "Entrega un JAR compatible con --class InformeCiudades."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "transfer",
+      "context": "Muestra de entrenamiento ORIGINAL, no el CSV completo del profesor. Campos: id_venta, fecha, cliente, ciudad, categoria, monto\n1,2025-01-05,Ana,Santiago,Tecnologia,150000.0\n2,2025-01-06,Luis,Valparaiso,Hogar,85000.0\n3,2025-02-07,Carla,Concepcion,Tecnologia,210000.0\n4,2025-02-08,Pedro,Santiago,Tecnologia,95000.0\n5,2025-03-09,Maria,Temuco,Tecnologia,180000.0\n6,2025-03-10,Diego,Santiago,Hogar,120000.0",
+      "steps": [
+        {
+          "title": "Planificar",
+          "body": "Escribe el flujo completo antes de programar."
+        },
+        {
+          "title": "Adaptar",
+          "body": "Piden PROMEDIO, no total. No copies la consulta anterior sin cambiar la medida."
+        },
+        {
+          "title": "Entregar",
+          "body": "Un .scala es fuente; spark-submit necesita el JAR compilado para esta aplicación."
+        }
+      ],
+      "run": "En el contenedor spark-master inicia /spark/bin/spark-shell --master spark://spark-master:7077. Dentro de scala>, carga tu archivo con :load /ruta/spark-dev-caso-programa.scala y luego invoca InformeCiudades.main(Array.empty[String]). Al terminar, spark.stop cierra la sesión usada por la aplicación. Para una entrega compilada, genera un JAR con versiones compatibles y desde la terminal usa /spark/bin/spark-submit --class InformeCiudades --master spark://spark-master:7077 analisis.jar. No envíes directamente el .scala a spark-submit. Comprueba sc.version antes de elegir versiones de compilación."
+    }
+  }
+]

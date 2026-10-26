@@ -16,17 +16,43 @@ Los ejercicios indican si adaptan una actividad o son una aplicación original d
 
 | Semana | Lecciones | Ejercicios | Contenido |
 |---|---:|---:|---|
-| 9 | 8 | 20 | Arquitectura, RDD, particiones, Scala/PySpark, transformaciones/acciones, lazy evaluation, HDFS y ventas |
-| 10 | 9 | 22 | DataFrames, esquemas, columnas, filtros, CSV, agregaciones, SQL, fechas, programas y documentación |
-| Total | 17 | 42 | 10 de reconocimiento, 6 de completar, 9 de corrección, 12 de construcción y 5 casos |
+| 9 | 8 | 21 | Arquitectura, RDD, particiones, Scala/PySpark, transformaciones/acciones, lazy evaluation, HDFS y ventas |
+| 10 | 9 | 35 | DataFrames, esquemas, columnas, filtros, CSV, agregaciones, SQL, fechas, programas y documentación |
+| Total | 17 | 56 | 10 de reconocimiento, 6 de completar, 9 de corrección, 12 de construcción y 19 casos |
 
-**32/42 actividades requieren completar, corregir o producir código.** Los ejercicios de nivel 0 piden respuestas cortas; las lecciones tienen una comprobación conceptual. El laboratorio no se reduce a alternativas.
+**46/56 actividades requieren completar, corregir o producir código.** Los ejercicios de nivel 0 piden respuestas cortas; las lecciones tienen una comprobación conceptual. El laboratorio no se reduce a alternativas.
 
 Cada ejercicio conserva un ID estable, semana/concepto, lenguaje, nivel, plantilla, objetivo de salida, pistas, solución, explicación, fuente y modo de revisión. Cada lección ofrece explicación, analogía, código, lectura línea por línea, comprobación y resumen. El glosario se consulta en la misma pantalla. El editor usa texto plano con una vista de resaltado; Tab mantiene la navegación accesible.
 
 El laboratorio permite sesiones de hasta seis ejercicios o elegir uno del banco. Detective filtra las correcciones. Modo 4,0 prioriza conceptos débiles, evita variantes recientes cuando hay suficientes y avanza de niveles 0–1 a 2 y 3 según aciertos sin ayuda. Nunca duplica un ejercicio dentro de una sesión ni promete aprobación. Sus sesiones adaptan la selección al prepararse; los errores alimentan las sesiones siguientes.
 
-Las simulaciones de 10/20 minutos y las configurables combinan lectura/predicción, completar, corregir y desarrollo. El tiempo es orientativo: no hay entrega forzada. Se bloquea material de ayuda y cambio de misión durante una simulación. La sesión se guarda y puede retomarse tras recargar. Salir sin entregar conserva borradores y no crea una nota.
+La simulación abre por defecto en **solo desarrollo**, con Scala y foco ejercicio 12 + nivel 4; no incluye alternativas ni reconocimiento. Permite 1 o más casos, lenguajes y focos. El modo mixto de apoyo conserva lectura/predicción, completar, corregir y desarrollo. El tiempo es orientativo: no hay entrega forzada. Se bloquea material de ayuda y cambio de misión durante una simulación. La sesión se guarda y puede retomarse tras recargar. Salir sin entregar conserva borradores y no crea una nota.
+
+## Foco de la prueba — 2026-10-26
+
+Se revisó de nuevo el repositorio del profesor: su rama predeterminada seguía en el mismo commit y las semanas Spark publicadas en presentaciones son 9 y 10. La pista comunicada por la estudiante prioriza **semana 10, nivel 3, ejercicio 12 y todo el nivel 4**; no se atribuye al profesor una pauta, número de casos o ponderación desconocidos.
+
+El ejercicio 12 pide total vendido por ciudad para Tecnologia mediante vista temporal y Spark SQL, y comparación con DataFrame API. El nivel 4 **original está escrito en PySpark**. Sus adaptaciones a Scala se identifican; no se presenta Scala como el lenguaje original de los ejercicios 16–17.
+
+La sección **Desarrollo de la prueba** añade 14 actividades, conservando los 42 IDs y enunciados previos:
+
+| Recorrido | Scala | PySpark | Cobertura |
+|---|---:|---:|---|
+| Ejercicio 12 | 1 | 1 | DataFrame, vista, WHERE, GROUP BY, SUM, ORDER BY y equivalencia de API |
+| Todo el nivel 4 | 3 | 3 | Ej. 16: tres bloques, editar/guardar/comprobar/ejecutar, añadir sexto registro y volver a ejecutar; ej. 17: decisión, interpretación y respuesta conceptual en comentarios |
+| Casos desde cero | 6 | 0 | SQL con dos condiciones, agregaciones, fechas/columnas, CSV HDFS/schema, RDD semana 9 y programa completo |
+
+La muestra original de seis ventas de estos casos está en `training-fixture.json`; no representa el archivo de cien mil filas del profesor. El programa de cinco clientes del ejercicio 16 sí mantiene sus datos: promedio esperado 144000, que pasa a 140000 al añadir Diego 120000. Los casos HDFS no inventan valores del archivo real.
+
+El selector inicia en Scala. Se pueden ocultar los pasos guiados y escribir la solución, consultar pistas/referencia, registrar rúbrica y descargar **el código propio** como .scala/.py. El editor guarda los borradores en el progreso existente. Un contador de casos intentados no certifica dominio.
+
+La simulación predeterminada selecciona casos de programación: con dos casos del foco prioritario incluye uno del ejercicio 12 y uno del nivel 4. El foco integrado permite incluir fundamentos de semana 9. El modo mixto sigue disponible como apoyo separado; no es el formato anunciado de la prueba. Las sesiones e historiales antiguos siguen importándose sin `format`; los nuevos guardan opcionalmente `format: development|mixed` y se comprueba que un formato de desarrollo no incluya reconocimiento.
+
+Todos los casos nuevos requieren contraste en Spark real: la rúbrica no otorga nota automática. Los resultados quedan pendientes de revisión y la simulación puede terminar **sin nota**. No hay backend ni ejecución Scala/PySpark en esta web.
+
+**Scala y archivos:** un script puede cargarse con `:load` en spark-shell; un `object` con `main` necesita ser invocado o compilarse como aplicación. `spark-submit --class ...` recibe un **JAR compatible**, no directamente el archivo .scala. PySpark utiliza .py con spark-submit y Python 3 configurado como en la guía. `ls -l` y `cat` permiten comprobar el archivo guardado. Nunca se da por ejecutado un código que solo se descargó.
+
+Implementación: `Development.tsx`, `development.json`, `LearningTools.tsx` (editor/código compartidos), selección en `progress.ts`. Los contenidos de semanas 9 y 10 se mantienen, con versión de catálogo 2 y almacenamiento compatible; no se borró progreso ni se inventaron semanas futuras.
 
 ## Qué valida realmente
 
@@ -36,7 +62,7 @@ Las simulaciones de 10/20 minutos y las configurables combinan lectura/predicci�
 | Modelo RDD local | 10 | Analiza una gramática restringida e interpreta operaciones sobre la colección finita del ejercicio; compara resultado y operaciones solicitadas |
 | Proyección DataFrame | 3 | Analiza la estructura de `df.select(...).show()`, las columnas y su orden; acepta nombres y objetos `df.columna` |
 | Rúbrica guiada | 15 | La estudiante contrasta criterios y referencia; no se certifica corrección ni se dan puntos automáticos |
-| Spark real requerido | 4 | Casos de clúster/HDFS/programas que necesitan ejecutarse fuera de esta web; quedan pendientes de verificación |
+| Spark real requerido | 18 | Casos de clúster/HDFS/programas que necesitan ejecutarse fuera de esta web; quedan pendientes de verificación |
 
 **Ninguno de estos mecanismos ejecuta Spark.** No hay backend, JVM, Scala, PySpark, Docker ni archivo de cien mil ventas dentro de la web. No se inventan conteos/totales de ese archivo. Los resultados numéricos de las colecciones cerradas y las cinco ventas del ejemplo se deducen de los datos explícitos.
 
@@ -88,3 +114,5 @@ CHROMIUM_PATH=/usr/bin/chromium node scripts/smoke-browser.cjs
 ```
 
 En otra máquina, proporciona `PLAYWRIGHT_MODULE` apuntando a una instalación de Playwright y `CHROMIUM_PATH` a Chromium; ambos son herramientas opcionales de QA, no dependencias del producto. `APP_URL` permite probar otro servidor. Las capturas se guardan en /tmp.
+
+Para la prueba Chromium específica del recorrido nuevo usa los mismos parámetros de entorno con `node scripts/smoke-development.cjs`. Comprueba descarga del código propio, casos guiados, lenguajes, simulación solo desarrollo, recarga y anchuras 1440/390/320 px.
