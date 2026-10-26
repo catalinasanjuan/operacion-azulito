@@ -6,7 +6,7 @@ export type Validation =
  | {kind:'rdd'; expected:number|number[]; operations:string[]}
  | {kind:'projection'; columns:string[]}
  | {kind:'rubric'|'runtime'; criteria:string[]};
-export type Training = {track:'exercise12'|'level4'|'transfer'; context:string; steps:{title:string;body:string}[]; run:string};
+export type Training = {format?:'block'|'case'; artifact?:'fragment'|'program'; order?:number; track:'exercise12'|'level4'|'transfer'; context:string; steps:{title:string;body:string}[]; run:string};
 export type Exercise = {training?:Training; id:string; week:SparkWeek; concept:string; title:string; language:Language; level:0|1|2|3|4; task:'read'|'complete'|'fix'|'build'|'case'; prompt:string; starter:string; expected:string; hints:string[]; solution:string; explanation:string; source:{file:string; section:string; origin:'adapted'|'original'}; validation:Validation; fundamental:boolean};
 export type SparkLesson = {id:string; week:SparkWeek; title:string; explanation:string; analogy:string; code:string; lines:string[]; check:string; answers:string[]; correct:number; remember:string; source:{file:string; section:string}};
 export type WeekContent = {id:number; title:string; version:number; status:'published'|'draft'; sources:string[]; concepts:string[]};

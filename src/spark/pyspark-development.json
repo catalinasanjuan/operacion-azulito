@@ -1,0 +1,1011 @@
+[
+  {
+    "id": "spark-dev-py-01-sesion",
+    "week": 10,
+    "concept": "program",
+    "title": "Paso 1 · iniciar sesión y preparar datos",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Escribe el primer archivo .py: importa SparkSession, crea la sesión y los cinco clientes del profesor. Muestra con print la cantidad de tuplas locales y cierra la sesión. Todavía no crees un DataFrame. Explica por qué estas tuplas siguen siendo datos locales.",
+    "starter": "# Tu solución PySpark. Escribe el código y explica tus decisiones.\n",
+    "expected": "Se inicia Spark y se imprime Registros locales: 5. Todavía no se consulta un DataFrame.",
+    "hints": [
+      "SparkSession es el punto de entrada; una lista Python por sí sola no distribuye sus elementos.",
+      "Define cliente y monto por registro; conserva decimales en los montos.",
+      "Revisa la referencia solo después de intentar tu propia solución."
+    ],
+    "solution": "from pyspark.sql import SparkSession\nspark = SparkSession.builder.appName(\"PracticaPySpark\").getOrCreate()\ndatos = [(\"Ana\", 150000.0), (\"Luis\", 85000.0), (\"Carla\", 210000.0), (\"Pedro\", 95000.0), (\"Maria\", 180000.0)]\nprint(\"Registros locales:\", len(datos))\n# Las tuplas aún son una lista Python local, no un DataFrame distribuido.\nspark.stop()",
+    "explanation": "La solución muestra una forma de resolver el requerimiento; se aceptan otras equivalentes mediante revisión. Ejecuta en el entorno Spark del curso para comprobar la salida; el navegador no ejecuta PySpark.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Nivel 4 · Ejercicio 16 · bloque 1",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Importa SparkSession y usa builder/appName/getOrCreate.",
+        "Prepara las cinco tuplas con montos numéricos.",
+        "Distingue la lista Python de una colección distribuida.",
+        "Cierra la sesión al terminar."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "level4",
+      "context": "Datos originales del ejercicio 16: Ana 150000.0, Luis 85000.0, Carla 210000.0, Pedro 95000.0, Maria 180000.0. Columnas cliente y monto.",
+      "steps": [
+        {
+          "title": "Preparar",
+          "body": "SparkSession es el punto de entrada; una lista Python por sí sola no distribuye sus elementos."
+        },
+        {
+          "title": "Escribir",
+          "body": "Define cliente y monto por registro; conserva decimales en los montos."
+        },
+        {
+          "title": "Comprobar",
+          "body": "Guarda el .py y ejecuta con spark-submit. print(len(datos)) cuenta una lista local, no lanza un conteo Spark."
+        }
+      ],
+      "run": "Guarda analisis.py en el contenedor spark-master. En la terminal configura PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 analisis.py. No escribas comandos de terminal dentro de >>>. Cada ejecución comienza desde el primer bloque.",
+      "format": "block",
+      "artifact": "program",
+      "order": 10
+    }
+  },
+  {
+    "id": "spark-dev-py-02-dataframe",
+    "week": 10,
+    "concept": "program",
+    "title": "Paso 2 · convertir y comprobar el DataFrame",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Continúa el archivo del paso 1. Escribe solo el bloque que insertarás ANTES de spark.stop(): crea df con las columnas cliente y monto, muestra sus filas e inspecciona su esquema. Explica qué cambió respecto de la lista local.",
+    "starter": "# Tu solución PySpark. Escribe el código y explica tus decisiones.\n",
+    "expected": "Cinco filas, cliente string y monto double. El cierre de sesión debe seguir al final del archivo.",
+    "hints": [
+      "No ejecutes un archivo nuevo con variables inexistentes: añádelo al programa anterior antes de spark.stop.",
+      "spark.createDataFrame recibe la lista y los nombres de las columnas.",
+      "Revisa la referencia solo después de intentar tu propia solución."
+    ],
+    "solution": "df = spark.createDataFrame(datos, [\"cliente\", \"monto\"])\ndf.show()\ndf.printSchema()\n# df es un DataFrame distribuido con columnas nombradas.",
+    "explanation": "Es un fragmento de aprendizaje, no un .py autónomo. Ejecuta en el entorno Spark del curso para comprobar la salida; el navegador no ejecuta PySpark.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Nivel 4 · Ejercicio 16 · bloque 2; ejercicio 2 (schema)",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Usa spark.createDataFrame con datos del bloque anterior.",
+        "Asigna exactamente cliente y monto.",
+        "Usa show para filas y printSchema para tipos.",
+        "Inserta el bloque antes del cierre y conserva el primer bloque."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "level4",
+      "context": "Datos originales del ejercicio 16: Ana 150000.0, Luis 85000.0, Carla 210000.0, Pedro 95000.0, Maria 180000.0. Columnas cliente y monto.",
+      "steps": [
+        {
+          "title": "Ubicar el bloque",
+          "body": "No ejecutes un archivo nuevo con variables inexistentes: añádelo al programa anterior antes de spark.stop."
+        },
+        {
+          "title": "Crear",
+          "body": "spark.createDataFrame recibe la lista y los nombres de las columnas."
+        },
+        {
+          "title": "Observar",
+          "body": "show y printSchema responden preguntas diferentes: contenido y estructura."
+        }
+      ],
+      "run": "Este es un FRAGMENTO. Incorpóralo al archivo del bloque anterior, en la posición indicada en el enunciado. No es un programa autónomo: necesita los datos y variables de ese archivo.\nGuarda analisis.py en el contenedor spark-master. En la terminal configura PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 analisis.py. No escribas comandos de terminal dentro de >>>. Cada ejecución comienza desde el primer bloque.",
+      "format": "block",
+      "artifact": "fragment",
+      "order": 20
+    }
+  },
+  {
+    "id": "spark-dev-py-03-promedio",
+    "week": 10,
+    "concept": "program",
+    "title": "Paso 3 · calcular la medida pedida",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "El archivo anterior ya crea spark y df. El requerimiento es monto PROMEDIO, pero una propuesta usa sum(\"monto\"). Escribe el bloque corregido que insertarás antes de spark.stop(), incluyendo el import necesario y el alias monto_promedio. Explica por qué el total 720000 no responde la pregunta.",
+    "starter": "# Tu solución PySpark. Escribe el código y explica tus decisiones.\n",
+    "expected": "Una fila con monto_promedio = 144000.0.",
+    "hints": [
+      "La pregunta pide una medida descriptiva por venta, no el dinero acumulado.",
+      "Usa avg sobre monto dentro de agg y asigna el alias solicitado.",
+      "Revisa la referencia solo después de intentar tu propia solución."
+    ],
+    "solution": "from pyspark.sql.functions import avg\ndf.agg(avg(\"monto\").alias(\"monto_promedio\")).show()\n# El promedio esperado es 720000 / 5 = 144000, no el total de los montos.",
+    "explanation": "Es un fragmento de aprendizaje, no un .py autónomo. Ejecuta en el entorno Spark del curso para comprobar la salida; el navegador no ejecuta PySpark.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Nivel 4 · Ejercicio 16 · bloque 3",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Importa avg de pyspark.sql.functions.",
+        "Agrega sobre monto, no sobre cliente.",
+        "Usa el alias monto_promedio y muestra la salida.",
+        "Distingue total de promedio e inserta el bloque antes de cerrar."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "level4",
+      "context": "Datos originales del ejercicio 16: Ana 150000.0, Luis 85000.0, Carla 210000.0, Pedro 95000.0, Maria 180000.0. Columnas cliente y monto.",
+      "steps": [
+        {
+          "title": "Interpretar",
+          "body": "La pregunta pide una medida descriptiva por venta, no el dinero acumulado."
+        },
+        {
+          "title": "Corregir",
+          "body": "Usa avg sobre monto dentro de agg y asigna el alias solicitado."
+        },
+        {
+          "title": "Comprobar",
+          "body": "Contrasta el resultado real con la suma dividida por las cinco filas."
+        }
+      ],
+      "run": "Este es un FRAGMENTO. Incorpóralo al archivo del bloque anterior, en la posición indicada en el enunciado. No es un programa autónomo: necesita los datos y variables de ese archivo.\nGuarda analisis.py en el contenedor spark-master. En la terminal configura PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 analisis.py. No escribas comandos de terminal dentro de >>>. Cada ejecución comienza desde el primer bloque.",
+      "format": "block",
+      "artifact": "fragment",
+      "order": 30
+    }
+  },
+  {
+    "id": "spark-dev-py-04-guardar-ejecutar",
+    "week": 10,
+    "concept": "program",
+    "title": "Paso 4 · guardar y ejecutar el archivo correcto",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Reconstruye el programa completo de cinco clientes y promedio. Al final escribe COMO COMENTARIOS los comandos de terminal para crear/editar analisis.py, verificar que se guardó y ejecutarlo en el Master. No pegues instrucciones de Bash como código Python ni uses pyspark como editor.",
+    "starter": "# Tu solución PySpark. Escribe el código y explica tus decisiones.\n",
+    "expected": "Archivo .py conservado, cinco filas y promedio 144000.0 al ejecutarlo correctamente.",
+    "hints": [
+      "vi edita, el archivo conserva el código y spark-submit lo ejecuta.",
+      "Guarda el archivo y revísalo con ls -l y cat antes de enviarlo.",
+      "Revisa la referencia solo después de intentar tu propia solución."
+    ],
+    "solution": "from pyspark.sql import SparkSession\nfrom pyspark.sql.functions import avg\nspark = SparkSession.builder.appName(\"Entrenamiento16\").getOrCreate()\ndatos = [(\"Ana\", 150000.0), (\"Luis\", 85000.0), (\"Carla\", 210000.0), (\"Pedro\", 95000.0), (\"Maria\", 180000.0)]\ndf = spark.createDataFrame(datos, [\"cliente\", \"monto\"])\ndf.show()\ndf.agg(avg(\"monto\").alias(\"monto_promedio\")).show()\nspark.stop()\n# TERMINAL (no ejecutar estas líneas como Python):\n# mkdir -p /tmp/curso_spark\n# cd /tmp/curso_spark\n# vi analisis.py\n# ls -l analisis.py\n# cat analisis.py\n# export PYSPARK_PYTHON=python3\n# export PYSPARK_DRIVER_PYTHON=python3\n# /spark/bin/spark-submit --master spark://spark-master:7077 analisis.py",
+    "explanation": "La solución muestra una forma de resolver el requerimiento; se aceptan otras equivalentes mediante revisión. Ejecuta en el entorno Spark del curso para comprobar la salida; el navegador no ejecuta PySpark.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Nivel 4 · Ejercicio 16 · pasos 1–3 y modalidades de trabajo",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "El programa conserva sesión, datos, DataFrame, análisis y cierre.",
+        "Diferencia el editor vi de la consola pyspark.",
+        "Incluye ls -l y cat para comprobar el archivo.",
+        "Configura ambos intérpretes Python 3 y usa spark-submit con el Master.",
+        "Escribe los comandos externos en comentarios, no como instrucciones Python."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "level4",
+      "context": "Datos originales del ejercicio 16: Ana 150000.0, Luis 85000.0, Carla 210000.0, Pedro 95000.0, Maria 180000.0. Columnas cliente y monto.",
+      "steps": [
+        {
+          "title": "Separar herramientas",
+          "body": "vi edita, el archivo conserva el código y spark-submit lo ejecuta."
+        },
+        {
+          "title": "Verificar",
+          "body": "Guarda el archivo y revísalo con ls -l y cat antes de enviarlo."
+        },
+        {
+          "title": "Ejecutar",
+          "body": "La configuración Python se aplica en la terminal del contenedor; no dentro de >>>."
+        }
+      ],
+      "run": "Guarda analisis.py en el contenedor spark-master. En la terminal configura PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 analisis.py. No escribas comandos de terminal dentro de >>>. Cada ejecución comienza desde el primer bloque.",
+      "format": "block",
+      "artifact": "program",
+      "order": 40
+    }
+  },
+  {
+    "id": "spark-dev-py-05-reconstruir",
+    "week": 10,
+    "concept": "program",
+    "title": "Paso 5 · modificar datos sin reutilizar un df antiguo",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Una compañera añadió a Diego DESPUÉS de crear df y volvió a calcular avg sobre el df anterior: seguía mostrando 144000. Escribe el programa completo corregido con seis clientes y explica por qué append a una lista no modifica un DataFrame ya creado.",
+    "starter": "# Tu solución PySpark. Escribe el código y explica tus decisiones.\n",
+    "expected": "Seis filas y monto_promedio = 140000.0.",
+    "hints": [
+      "El DataFrame no es una vista viva de la lista Python que usaste para crearlo.",
+      "Modifica datos antes de createDataFrame o construye otro DataFrame después.",
+      "Revisa la referencia solo después de intentar tu propia solución."
+    ],
+    "solution": "from pyspark.sql import SparkSession\nspark = SparkSession.builder.appName(\"PracticaPySpark\").getOrCreate()\nfrom pyspark.sql.functions import avg\ndatos = [(\"Ana\", 150000.0), (\"Luis\", 85000.0), (\"Carla\", 210000.0), (\"Pedro\", 95000.0), (\"Maria\", 180000.0)]\ndatos.append((\"Diego\", 120000.0))\ndf = spark.createDataFrame(datos, [\"cliente\", \"monto\"])\ndf.show()\ndf.agg(avg(\"monto\").alias(\"monto_promedio\")).show()\n# El nuevo df se crea DESPUÉS del cambio: suma 840000, seis filas, promedio esperado 140000.\n# Cada spark-submit recorre el archivo completo, no solo el bloque editado.\nspark.stop()",
+    "explanation": "La solución muestra una forma de resolver el requerimiento; se aceptan otras equivalentes mediante revisión. Ejecuta en el entorno Spark del curso para comprobar la salida; el navegador no ejecuta PySpark.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Nivel 4 · Ejercicio 16 · paso 4; inmutabilidad (ejercicios 3–5)",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Conserva los cinco clientes y añade a Diego.",
+        "Crea o reconstruye df después de modificar los datos.",
+        "No confunde una lista mutable con un DataFrame inmutable.",
+        "Calcula promedio sobre seis filas y explica que el archivo se ejecuta desde el principio."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "level4",
+      "context": "Datos originales del ejercicio 16: Ana 150000.0, Luis 85000.0, Carla 210000.0, Pedro 95000.0, Maria 180000.0. Columnas cliente y monto.",
+      "steps": [
+        {
+          "title": "Diagnosticar",
+          "body": "El DataFrame no es una vista viva de la lista Python que usaste para crearlo."
+        },
+        {
+          "title": "Reordenar",
+          "body": "Modifica datos antes de createDataFrame o construye otro DataFrame después."
+        },
+        {
+          "title": "Contrastar",
+          "body": "Compara filas y promedio entre las versiones, no solo la presencia de un append."
+        }
+      ],
+      "run": "Guarda analisis.py en el contenedor spark-master. En la terminal configura PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 analisis.py. No escribas comandos de terminal dentro de >>>. Cada ejecución comienza desde el primer bloque.",
+      "format": "block",
+      "artifact": "program",
+      "order": 50
+    }
+  },
+  {
+    "id": "spark-dev-py-06-decision",
+    "week": 10,
+    "concept": "program",
+    "title": "Paso 6 · justificar una decisión técnica",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Escribe el comentario DECISIÓN que insertarías antes de crear el DataFrame de clientes y montos. Justifica usar columnas nombradas para calcular una medida sobre monto. No basta escribir «crear un DataFrame».",
+    "starter": "# Tu solución PySpark. Escribe el código y explica tus decisiones.\n",
+    "expected": "Un comentario breve que justifica la representación y su relación con el análisis.",
+    "hints": [
+      "¿Qué necesidad del caso resuelve usar columnas nombradas?",
+      "Conecta la decisión con monto y el cálculo del promedio.",
+      "Revisa la referencia solo después de intentar tu propia solución."
+    ],
+    "solution": "# DECISIÓN:\n# Uso un DataFrame con cliente y monto para identificar la variable monetaria\n# por nombre y aplicar AVG sobre una columna numérica sin depender de posiciones.",
+    "explanation": "Es un fragmento de aprendizaje, no un .py autónomo. La rúbrica registra una autoevaluación, no una corrección automática.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Nivel 4 · Ejercicio 17 · paso 2",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "rubric",
+      "criteria": [
+        "Usa comentarios Python con #.",
+        "Explica por qué DataFrame sirve a este análisis, no solo qué método viene después.",
+        "Relaciona monto numérico y agregación por nombre."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "level4",
+      "context": "Datos originales del ejercicio 16: Ana 150000.0, Luis 85000.0, Carla 210000.0, Pedro 95000.0, Maria 180000.0. Columnas cliente y monto.",
+      "steps": [
+        {
+          "title": "Preguntar por qué",
+          "body": "¿Qué necesidad del caso resuelve usar columnas nombradas?"
+        },
+        {
+          "title": "Ser específico",
+          "body": "Conecta la decisión con monto y el cálculo del promedio."
+        },
+        {
+          "title": "Releer",
+          "body": "El comentario debe ser coherente con el programa que realmente escribiste."
+        }
+      ],
+      "run": "Este es un FRAGMENTO. Incorpóralo al archivo del bloque anterior, en la posición indicada en el enunciado. No es un programa autónomo: necesita los datos y variables de ese archivo.\nGuarda analisis.py en el contenedor spark-master. En la terminal configura PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 analisis.py. No escribas comandos de terminal dentro de >>>. Cada ejecución comienza desde el primer bloque.",
+      "format": "block",
+      "artifact": "fragment",
+      "order": 60
+    }
+  },
+  {
+    "id": "spark-dev-py-07-interpretacion",
+    "week": 10,
+    "concept": "program",
+    "title": "Paso 7 · interpretar sin inventar una ejecución",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Escribe comentarios INTERPRETACIÓN para el programa original de cinco clientes. Puedes deducir 144000 de la muestra, pero no has ejecutado Spark aquí. Distingue ese valor esperado de un valor observado e indica qué salida contrastarías.",
+    "starter": "# Tu solución PySpark. Escribe el código y explica tus decisiones.\n",
+    "expected": "Interpretación con significado, cálculo esperado y límite de evidencia.",
+    "hints": [
+      "Un número sin decir qué mide no interpreta el resultado.",
+      "Una cuenta manual permite esperar un valor, pero no demuestra que el programa se ejecutó.",
+      "Revisa la referencia solo después de intentar tu propia solución."
+    ],
+    "solution": "# INTERPRETACIÓN:\n# La media esperada de estos cinco montos es 144000.0: 720000 / 5.\n# Representa el monto promedio por venta, no el total vendido.\n# Aún no he ejecutado este programa en el clúster; contrastaré monto_promedio\n# y las cinco filas de df.show() con la salida real antes de afirmar que lo observé.",
+    "explanation": "Es un fragmento de aprendizaje, no un .py autónomo. La rúbrica registra una autoevaluación, no una corrección automática.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Nivel 4 · Ejercicio 17 · paso 3",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "rubric",
+      "criteria": [
+        "Identifica 144000.0 como promedio por venta, no total.",
+        "Explica la base de cinco registros y suma 720000.",
+        "Distingue explícitamente esperado de observado y propone comprobarlo en Spark real."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "level4",
+      "context": "Datos originales del ejercicio 16: Ana 150000.0, Luis 85000.0, Carla 210000.0, Pedro 95000.0, Maria 180000.0. Columnas cliente y monto.",
+      "steps": [
+        {
+          "title": "Dar significado",
+          "body": "Un número sin decir qué mide no interpreta el resultado."
+        },
+        {
+          "title": "Separar evidencia",
+          "body": "Una cuenta manual permite esperar un valor, pero no demuestra que el programa se ejecutó."
+        },
+        {
+          "title": "Contrastar",
+          "body": "Comprueba tanto el resultado agregado como las filas que alimentaron el cálculo."
+        }
+      ],
+      "run": "Este es un FRAGMENTO. Incorpóralo al archivo del bloque anterior, en la posición indicada en el enunciado. No es un programa autónomo: necesita los datos y variables de ese archivo.\nGuarda analisis.py en el contenedor spark-master. En la terminal configura PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 analisis.py. No escribas comandos de terminal dentro de >>>. Cada ejecución comienza desde el primer bloque.",
+      "format": "block",
+      "artifact": "fragment",
+      "order": 70
+    }
+  },
+  {
+    "id": "spark-dev-py-08-schema",
+    "week": 10,
+    "concept": "program",
+    "title": "Paso 8 · responder sobre schema dentro del programa",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "En el archivo del ejercicio 17, redacta la respuesta comentada a: «¿Qué ventaja tendría definir explícitamente un schema para un archivo cuya estructura conocemos?». Menciona nombres, tipos e inferencia, y aclara qué no garantiza.",
+    "starter": "# Tu solución PySpark. Escribe el código y explica tus decisiones.\n",
+    "expected": "Respuesta conceptual como comentarios Python coherentes con el código.",
+    "hints": [
+      "Si conoces la estructura, puedes entregarla en vez de pedir que Spark la deduzca.",
+      "Un tipo numérico es necesario para agregar monto como dinero.",
+      "Revisa la referencia solo después de intentar tu propia solución."
+    ],
+    "solution": "# PREGUNTA: ¿Qué aporta un schema explícito con estructura conocida?\n# RESPUESTA:\n# Declara de antemano nombres y tipos, por ejemplo monto DoubleType,\n# y evita depender de que Spark los infiera leyendo el archivo.\n# No limpia por sí solo datos malformados ni garantiza que todos los registros\n# sean válidos; debo comprobar la lectura y sus resultados.",
+    "explanation": "Es un fragmento de aprendizaje, no un .py autónomo. La rúbrica registra una autoevaluación, no una corrección automática.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Nivel 4 · Ejercicio 17 · paso 4; ejercicio 8",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "rubric",
+      "criteria": [
+        "Declara la ventaja de nombres y tipos conocidos.",
+        "Distingue schema explícito de inferSchema.",
+        "No afirma que definir schema corrija automáticamente el contenido del archivo.",
+        "Usa comentarios y conserva el programa ejecutable."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "level4",
+      "context": "Datos originales del ejercicio 16: Ana 150000.0, Luis 85000.0, Carla 210000.0, Pedro 95000.0, Maria 180000.0. Columnas cliente y monto.",
+      "steps": [
+        {
+          "title": "Conectar",
+          "body": "Si conoces la estructura, puedes entregarla en vez de pedir que Spark la deduzca."
+        },
+        {
+          "title": "Precisar",
+          "body": "Un tipo numérico es necesario para agregar monto como dinero."
+        },
+        {
+          "title": "Limitar",
+          "body": "Declarar tipos no equivale a limpiar cualquier registro inválido."
+        }
+      ],
+      "run": "Este es un FRAGMENTO. Incorpóralo al archivo del bloque anterior, en la posición indicada en el enunciado. No es un programa autónomo: necesita los datos y variables de ese archivo.\nGuarda analisis.py en el contenedor spark-master. En la terminal configura PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 analisis.py. No escribas comandos de terminal dentro de >>>. Cada ejecución comienza desde el primer bloque.",
+      "format": "block",
+      "artifact": "fragment",
+      "order": 80
+    }
+  },
+  {
+    "id": "spark-dev-py-12-hdfs",
+    "week": 10,
+    "concept": "sql",
+    "title": "Ejercicio 12 · de HDFS a Spark SQL en PySpark",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Desarrolla un .py completo: declara schema para los seis campos, lee el CSV sin encabezado de HDFS, registra ventas y calcula con SQL el total por ciudad solo de Tecnologia, descendente. Compara con la API DataFrame sobre el mismo df.",
+    "starter": "# Tu solución PySpark. Escribe el código y explica tus decisiones.\n",
+    "expected": "Ambas salidas deben coincidir sobre el archivo real. No se conocen aquí sus totales.",
+    "hints": [
+      "El archivo no tiene encabezado; monto debe ser numérico.",
+      "Registra la vista antes de usarla en spark.sql.",
+      "Revisa la referencia solo después de intentar tu propia solución."
+    ],
+    "solution": "from pyspark.sql import SparkSession\nspark = SparkSession.builder.appName(\"PracticaPySpark\").getOrCreate()\nfrom pyspark.sql.functions import col, sum, desc\nfrom pyspark.sql.types import StructType, StructField, IntegerType, StringType, DoubleType\nschema_ventas = StructType([\n    StructField(\"id_venta\", IntegerType(), True),\n    StructField(\"fecha\", StringType(), True),\n    StructField(\"cliente\", StringType(), True),\n    StructField(\"ciudad\", StringType(), True),\n    StructField(\"categoria\", StringType(), True),\n    StructField(\"monto\", DoubleType(), True)\n])\nventas = spark.read.option(\"header\", \"false\").schema(schema_ventas).csv(\"hdfs://namenode:8020/curso/hive/datos_ventas/ventas_hive.csv\")\nventas.printSchema()\nventas.show(5)\nventas.createOrReplaceTempView(\"ventas\")\npor_sql = spark.sql(\"\"\"\nSELECT ciudad, SUM(monto) AS total_ventas\nFROM ventas WHERE categoria = 'Tecnologia'\nGROUP BY ciudad ORDER BY total_ventas DESC, ciudad ASC\n\"\"\")\npor_api = ventas.filter(col(\"categoria\") == \"Tecnologia\").groupBy(\"ciudad\").agg(sum(\"monto\").alias(\"total_ventas\")).orderBy(desc(\"total_ventas\"), \"ciudad\")\npor_sql.show()\npor_api.show()\n# Comparar ambos resultados reales antes de escribir sus valores.\nspark.stop()",
+    "explanation": "La solución muestra una forma de resolver el requerimiento; se aceptan otras equivalentes mediante revisión. Ejecuta en el entorno Spark del curso para comprobar la salida; el navegador no ejecuta PySpark.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Nivel 3 · Ejercicio 12; ejercicios 7–11",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Declara los seis campos en orden y lee con header=false.",
+        "Examina tipos y muestra antes de analizar.",
+        "Registra la vista y usa WHERE, SUM, GROUP BY y ORDER BY.",
+        "Compara con filter/groupBy/agg/orderBy sobre el mismo df.",
+        "Cierra la sesión y registra valores solo después de ejecutar."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "exercise12",
+      "context": "Archivo real: hdfs://namenode:8020/curso/hive/datos_ventas/ventas_hive.csv. Campos: id_venta,fecha,cliente,ciudad,categoria,monto. Sin encabezado.",
+      "steps": [
+        {
+          "title": "Preparar",
+          "body": "El archivo no tiene encabezado; monto debe ser numérico."
+        },
+        {
+          "title": "Consultar",
+          "body": "Registra la vista antes de usarla en spark.sql."
+        },
+        {
+          "title": "Comparar",
+          "body": "Compartir fuente y filtro permite contrastar API y SQL sin atribuirlos a Hive."
+        }
+      ],
+      "run": "Guarda analisis.py en el contenedor spark-master. En la terminal configura PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 analisis.py. No escribas comandos de terminal dentro de >>>. Cada ejecución comienza desde el primer bloque.",
+      "format": "case",
+      "artifact": "program",
+      "order": 2000
+    }
+  },
+  {
+    "id": "spark-dev-py-caso-filtros",
+    "week": 10,
+    "concept": "withColumn",
+    "title": "Caso PySpark · columnas y condiciones combinadas",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Usa los seis registros de entrenamiento. Programa desde cero para mostrar cliente y monto solo de Santiago con monto >100000. Crea además monto_miles sin modificar ventas y muestra esa columna en la salida.",
+    "starter": "# Tu solución PySpark. Escribe el código y explica tus decisiones.\n",
+    "expected": "Ana | 150000.0 | 150.0; Diego | 120000.0 | 120.0. No se exige orden de filas.",
+    "hints": [
+      "Las dos condiciones deben cumplirse en la misma fila.",
+      "withColumn produce un nuevo DataFrame.",
+      "Revisa la referencia solo después de intentar tu propia solución."
+    ],
+    "solution": "from pyspark.sql import SparkSession\nspark = SparkSession.builder.appName(\"PracticaPySpark\").getOrCreate()\nfrom pyspark.sql.functions import col, sum, avg, count, desc, to_date, month\ndatos = [(1, '2025-01-05', 'Ana', 'Santiago', 'Tecnologia', 150000.0), (2, '2025-01-06', 'Luis', 'Valparaiso', 'Hogar', 85000.0), (3, '2025-02-07', 'Carla', 'Concepcion', 'Tecnologia', 210000.0), (4, '2025-02-08', 'Pedro', 'Santiago', 'Tecnologia', 95000.0), (5, '2025-03-09', 'Maria', 'Temuco', 'Tecnologia', 180000.0), (6, '2025-03-10', 'Diego', 'Santiago', 'Hogar', 120000.0)]\nventas = spark.createDataFrame(datos, ['id_venta', 'fecha', 'cliente', 'ciudad', 'categoria', 'monto'])\n\nseleccion = ventas.filter((col(\"ciudad\") == \"Santiago\") & (col(\"monto\") > 100000))\ncon_miles = seleccion.withColumn(\"monto_miles\", col(\"monto\") / 1000)\ncon_miles.select(\"cliente\", \"monto\", \"monto_miles\").show()\n# ventas conserva su esquema original, sin monto_miles.\nspark.stop()",
+    "explanation": "La solución muestra una forma de resolver el requerimiento; se aceptan otras equivalentes mediante revisión. Ejecuta en el entorno Spark del curso para comprobar la salida; el navegador no ejecuta PySpark.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicios 3–5 · caso original integrado",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Construye los seis datos y columnas correctas.",
+        "Combina condiciones Column con & y paréntesis, no and.",
+        "Crea monto_miles dividiendo por 1000 y conserva el retorno.",
+        "Proyecta cliente, monto y monto_miles sin alterar ventas."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "transfer",
+      "context": "Muestra de entrenamiento ORIGINAL, no el CSV completo del profesor. Campos: id_venta, fecha, cliente, ciudad, categoria, monto\n1,2025-01-05,Ana,Santiago,Tecnologia,150000.0\n2,2025-01-06,Luis,Valparaiso,Hogar,85000.0\n3,2025-02-07,Carla,Concepcion,Tecnologia,210000.0\n4,2025-02-08,Pedro,Santiago,Tecnologia,95000.0\n5,2025-03-09,Maria,Temuco,Tecnologia,180000.0\n6,2025-03-10,Diego,Santiago,Hogar,120000.0",
+      "steps": [
+        {
+          "title": "Filtrar",
+          "body": "Las dos condiciones deben cumplirse en la misma fila."
+        },
+        {
+          "title": "Derivar",
+          "body": "withColumn produce un nuevo DataFrame."
+        },
+        {
+          "title": "Mostrar",
+          "body": "select elige columnas; no reemplaza el filtrado."
+        }
+      ],
+      "run": "Guarda analisis.py en el contenedor spark-master. En la terminal configura PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 analisis.py. No escribas comandos de terminal dentro de >>>. Cada ejecución comienza desde el primer bloque.",
+      "format": "case",
+      "artifact": "program",
+      "order": 10
+    }
+  },
+  {
+    "id": "spark-dev-py-caso-agregados",
+    "week": 10,
+    "concept": "aggregation",
+    "title": "Caso PySpark · cantidad, total y promedio",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "La tienda pide cantidad de ventas, total y promedio por categoría solo de ventas individuales >100000. Escribe el .py completo y ordena por total descendente. Interpreta las tres medidas sin confundirlas.",
+    "starter": "# Tu solución PySpark. Escribe el código y explica tus decisiones.\n",
+    "expected": "Tecnologia: 3, 540000.0, 180000.0. Hogar: 1, 120000.0, 120000.0.",
+    "hints": [
+      "La condición es por venta individual, no por suma del grupo.",
+      "Tres expresiones dentro de agg permiten medidas diferentes.",
+      "Revisa la referencia solo después de intentar tu propia solución."
+    ],
+    "solution": "from pyspark.sql import SparkSession\nspark = SparkSession.builder.appName(\"PracticaPySpark\").getOrCreate()\nfrom pyspark.sql.functions import col, sum, avg, count, desc, to_date, month\ndatos = [(1, '2025-01-05', 'Ana', 'Santiago', 'Tecnologia', 150000.0), (2, '2025-01-06', 'Luis', 'Valparaiso', 'Hogar', 85000.0), (3, '2025-02-07', 'Carla', 'Concepcion', 'Tecnologia', 210000.0), (4, '2025-02-08', 'Pedro', 'Santiago', 'Tecnologia', 95000.0), (5, '2025-03-09', 'Maria', 'Temuco', 'Tecnologia', 180000.0), (6, '2025-03-10', 'Diego', 'Santiago', 'Hogar', 120000.0)]\nventas = spark.createDataFrame(datos, ['id_venta', 'fecha', 'cliente', 'ciudad', 'categoria', 'monto'])\n\nresumen = (ventas.filter(col(\"monto\") > 100000)\n    .groupBy(\"categoria\")\n    .agg(count(\"*\").alias(\"cantidad\"), sum(\"monto\").alias(\"total\"), avg(\"monto\").alias(\"promedio\"))\n    .orderBy(desc(\"total\")))\nresumen.show()\n# Tecnologia: 3 ventas, 540000 total, 180000 promedio.\n# Hogar: 1 venta, 120000 total y promedio.\nspark.stop()",
+    "explanation": "La solución muestra una forma de resolver el requerimiento; se aceptan otras equivalentes mediante revisión. Ejecuta en el entorno Spark del curso para comprobar la salida; el navegador no ejecuta PySpark.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicios 9 y 15 · caso original",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Filtra las ventas antes de formar grupos.",
+        "Agrupa por categoria.",
+        "Calcula COUNT, SUM y AVG con alias diferentes.",
+        "Ordena por total y explica la unidad de cada medida."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "transfer",
+      "context": "Muestra de entrenamiento ORIGINAL, no el CSV completo del profesor. Campos: id_venta, fecha, cliente, ciudad, categoria, monto\n1,2025-01-05,Ana,Santiago,Tecnologia,150000.0\n2,2025-01-06,Luis,Valparaiso,Hogar,85000.0\n3,2025-02-07,Carla,Concepcion,Tecnologia,210000.0\n4,2025-02-08,Pedro,Santiago,Tecnologia,95000.0\n5,2025-03-09,Maria,Temuco,Tecnologia,180000.0\n6,2025-03-10,Diego,Santiago,Hogar,120000.0",
+      "steps": [
+        {
+          "title": "Decidir",
+          "body": "La condición es por venta individual, no por suma del grupo."
+        },
+        {
+          "title": "Agregar",
+          "body": "Tres expresiones dentro de agg permiten medidas diferentes."
+        },
+        {
+          "title": "Interpretar",
+          "body": "Cantidad cuenta registros; total y promedio miden dinero."
+        }
+      ],
+      "run": "Guarda analisis.py en el contenedor spark-master. En la terminal configura PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 analisis.py. No escribas comandos de terminal dentro de >>>. Cada ejecución comienza desde el primer bloque.",
+      "format": "case",
+      "artifact": "program",
+      "order": 20
+    }
+  },
+  {
+    "id": "spark-dev-py-caso-sql",
+    "week": 10,
+    "concept": "sql",
+    "title": "Caso PySpark · dos condiciones en SQL",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "El informe solo considera Tecnologia con monto >100000. Escribe un programa PySpark con vista temporal y consulta SQL para sumar por ciudad y ordenar descendente. Explica por qué Santiago deja de sumar 245000.",
+    "starter": "# Tu solución PySpark. Escribe el código y explica tus decisiones.\n",
+    "expected": "Concepcion 210000.0; Temuco 180000.0; Santiago 150000.0.",
+    "hints": [
+      "AND pertenece a SQL; & se usa para combinar objetos Column de PySpark.",
+      "Filtra filas antes de sumar por ciudad.",
+      "Revisa la referencia solo después de intentar tu propia solución."
+    ],
+    "solution": "from pyspark.sql import SparkSession\nspark = SparkSession.builder.appName(\"PracticaPySpark\").getOrCreate()\nfrom pyspark.sql.functions import col, sum, avg, count, desc, to_date, month\ndatos = [(1, '2025-01-05', 'Ana', 'Santiago', 'Tecnologia', 150000.0), (2, '2025-01-06', 'Luis', 'Valparaiso', 'Hogar', 85000.0), (3, '2025-02-07', 'Carla', 'Concepcion', 'Tecnologia', 210000.0), (4, '2025-02-08', 'Pedro', 'Santiago', 'Tecnologia', 95000.0), (5, '2025-03-09', 'Maria', 'Temuco', 'Tecnologia', 180000.0), (6, '2025-03-10', 'Diego', 'Santiago', 'Hogar', 120000.0)]\nventas = spark.createDataFrame(datos, ['id_venta', 'fecha', 'cliente', 'ciudad', 'categoria', 'monto'])\n\nventas.createOrReplaceTempView(\"ventas\")\nresumen = spark.sql(\"\"\"\nSELECT ciudad, SUM(monto) AS total\nFROM ventas\nWHERE categoria = 'Tecnologia' AND monto > 100000\nGROUP BY ciudad ORDER BY total DESC, ciudad ASC\n\"\"\")\nresumen.show()\n# Pedro queda fuera por sus 95000; Santiago conserva solo 150000.\nspark.stop()",
+    "explanation": "La solución muestra una forma de resolver el requerimiento; se aceptan otras equivalentes mediante revisión. Ejecuta en el entorno Spark del curso para comprobar la salida; el navegador no ejecuta PySpark.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Nivel 3 · Ejercicio 12 · variante original",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Registra ventas antes de consultar.",
+        "Combina filtros con AND dentro de SQL.",
+        "Agrupa por ciudad y suma monto.",
+        "Ordena e interpreta la exclusión de Pedro."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "transfer",
+      "context": "Muestra de entrenamiento ORIGINAL, no el CSV completo del profesor. Campos: id_venta, fecha, cliente, ciudad, categoria, monto\n1,2025-01-05,Ana,Santiago,Tecnologia,150000.0\n2,2025-01-06,Luis,Valparaiso,Hogar,85000.0\n3,2025-02-07,Carla,Concepcion,Tecnologia,210000.0\n4,2025-02-08,Pedro,Santiago,Tecnologia,95000.0\n5,2025-03-09,Maria,Temuco,Tecnologia,180000.0\n6,2025-03-10,Diego,Santiago,Hogar,120000.0",
+      "steps": [
+        {
+          "title": "Ubicar sintaxis",
+          "body": "AND pertenece a SQL; & se usa para combinar objetos Column de PySpark."
+        },
+        {
+          "title": "Agrupar",
+          "body": "Filtra filas antes de sumar por ciudad."
+        },
+        {
+          "title": "Interpretar",
+          "body": "Revisa la fila excluida antes de concluir que el total está mal."
+        }
+      ],
+      "run": "Guarda analisis.py en el contenedor spark-master. En la terminal configura PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 analisis.py. No escribas comandos de terminal dentro de >>>. Cada ejecución comienza desde el primer bloque.",
+      "format": "case",
+      "artifact": "program",
+      "order": 30
+    }
+  },
+  {
+    "id": "spark-dev-py-caso-fechas",
+    "week": 10,
+    "concept": "dates",
+    "title": "Caso PySpark · fechas, meses y esquema",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Construye un .py que convierta fecha yyyy-MM-dd a date, derive mes y calcule total mensual de 2025 en orden cronológico. Muestra antes fecha/fecha_date y printSchema para comprobar la conversión.",
+    "starter": "# Tu solución PySpark. Escribe el código y explica tus decisiones.\n",
+    "expected": "mes 1: 235000.0; mes 2: 305000.0; mes 3: 300000.0. fecha_date debe ser date.",
+    "hints": [
+      "fecha es string; una columna date permite funciones de calendario.",
+      "month recibe la fecha convertida, no una comparación textual.",
+      "Revisa la referencia solo después de intentar tu propia solución."
+    ],
+    "solution": "from pyspark.sql import SparkSession\nspark = SparkSession.builder.appName(\"PracticaPySpark\").getOrCreate()\nfrom pyspark.sql.functions import col, sum, avg, count, desc, to_date, month\ndatos = [(1, '2025-01-05', 'Ana', 'Santiago', 'Tecnologia', 150000.0), (2, '2025-01-06', 'Luis', 'Valparaiso', 'Hogar', 85000.0), (3, '2025-02-07', 'Carla', 'Concepcion', 'Tecnologia', 210000.0), (4, '2025-02-08', 'Pedro', 'Santiago', 'Tecnologia', 95000.0), (5, '2025-03-09', 'Maria', 'Temuco', 'Tecnologia', 180000.0), (6, '2025-03-10', 'Diego', 'Santiago', 'Hogar', 120000.0)]\nventas = spark.createDataFrame(datos, ['id_venta', 'fecha', 'cliente', 'ciudad', 'categoria', 'monto'])\n\nfechas = ventas.withColumn(\"fecha_date\", to_date(col(\"fecha\"), \"yyyy-MM-dd\"))\nfechas.select(\"fecha\", \"fecha_date\").show()\nfechas.printSchema()\nmeses = fechas.withColumn(\"mes\", month(col(\"fecha_date\")))\nmeses.groupBy(\"mes\").agg(sum(\"monto\").alias(\"total\")).orderBy(\"mes\").show()\n# Se espera mes 1:235000, 2:305000, 3:300000 en esta muestra de 2025.\nspark.stop()",
+    "explanation": "La solución muestra una forma de resolver el requerimiento; se aceptan otras equivalentes mediante revisión. Ejecuta en el entorno Spark del curso para comprobar la salida; el navegador no ejecuta PySpark.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Nivel 3 · Ejercicio 13 · caso original con muestra pequeña",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Usa to_date con el patrón correcto.",
+        "Inspecciona la nueva columna y su tipo.",
+        "Extrae month de fecha_date y suma monto por mes.",
+        "Ordena por mes y advierte que no se deben mezclar años sin distinguirlos."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "transfer",
+      "context": "Muestra de entrenamiento ORIGINAL, no el CSV completo del profesor. Campos: id_venta, fecha, cliente, ciudad, categoria, monto\n1,2025-01-05,Ana,Santiago,Tecnologia,150000.0\n2,2025-01-06,Luis,Valparaiso,Hogar,85000.0\n3,2025-02-07,Carla,Concepcion,Tecnologia,210000.0\n4,2025-02-08,Pedro,Santiago,Tecnologia,95000.0\n5,2025-03-09,Maria,Temuco,Tecnologia,180000.0\n6,2025-03-10,Diego,Santiago,Hogar,120000.0",
+      "steps": [
+        {
+          "title": "Convertir",
+          "body": "fecha es string; una columna date permite funciones de calendario."
+        },
+        {
+          "title": "Derivar",
+          "body": "month recibe la fecha convertida, no una comparación textual."
+        },
+        {
+          "title": "Agregar",
+          "body": "Agrupa por mes dentro de esta muestra de un solo año."
+        }
+      ],
+      "run": "Guarda analisis.py en el contenedor spark-master. En la terminal configura PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 analisis.py. No escribas comandos de terminal dentro de >>>. Cada ejecución comienza desde el primer bloque.",
+      "format": "case",
+      "artifact": "program",
+      "order": 40
+    }
+  },
+  {
+    "id": "spark-dev-py-caso-schema",
+    "week": 10,
+    "concept": "schema",
+    "title": "Caso PySpark · controlar lectura y metadatos",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Escribe un programa completo que lea el CSV real con schema explícito, muestre dtypes, una muestra y el promedio por ciudad en SQL. Incluye una decisión sobre el schema y una interpretación pendiente de la ejecución real.",
+    "starter": "# Tu solución PySpark. Escribe el código y explica tus decisiones.\n",
+    "expected": "Seis columnas con tipos declarados y un promedio por ciudad; valores desconocidos hasta ejecutar el CSV real.",
+    "hints": [
+      "Inferir tipos no es lo mismo que entregarlos explícitamente.",
+      "No interpretes promedios sin revisar que monto se leyó como número.",
+      "Revisa la referencia solo después de intentar tu propia solución."
+    ],
+    "solution": "from pyspark.sql import SparkSession\nspark = SparkSession.builder.appName(\"PracticaPySpark\").getOrCreate()\nfrom pyspark.sql.types import StructType, StructField, IntegerType, StringType, DoubleType\nschema_ventas = StructType([\n    StructField(\"id_venta\", IntegerType(), True),\n    StructField(\"fecha\", StringType(), True),\n    StructField(\"cliente\", StringType(), True),\n    StructField(\"ciudad\", StringType(), True),\n    StructField(\"categoria\", StringType(), True),\n    StructField(\"monto\", DoubleType(), True)\n])\nventas = spark.read.option(\"header\", \"false\").schema(schema_ventas).csv(\"hdfs://namenode:8020/curso/hive/datos_ventas/ventas_hive.csv\")\n# DECISIÓN: estructura conocida; monto DoubleType para agregar numéricamente.\nprint(ventas.dtypes)\nventas.show(5)\nventas.createOrReplaceTempView(\"ventas\")\nspark.sql(\"SELECT ciudad, AVG(monto) AS promedio FROM ventas GROUP BY ciudad\").show()\n# INTERPRETACIÓN: registrar aquí el promedio observado por ciudad tras ejecutar.\nspark.stop()",
+    "explanation": "La solución muestra una forma de resolver el requerimiento; se aceptan otras equivalentes mediante revisión. Ejecuta en el entorno Spark del curso para comprobar la salida; el navegador no ejecuta PySpark.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Ejercicios 7–8, 14 y nivel 4 · caso original",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Usa los seis tipos/nombres del CSV y header=false.",
+        "Muestra dtypes y una muestra de los datos.",
+        "Registra la vista y calcula AVG por ciudad.",
+        "Distingue vista Spark de tabla Hive y documenta sin inventar valores."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "transfer",
+      "context": "CSV real de seis campos sin encabezado en hdfs://namenode:8020/curso/hive/datos_ventas/ventas_hive.csv. No contiene aquí una copia local.",
+      "steps": [
+        {
+          "title": "Declarar",
+          "body": "Inferir tipos no es lo mismo que entregarlos explícitamente."
+        },
+        {
+          "title": "Comprobar",
+          "body": "No interpretes promedios sin revisar que monto se leyó como número."
+        },
+        {
+          "title": "Documentar",
+          "body": "Una decisión explica por qué; una interpretación se apoya en la salida real."
+        }
+      ],
+      "run": "Guarda analisis.py en el contenedor spark-master. En la terminal configura PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 analisis.py. No escribas comandos de terminal dentro de >>>. Cada ejecución comienza desde el primer bloque.",
+      "format": "case",
+      "artifact": "program",
+      "order": 50
+    }
+  },
+  {
+    "id": "spark-dev-py-caso-entrega",
+    "week": 10,
+    "concept": "program",
+    "title": "Caso PySpark · entregar y defender un programa",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Una tienda entrega tres ventas: Ana 120000, Luis 60000, Carla 180000. Escribe un .py completo que muestre los registros y el promedio. Agrega a Diego con 40000, crea un df nuevo y compara los promedios. Incluye DECISIÓN, INTERPRETACIÓN y respuesta sobre schema.",
+    "starter": "# Tu solución PySpark. Escribe el código y explica tus decisiones.\n",
+    "expected": "Tres filas con promedio 120000.0; cuatro filas con promedio 100000.0.",
+    "hints": [
+      "Conserva dos conjuntos distintos para comparar antes y después.",
+      "Guarda los nuevos datos y el nuevo DataFrame en variables distintas.",
+      "Revisa la referencia solo después de intentar tu propia solución."
+    ],
+    "solution": "from pyspark.sql import SparkSession\nspark = SparkSession.builder.appName(\"PracticaPySpark\").getOrCreate()\nfrom pyspark.sql.functions import avg\ndatos = [(\"Ana\", 120000.0), (\"Luis\", 60000.0), (\"Carla\", 180000.0)]\n# DECISIÓN: DataFrame con monto numérico para agregar por nombre.\ndf = spark.createDataFrame(datos, [\"cliente\", \"monto\"])\ndf.show()\ndf.agg(avg(\"monto\").alias(\"promedio_antes\")).show()\ndatos_nuevos = datos + [(\"Diego\", 40000.0)]\ndf_nuevo = spark.createDataFrame(datos_nuevos, [\"cliente\", \"monto\"])\ndf_nuevo.show()\ndf_nuevo.agg(avg(\"monto\").alias(\"promedio_despues\")).show()\n# INTERPRETACIÓN: se espera pasar de 120000 a 100000 por el nuevo monto menor a la media.\n# RESPUESTA: schema explícito fija nombres/tipos conocidos y evita depender de inferencia.\nspark.stop()",
+    "explanation": "La solución muestra una forma de resolver el requerimiento; se aceptan otras equivalentes mediante revisión. Ejecuta en el entorno Spark del curso para comprobar la salida; el navegador no ejecuta PySpark.",
+    "source": {
+      "file": "Semana_10_SPARK_Ejercicios.md",
+      "section": "Nivel 4 · Ejercicios 16–17 · caso original con nuevos datos",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Incluye sesión, imports, datos y cierre.",
+        "Muestra y promedia los tres registros originales.",
+        "Crea un nuevo df con Diego; no supone que la lista actualice df.",
+        "Compara ambos promedios sin promediar promedios.",
+        "Justifica, interpreta y responde sobre schema con comentarios Python."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "transfer",
+      "context": "Muestra ORIGINAL: Ana 120000.0, Luis 60000.0, Carla 180000.0. Después añadir Diego 40000.0.",
+      "steps": [
+        {
+          "title": "Planificar",
+          "body": "Conserva dos conjuntos distintos para comparar antes y después."
+        },
+        {
+          "title": "Programar",
+          "body": "Guarda los nuevos datos y el nuevo DataFrame en variables distintas."
+        },
+        {
+          "title": "Defender",
+          "body": "Explica por qué baja la media y qué evidencia te falta si aún no ejecutaste."
+        }
+      ],
+      "run": "Guarda analisis.py en el contenedor spark-master. En la terminal configura PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 analisis.py. No escribas comandos de terminal dentro de >>>. Cada ejecución comienza desde el primer bloque.",
+      "format": "case",
+      "artifact": "program",
+      "order": 60
+    }
+  },
+  {
+    "id": "spark-dev-py-rdd-numeros",
+    "week": 9,
+    "concept": "rdd",
+    "title": "Caso PySpark · pares, transformaciones y acción",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Escribe un .py que cree del 1 al 100 con cuatro particiones, filtre pares, multiplique por diez y sume. Muestra cantidad de particiones y resultado. Comenta qué operaciones son transformaciones y cuál pide el resultado.",
+    "starter": "# Tu solución PySpark. Escribe el código y explica tus decisiones.\n",
+    "expected": "Particiones: 4. Suma: 25500.",
+    "hints": [
+      "range(1,101) incluye el 100 en Python.",
+      "filter conserva pares y map cambia sus valores.",
+      "Revisa la referencia solo después de intentar tu propia solución."
+    ],
+    "solution": "from pyspark.sql import SparkSession\nspark = SparkSession.builder.appName(\"PracticaPySpark\").getOrCreate()\nsc = spark.sparkContext\ndatos = sc.parallelize(range(1, 101), 4)\npares = datos.filter(lambda x: x % 2 == 0)\ndecenas = pares.map(lambda x: x * 10)\nprint(\"Particiones:\", datos.getNumPartitions())\nprint(\"Suma:\", decenas.reduce(lambda a, b: a + b))\n# filter/map son transformaciones; reduce solicita un resultado.\n# Cuatro particiones no requieren cuatro Workers.\nspark.stop()",
+    "explanation": "La solución muestra una forma de resolver el requerimiento; se aceptan otras equivalentes mediante revisión. Ejecuta en el entorno Spark del curso para comprobar la salida; el navegador no ejecuta PySpark.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicios 5–8 · programa original de aplicación",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Crea SparkContext desde la sesión y range sin excluir el 100.",
+        "Usa cuatro particiones, filter y map con lambdas Python.",
+        "Reduce mediante suma y muestra el resultado.",
+        "Distingue transformaciones/acción y particiones/Workers."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "transfer",
+      "context": "Colección cerrada de enteros del 1 al 100; 4 particiones.",
+      "steps": [
+        {
+          "title": "Crear",
+          "body": "range(1,101) incluye el 100 en Python."
+        },
+        {
+          "title": "Transformar",
+          "body": "filter conserva pares y map cambia sus valores."
+        },
+        {
+          "title": "Solicitar",
+          "body": "Una acción pide el cálculo; no confundas particiones con máquinas."
+        }
+      ],
+      "run": "Guarda analisis.py en el contenedor spark-master. En la terminal configura PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 analisis.py. No escribas comandos de terminal dentro de >>>. Cada ejecución comienza desde el primer bloque.",
+      "format": "case",
+      "artifact": "program",
+      "order": 70
+    }
+  },
+  {
+    "id": "spark-dev-py-rdd-campos",
+    "week": 9,
+    "concept": "sales-rdd",
+    "title": "Caso PySpark · texto, campos y filtro numérico",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Con las tres líneas cliente,ciudad,monto indicadas, construye un RDD, separa campos y cuenta ventas con monto >100000. Muestra una muestra antes de contar y explica por qué conviertes a float.",
+    "starter": "# Tu solución PySpark. Escribe el código y explica tus decisiones.\n",
+    "expected": "Dos ventas: Ana y Carla. En esta muestra de TRES campos monto es x[2].",
+    "hints": [
+      "Esta muestra tiene tres campos; no copies los índices del CSV original de seis.",
+      "split deja cadenas; compara monto como valor numérico.",
+      "Revisa la referencia solo después de intentar tu propia solución."
+    ],
+    "solution": "from pyspark.sql import SparkSession\nspark = SparkSession.builder.appName(\"PracticaPySpark\").getOrCreate()\nsc = spark.sparkContext\nlineas = sc.parallelize([\"Ana,Santiago,150000\", \"Pedro,Santiago,95000\", \"Carla,Concepcion,210000\"], 2)\ncampos = lineas.map(lambda linea: linea.split(\",\"))\naltas = campos.filter(lambda x: float(x[2]) > 100000)\nprint(altas.take(3))\nprint(\"Ventas altas:\", altas.count())\n# split deja texto; convierto monto antes de compararlo como número.\nspark.stop()",
+    "explanation": "La solución muestra una forma de resolver el requerimiento; se aceptan otras equivalentes mediante revisión. Ejecuta en el entorno Spark del curso para comprobar la salida; el navegador no ejecuta PySpark.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicios 11–12 · caso original simplificado",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Lee los tres campos en el orden dado.",
+        "Usa map/split y float(x[2]).",
+        "Filtra >100000 y usa take para inspeccionar una muestra.",
+        "Cuenta con count y no confunde el formato de tres campos con el de seis del curso."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "transfer",
+      "context": "CSV ORIGINAL de tres campos: Ana,Santiago,150000; Pedro,Santiago,95000; Carla,Concepcion,210000.",
+      "steps": [
+        {
+          "title": "Reconocer",
+          "body": "Esta muestra tiene tres campos; no copies los índices del CSV original de seis."
+        },
+        {
+          "title": "Convertir",
+          "body": "split deja cadenas; compara monto como valor numérico."
+        },
+        {
+          "title": "Verificar",
+          "body": "Inspecciona unas filas antes de pedir la cantidad total."
+        }
+      ],
+      "run": "Guarda analisis.py en el contenedor spark-master. En la terminal configura PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 analisis.py. No escribas comandos de terminal dentro de >>>. Cada ejecución comienza desde el primer bloque.",
+      "format": "case",
+      "artifact": "program",
+      "order": 80
+    }
+  },
+  {
+    "id": "spark-dev-py-rdd-ciudades",
+    "week": 9,
+    "concept": "sales-rdd",
+    "title": "Caso PySpark · claves y agregación por ciudad",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Escribe un programa para sumar montos por ciudad a partir de las tres líneas de entrenamiento, solo con ventas >100000. Usa pares clave-valor y reduceByKey. Explica por qué no sirve count para calcular dinero.",
+    "starter": "# Tu solución PySpark. Escribe el código y explica tus decisiones.\n",
+    "expected": "Santiago 150000.0 y Concepcion 210000.0, sin orden garantizado.",
+    "hints": [
+      "La ciudad agrupa las ventas; no debe ser el valor que sumas.",
+      "reduceByKey combina importes de la misma ciudad.",
+      "Revisa la referencia solo después de intentar tu propia solución."
+    ],
+    "solution": "from pyspark.sql import SparkSession\nspark = SparkSession.builder.appName(\"PracticaPySpark\").getOrCreate()\nsc = spark.sparkContext\nlineas = sc.parallelize([\"Ana,Santiago,150000\", \"Pedro,Santiago,95000\", \"Carla,Concepcion,210000\"], 2)\ncampos = lineas.map(lambda linea: linea.split(\",\"))\naltas = campos.filter(lambda x: float(x[2]) > 100000)\npares = altas.map(lambda x: (x[1], float(x[2])))\ntotales = pares.reduceByKey(lambda a, b: a + b)\nprint(totales.collect())\n# Ciudad es la clave; monto es el valor. count contaría registros, no dinero.\n# collect solo se usa para este agregado pequeño; el orden no está garantizado.\nspark.stop()",
+    "explanation": "La solución muestra una forma de resolver el requerimiento; se aceptan otras equivalentes mediante revisión. Ejecuta en el entorno Spark del curso para comprobar la salida; el navegador no ejecuta PySpark.",
+    "source": {
+      "file": "Semana_09_SPARK_Ejercicios.md",
+      "section": "Ejercicios 13 y 15 · adaptación de conceptos a PySpark",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Separa y filtra los tres campos con conversión numérica.",
+        "Construye pares ciudad,monto.",
+        "Suma por clave mediante reduceByKey.",
+        "Obtiene el resultado pequeño con una acción y no supone orden."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "transfer",
+      "context": "CSV ORIGINAL de tres campos: Ana,Santiago,150000; Pedro,Santiago,95000; Carla,Concepcion,210000.",
+      "steps": [
+        {
+          "title": "Elegir clave",
+          "body": "La ciudad agrupa las ventas; no debe ser el valor que sumas."
+        },
+        {
+          "title": "Agregar",
+          "body": "reduceByKey combina importes de la misma ciudad."
+        },
+        {
+          "title": "Interpretar",
+          "body": "Contar filas y sumar dinero son requerimientos distintos."
+        }
+      ],
+      "run": "Guarda analisis.py en el contenedor spark-master. En la terminal configura PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 analisis.py. No escribas comandos de terminal dentro de >>>. Cada ejecución comienza desde el primer bloque.",
+      "format": "case",
+      "artifact": "program",
+      "order": 90
+    }
+  }
+]

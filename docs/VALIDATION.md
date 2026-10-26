@@ -1,5 +1,15 @@
 # Verificación
 
+## Ampliación PySpark — 2026-10-26
+
+- Estado inicial: 36/36 pruebas aprobadas y checkout limpio.
+- Guía releída: nivel 4 completo de semana 10 (ejercicios 16–17 y sus pasos), ejercicio 12 y cobertura práctica semanas 9–10. Mismo commit académico fijado, confirmado mediante fetch.
+- 18 actividades nuevas PySpark; recorrido de desarrollo PySpark total 22: 8 bloques y 14 casos completos. Cinco bloques son fragmentos explícitos; ninguno de los ocho bloques se incluye en simulaciones de desarrollo.
+- `npm test`: **42 pruebas aprobadas, sin fallos ni omisiones**. Se verifican orden/cobertura de bloques, selección de casos completos por lenguaje, exclusión de fragmentos, persistencia/importación y todos los flujos anteriores.
+- Referencias de las 22 actividades de desarrollo PySpark analizadas con `ast.parse`, sin errores de sintaxis Python. Esto no acredita ejecución Spark ni presencia de sus librerías.
+- TypeScript/Vite y prueba Chromium de Ruta PySpark: descarga, filtros, casos, recarga y entrega de simulación; escritorio 1440px y móvil 390/320px. Sin backend ni ejecución PySpark real.
+
+
 ## Desarrollo de la prueba — 2026-10-26
 
 - Estado inicial de esta ampliación: 30/30 pruebas aprobadas; checkout sin cambios.

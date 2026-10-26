@@ -1,13 +1,14 @@
+import pysparkDevelopment from './pyspark-development.json';
 import development from './development.json';
 import bank from './exercises.json';
 import units from './lessons.json';
 import type {Exercise,SparkLesson,WeekContent} from './types';
-const allExercises=[...bank,...development] as Exercise[];
+const allExercises=[...bank,...development,...pysparkDevelopment] as Exercise[];
 export const sourceCommit='6dbb5edb023d218b50b9d2494676ceb0de51ecb5';
 export const sourceURL=(file:string)=>`https://github.com/juliopez/Hadoop/blob/${sourceCommit}/material_docente/presentaciones/${file}`;
 export const sparkWeeks:WeekContent[]=[
- {id:9,title:'Fundamentos y RDD',version:2,status:'published',sources:['Semana_09_SPARK.md','Semana_09_SPARK_Ejercicios.md'],concepts:[...new Set(allExercises.filter(e=>e.week===9).map(e=>e.concept))]},
- {id:10,title:'DataFrames y Spark SQL',version:2,status:'published',sources:['Semana_10_SPARK_Ejercicios.md'],concepts:[...new Set(allExercises.filter(e=>e.week===10).map(e=>e.concept))]}
+ {id:9,title:'Fundamentos y RDD',version:3,status:'published',sources:['Semana_09_SPARK.md','Semana_09_SPARK_Ejercicios.md'],concepts:[...new Set(allExercises.filter(e=>e.week===9).map(e=>e.concept))]},
+ {id:10,title:'DataFrames y Spark SQL',version:3,status:'published',sources:['Semana_10_SPARK_Ejercicios.md'],concepts:[...new Set(allExercises.filter(e=>e.week===10).map(e=>e.concept))]}
 ];
 export const publishedSparkWeeks=sparkWeeks.filter(w=>w.status==='published');
 export const exercises=allExercises.filter(e=>publishedSparkWeeks.some(w=>w.id===e.week));

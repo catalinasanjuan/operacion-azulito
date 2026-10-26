@@ -29,9 +29,9 @@ npm run preview
 
 ## Misión Spark ⚡
 
-**Desarrollo de la prueba** prioriza semana 10, nivel 3, ejercicio 12, y todo el nivel 4: 14 casos nuevos (10 Scala / 4 PySpark), pasos guiados, código descargable y simulación por defecto solo de desarrollo. El nivel 4 original es PySpark; las adaptaciones a Scala se identifican. El repaso conceptual queda como apoyo separado.
+**Desarrollo de la prueba** prioriza semana 10, nivel 3, ejercicio 12, y todo el nivel 4: 32 actividades de desarrollo (10 Scala / 22 PySpark), pasos guiados, código descargable y simulación por defecto solo de desarrollo. El nivel 4 original es PySpark; las adaptaciones a Scala se identifican. El repaso conceptual queda como apoyo separado. **Ruta PySpark** ofrece 8 bloques progresivos y 14 casos completos: sesión, DataFrame, promedio, guardado/ejecución, modificación, comentarios y casos de semanas 9–10. Los fragmentos están identificados y la simulación solo selecciona casos completos.
 
-17 lecciones y 56 ejercicios de las semanas 9–10: laboratorio con escritura de código, detective, simulaciones prácticas, Modo 4,0, glosario y progreso separado. 23 ejercicios tienen comprobación automática local, 15 usan rúbrica y 18 requieren Spark real. La web no ejecuta PySpark/Scala. La exportación incluye ambas misiones y admite los archivos antiguos. Consulta [docs/SPARK.md](docs/SPARK.md) para fuentes, límites y ampliación a nuevas semanas.
+17 lecciones y 74 ejercicios de las semanas 9–10: laboratorio con escritura de código, detective, simulaciones prácticas, Modo 4,0, glosario y progreso separado. 23 ejercicios tienen comprobación automática local, 18 usan rúbrica y 33 requieren Spark real. La web no ejecuta PySpark/Scala. La exportación incluye ambas misiones y admite los archivos antiguos. Consulta [docs/SPARK.md](docs/SPARK.md) para fuentes, límites y ampliación a nuevas semanas.
 
 ## Qué incluye Hadoop + Hive
 

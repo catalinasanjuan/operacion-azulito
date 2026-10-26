@@ -16,11 +16,11 @@ Los ejercicios indican si adaptan una actividad o son una aplicación original d
 
 | Semana | Lecciones | Ejercicios | Contenido |
 |---|---:|---:|---|
-| 9 | 8 | 21 | Arquitectura, RDD, particiones, Scala/PySpark, transformaciones/acciones, lazy evaluation, HDFS y ventas |
-| 10 | 9 | 35 | DataFrames, esquemas, columnas, filtros, CSV, agregaciones, SQL, fechas, programas y documentación |
-| Total | 17 | 56 | 10 de reconocimiento, 6 de completar, 9 de corrección, 12 de construcción y 19 casos |
+| 9 | 8 | 24 | Arquitectura, RDD, particiones, Scala/PySpark, transformaciones/acciones, lazy evaluation, HDFS y ventas |
+| 10 | 9 | 50 | DataFrames, esquemas, columnas, filtros, CSV, agregaciones, SQL, fechas, programas y documentación |
+| Total | 17 | 74 | 10 de reconocimiento, 6 de completar, 9 de corrección, 12 de construcción y 37 casos/bloques |
 
-**46/56 actividades requieren completar, corregir o producir código.** Los ejercicios de nivel 0 piden respuestas cortas; las lecciones tienen una comprobación conceptual. El laboratorio no se reduce a alternativas.
+**64/74 actividades requieren completar, corregir o producir código o comentarios técnicos.** Los ejercicios de nivel 0 piden respuestas cortas; las lecciones tienen una comprobación conceptual. El laboratorio no se reduce a alternativas.
 
 Cada ejercicio conserva un ID estable, semana/concepto, lenguaje, nivel, plantilla, objetivo de salida, pistas, solución, explicación, fuente y modo de revisión. Cada lección ofrece explicación, analogía, código, lectura línea por línea, comprobación y resumen. El glosario se consulta en la misma pantalla. El editor usa texto plano con una vista de resaltado; Tab mantiene la navegación accesible.
 
@@ -34,13 +34,13 @@ Se revisó de nuevo el repositorio del profesor: su rama predeterminada seguía 
 
 El ejercicio 12 pide total vendido por ciudad para Tecnologia mediante vista temporal y Spark SQL, y comparación con DataFrame API. El nivel 4 **original está escrito en PySpark**. Sus adaptaciones a Scala se identifican; no se presenta Scala como el lenguaje original de los ejercicios 16–17.
 
-La sección **Desarrollo de la prueba** añade 14 actividades, conservando los 42 IDs y enunciados previos:
+La sección **Desarrollo de la prueba** y la entrada **Ruta PySpark** ofrecen 32 actividades: las 14 iniciales y 18 añadidas para PySpark. Se conservan los 42 IDs/enunciados del banco inicial y los 14 de la ampliación anterior:
 
 | Recorrido | Scala | PySpark | Cobertura |
 |---|---:|---:|---|
-| Ejercicio 12 | 1 | 1 | DataFrame, vista, WHERE, GROUP BY, SUM, ORDER BY y equivalencia de API |
-| Todo el nivel 4 | 3 | 3 | Ej. 16: tres bloques, editar/guardar/comprobar/ejecutar, añadir sexto registro y volver a ejecutar; ej. 17: decisión, interpretación y respuesta conceptual en comentarios |
-| Casos desde cero | 6 | 0 | SQL con dos condiciones, agregaciones, fechas/columnas, CSV HDFS/schema, RDD semana 9 y programa completo |
+| Ejercicio 12 | 1 | 2 | DataFrame, vista, WHERE, GROUP BY, SUM, ORDER BY y equivalencia de API |
+| Todo el nivel 4 | 3 | 11 | Ej. 16: tres bloques, editar/guardar/comprobar/ejecutar, añadir sexto registro y volver a ejecutar; ej. 17: decisión, interpretación y respuesta conceptual en comentarios |
+| Casos desde cero | 6 | 9 | SQL con dos condiciones, agregaciones, fechas/columnas, CSV HDFS/schema, RDD semana 9 y programa completo |
 
 La muestra original de seis ventas de estos casos está en `training-fixture.json`; no representa el archivo de cien mil filas del profesor. El programa de cinco clientes del ejercicio 16 sí mantiene sus datos: promedio esperado 144000, que pasa a 140000 al añadir Diego 120000. Los casos HDFS no inventan valores del archivo real.
 
@@ -48,11 +48,28 @@ El selector inicia en Scala. Se pueden ocultar los pasos guiados y escribir la s
 
 La simulación predeterminada selecciona casos de programación: con dos casos del foco prioritario incluye uno del ejercicio 12 y uno del nivel 4. El foco integrado permite incluir fundamentos de semana 9. El modo mixto sigue disponible como apoyo separado; no es el formato anunciado de la prueba. Las sesiones e historiales antiguos siguen importándose sin `format`; los nuevos guardan opcionalmente `format: development|mixed` y se comprueba que un formato de desarrollo no incluya reconocimiento.
 
-Todos los casos nuevos requieren contraste en Spark real: la rúbrica no otorga nota automática. Los resultados quedan pendientes de revisión y la simulación puede terminar **sin nota**. No hay backend ni ejecución Scala/PySpark en esta web.
+Los casos completos requieren contraste en Spark real; tres fragmentos de comentarios usan revisión conceptual guiada: la rúbrica no otorga nota automática. Los resultados quedan pendientes de revisión y la simulación puede terminar **sin nota**. No hay backend ni ejecución Scala/PySpark en esta web.
 
 **Scala y archivos:** un script puede cargarse con `:load` en spark-shell; un `object` con `main` necesita ser invocado o compilarse como aplicación. `spark-submit --class ...` recibe un **JAR compatible**, no directamente el archivo .scala. PySpark utiliza .py con spark-submit y Python 3 configurado como en la guía. `ls -l` y `cat` permiten comprobar el archivo guardado. Nunca se da por ejecutado un código que solo se descargó.
 
-Implementación: `Development.tsx`, `development.json`, `LearningTools.tsx` (editor/código compartidos), selección en `progress.ts`. Los contenidos de semanas 9 y 10 se mantienen, con versión de catálogo 2 y almacenamiento compatible; no se borró progreso ni se inventaron semanas futuras.
+Implementación: `Development.tsx`, `development.json`, `LearningTools.tsx` (editor/código compartidos), selección en `progress.ts`. Los contenidos de semanas 9 y 10 se mantienen, con versión de catálogo 3 y almacenamiento compatible; no se borró progreso ni se inventaron semanas futuras.
+
+## Ampliación PySpark: recorrido propio
+
+Se volvió a leer la semana 10, nivel 4 completo (incluidos los pasos de los ejercicios 16–17), el ejercicio 12 y los apartados prácticos de semanas 9–10. El repositorio académico sigue en el commit fijado. El objetivo es desarrollar competencias separadas, no multiplicar variantes numéricas para inflar el banco.
+
+La entrada **Misión Spark → Ruta PySpark** abre directamente el lenguaje Python y el nivel 4. Incluye **22 actividades PySpark**, frente a las cuatro de desarrollo iniciales:
+
+- **8 bloques nuevos**, en orden pedagógico: sesión/datos locales; creación/inspección del DataFrame; medida promedio; guardar/verificar/ejecutar el archivo; reconstruir el DataFrame después de cambiar datos; comentario DECISIÓN; INTERPRETACIÓN con límite de evidencia; RESPUESTA sobre schema.
+- **14 casos completos**: los cuatro previos, un caso nuevo del ejercicio 12 sobre el archivo real de HDFS y nueve casos de transferencia. Estos últimos cubren condiciones Column/select/withColumn, medidas agrupadas, SQL con dos condiciones, fechas, schema/CSV, entrega de un programa con comparación antes/después, y tres casos RDD de semana 9.
+
+En el nivel 4 de PySpark hay 11 actividades: los ocho bloques y los tres casos integrados previos. Los bloques con código parcial o comentarios (cinco) se rotulan **fragmento**, especifican las variables y el archivo donde insertarlos y no se presentan como programas autónomos. Los otros tres bloques producen archivos completos, pero siguen siendo aprendizaje por pasos. Un selector permite ver todas las actividades, solo bloques o solo casos completos; el contador desglosa el lenguaje actual.
+
+Las simulaciones de desarrollo excluyen TODOS los bloques breves, incluso cuando tienen un .py completo. Así entrenan resolución integral, no un comentario aislado. PySpark dispone de 14 casos completos seleccionables: cinco prioritarios (ejercicio 12/nivel 4) y nueve de transferencia; estos incluyen semanas 9 y 10. Una importación no puede etiquetar un bloque como simulación de desarrollo. Las sesiones antiguas mantienen compatibilidad.
+
+Las soluciones Python se comprobaron mediante `ast.parse`: eso acredita sintaxis Python, **no ejecución ni corrección Spark**. Las rúbricas no asignan aciertos automáticos por marcar casillas. Los conteos de 8 bloques/14 casos describen la sección de desarrollo PySpark; no confunden todo el banco Spark ni los ejercicios Scala con cobertura de Python.
+
+Contenido: `pyspark-development.json` añade 18 IDs estables sin cambiar los previos; `Training` añade metadatos opcionales `format`, `artifact` y `order`. El progreso conserva la versión 1 y sus borradores/intentos; no requiere borrar datos ni cambiar de clave.
 
 ## Qué valida realmente
 
@@ -61,8 +78,8 @@ Implementación: `Development.tsx`, `development.json`, `LearningTools.tsx` (edi
 | Respuesta cerrada | 10 | Valor numérico o término conceptual del enunciado |
 | Modelo RDD local | 10 | Analiza una gramática restringida e interpreta operaciones sobre la colección finita del ejercicio; compara resultado y operaciones solicitadas |
 | Proyección DataFrame | 3 | Analiza la estructura de `df.select(...).show()`, las columnas y su orden; acepta nombres y objetos `df.columna` |
-| Rúbrica guiada | 15 | La estudiante contrasta criterios y referencia; no se certifica corrección ni se dan puntos automáticos |
-| Spark real requerido | 18 | Casos de clúster/HDFS/programas que necesitan ejecutarse fuera de esta web; quedan pendientes de verificación |
+| Rúbrica guiada | 18 | La estudiante contrasta criterios y referencia; no se certifica corrección ni se dan puntos automáticos |
+| Spark real requerido | 33 | Casos de clúster/HDFS/programas que necesitan ejecutarse fuera de esta web; quedan pendientes de verificación |
 
 **Ninguno de estos mecanismos ejecuta Spark.** No hay backend, JVM, Scala, PySpark, Docker ni archivo de cien mil ventas dentro de la web. No se inventan conteos/totales de ese archivo. Los resultados numéricos de las colecciones cerradas y las cinco ventas del ejemplo se deducen de los datos explícitos.
 
@@ -116,3 +133,5 @@ CHROMIUM_PATH=/usr/bin/chromium node scripts/smoke-browser.cjs
 En otra máquina, proporciona `PLAYWRIGHT_MODULE` apuntando a una instalación de Playwright y `CHROMIUM_PATH` a Chromium; ambos son herramientas opcionales de QA, no dependencias del producto. `APP_URL` permite probar otro servidor. Las capturas se guardan en /tmp.
 
 Para la prueba Chromium específica del recorrido nuevo usa los mismos parámetros de entorno con `node scripts/smoke-development.cjs`. Comprueba descarga del código propio, casos guiados, lenguajes, simulación solo desarrollo, recarga y anchuras 1440/390/320 px.
+
+Prueba de la Ruta PySpark: `node scripts/smoke-pyspark.cjs` con las mismas variables opcionales `PLAYWRIGHT_MODULE`, `CHROMIUM_PATH` y `APP_URL`. Verifica fragmentos, descarga propia, nueve casos de transferencia y simulación PySpark reanudable, en escritorio y móvil.
