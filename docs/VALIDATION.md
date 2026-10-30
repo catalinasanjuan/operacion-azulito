@@ -1,5 +1,15 @@
 # Verificación
 
+## Semana 11: Pipeline y SparkSession — 2026-10-29
+
+- Estado inicial: 42/42 pruebas aprobadas; checkout limpio.
+- Fuente nueva: semana 11 publicada en commit 11d2cee2b28af20d7da8b9692595962d59ea0582. Enlaces antiguos conservan su revisión académica previa.
+- 14 actividades y 6 lecciones nuevas. Se comprueba que los 74 ejercicios anteriores siguen idénticos y que sus datos guardados se importan sin pérdida.
+- `npm test`: **48 pruebas aprobadas, sin fallos ni omisiones**. Cobertura del listado de cuatro temas, límites de nivel_venta, referencia duplicada, regiones NULL, agregados de muestra, conservación/importación y UI de aprendizaje/desarrollo/simulación.
+- TypeScript/Vite correcto; contenido de semana 11 en chunk separado. Ocho referencias PySpark con sintaxis válida según ast.parse; no se ejecutó Spark ni se escribieron rutas HDFS.
+- Chromium sobre el build de producción: lecciones, pipeline/sesión, ambos lenguajes, cuatro casos prioritarios, recarga y entrega; escritorio y móvil 390/320px, sin errores de página ni desbordamiento horizontal.
+
+
 ## Ampliación PySpark — 2026-10-26
 
 - Estado inicial: 36/36 pruebas aprobadas y checkout limpio.

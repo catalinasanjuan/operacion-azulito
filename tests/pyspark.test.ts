@@ -5,7 +5,7 @@ import {initial,parseProgress} from '../src/lib/storage.ts';
 import {defaultScale,seeded} from '../src/lib/engine.ts';
 import {checkCode} from '../src/spark/validator.ts';
 import type {SparkAttempt} from '../src/spark/types.ts';
-const py=developmentExercises.filter(e=>e.language==='PySpark');
+const py=developmentExercises.filter(e=>e.language==='PySpark'&&e.week<=10);
 test('PySpark has its own eight-step level 4 sequence plus independent complete cases for weeks 9 and 10',()=>{
  assert.equal(py.length,22);const blocks=py.filter(e=>e.training!.format==='block').sort((a,b)=>a.training!.order!-b.training!.order!);assert.equal(blocks.length,8);assert.equal(new Set(blocks.map(e=>e.training!.order)).size,8);assert.ok(blocks.every(e=>e.training!.track==='level4'&&e.week===10));assert.deepEqual(blocks.map(e=>e.id.split('-').at(-1)),['sesion','dataframe','promedio','ejecutar','reconstruir','decision','interpretacion','schema']);
  assert.equal(py.filter(e=>e.training!.artifact==='fragment').length,5);assert.equal(py.filter(e=>e.training!.format!=='block').length,14);

@@ -1,0 +1,863 @@
+[
+  {
+    "id": "spark-dev-w11-entradas-py",
+    "week": 11,
+    "concept": "pipeline",
+    "title": "Pipeline · preparar y validar las entradas",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Desarrolla la primera etapa del pipeline con las dos fuentes HDFS de la guía. Todavía no hagas join: examina esquemas, muestras, conteos y valores de ciudad; detén el proceso si alguna fuente obligatoria está vacía.\nUsa PySpark y comentarios Python; distingue el código del programa de los comandos de terminal.",
+    "starter": "# Tu solución PySpark.\n",
+    "expected": "Entradas legibles y no vacías. La guía espera 100000 ventas en su archivo; registra el conteo observado, no lo inventes.",
+    "hints": [
+      "Ventas no tiene encabezado; ciudades sí. Ambas rutas se leen desde HDFS.",
+      "Inspecciona tipos, muestras y conteos; detén el proceso si una entrada obligatoria está vacía.",
+      "Comprueba nombres, tipos, conteos y el lugar de spark.stop antes de consultar la referencia."
+    ],
+    "solution": "from pyspark.sql import SparkSession\nspark = SparkSession.builder.appName(\"PipelineVentasGuia3\").getOrCreate()\nfrom pyspark.sql.types import StructType, StructField, IntegerType, StringType, DoubleType\nschema_ventas = StructType([\n    StructField(\"id_venta\", IntegerType(), True),\n    StructField(\"fecha\", StringType(), True),\n    StructField(\"cliente\", StringType(), True),\n    StructField(\"ciudad\", StringType(), True),\n    StructField(\"categoria\", StringType(), True),\n    StructField(\"monto\", DoubleType(), True)\n])\ndf_ventas = spark.read.schema(schema_ventas).option(\"header\", \"false\").csv(\"hdfs://namenode:8020/curso/hive/datos_ventas/ventas_hive.csv\")\ndf_ciudades = spark.read.option(\"header\", \"true\").option(\"inferSchema\", \"true\").csv(\"hdfs://namenode:8020/curso/spark/guia3/fuentes/ciudades.csv\")\ndf_ventas.printSchema()\ndf_ciudades.printSchema()\ndf_ventas.show(5, False)\ndf_ciudades.show(10, False)\ncantidad_ventas = df_ventas.count()\nif cantidad_ventas == 0 or df_ciudades.count() == 0:\n    raise ValueError(\"Una fuente obligatoria está vacía\")\ndf_ventas.select(\"ciudad\").distinct().orderBy(\"ciudad\").show()\ndf_ciudades.select(\"ciudad\").distinct().orderBy(\"ciudad\").show()\n# Refuerzo original de validación: una referencia única por ciudad.\nif df_ciudades.groupBy(\"ciudad\").count().filter(\"count > 1\").count() > 0:\n    raise ValueError(\"Hay ciudades duplicadas en la referencia\")\nspark.stop()",
+    "explanation": "La guía original usa PySpark. Pipeline significa aquí proceso batch de datos, no ML Pipeline. Rúbrica guiada: comprobar la ejecución en Spark real; no se asigna un acierto automático.",
+    "source": {
+      "file": "Semana_11_SPARK_Ejercicios.md",
+      "section": "Nivel 3 · Ejercicio 11; antecedente ejercicio 6",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Crea una sola sesión y usa las dos rutas HDFS.",
+        "Distingue header=false en ventas y header=true en ciudades.",
+        "Inspecciona esquemas, muestras, conteos y clave ciudad.",
+        "Detiene ante fuentes vacías y reconoce la condición de unicidad de referencia."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "pipeline",
+      "context": "Entradas de la guía: hdfs://namenode:8020/curso/hive/datos_ventas/ventas_hive.csv (sin encabezado) y hdfs://namenode:8020/curso/spark/guia3/fuentes/ciudades.csv (con encabezado ciudad,region,zona). Salida SOLO del ejercicio: hdfs://namenode:8020/curso/spark/guia3/pipeline/ventas_por_region_nivel. No se incluye el archivo real ni se conocen sus agregados aquí.",
+      "steps": [
+        {
+          "title": "Preparar las fuentes",
+          "body": "Ventas no tiene encabezado; ciudades sí. Ambas rutas se leen desde HDFS."
+        },
+        {
+          "title": "Validar antes de integrar",
+          "body": "Inspecciona tipos, muestras y conteos; detén el proceso si una entrada obligatoria está vacía."
+        },
+        {
+          "title": "Revisar la clave",
+          "body": "ciudad enlaza ambas fuentes; la referencia debe tener una sola fila por clave para no multiplicar ventas."
+        }
+      ],
+      "run": "En spark-master: guarda el .py, exporta PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 archivo.py. Verifica las rutas del ejercicio desde namenode con hdfs dfs -ls. El navegador no ejecuta Spark.",
+      "format": "block",
+      "artifact": "program",
+      "order": 10
+    }
+  },
+  {
+    "id": "spark-dev-w11-integrar-py",
+    "week": 11,
+    "concept": "pipeline",
+    "title": "Pipeline · integrar, clasificar y agregar",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Con df_ventas, df_ciudades y cantidad_ventas ya validados, escribe el fragmento que se añade antes de spark.stop: conserva ventas, detecta región faltante, crea nivel_venta y agrega por región+nivel. No elimines las regiones NULL.\nUsa PySpark y comentarios Python; distingue el código del programa de los comandos de terminal.",
+    "starter": "# Tu solución PySpark.\n",
+    "expected": "Las ventas se conservan si la referencia es única por ciudad; los faltantes siguen como NULL y tienen su propio grupo. No conocemos aquí el agregado del archivo real.",
+    "hints": [
+      "Usa left join y compara el conteo antes/después. Una clave duplicada puede multiplicar ventas aun usando left.",
+      "100000 pertenece a MEDIA y 300000 a ALTA. Mantén los NULL de región y contabilízalos.",
+      "Comprueba nombres, tipos, conteos y el lugar de spark.stop antes de consultar la referencia."
+    ],
+    "solution": "from pyspark.sql.functions import col, when, count, sum, avg, round\ndf_integrado = df_ventas.join(df_ciudades, on=\"ciudad\", how=\"left\")\nif df_integrado.count() != cantidad_ventas:\n    raise ValueError(\"Cambió la cantidad después del left join\")\nprint(\"Ventas sin región:\", df_integrado.filter(col(\"region\").isNull()).count())\ndf_transformado = df_integrado.withColumn(\n    \"nivel_venta\",\n    when(col(\"monto\") < 100000, \"BAJA\")\n    .when((col(\"monto\") >= 100000) & (col(\"monto\") < 300000), \"MEDIA\")\n    .otherwise(\"ALTA\")\n)\n# Se conservan las regiones NULL: no se elimina ni corrige sin analizar.\ndf_resultado = (df_transformado.groupBy(\"region\", \"nivel_venta\")\n    .agg(count(\"*\").alias(\"cantidad_ventas\"),\n         round(sum(\"monto\"), 2).alias(\"monto_total\"),\n         round(avg(\"monto\"), 2).alias(\"monto_promedio\"))\n    .orderBy(\"region\", \"nivel_venta\"))\ndf_resultado.show(100, False)\n",
+    "explanation": "La guía original usa PySpark. Pipeline significa aquí proceso batch de datos, no ML Pipeline. Rúbrica guiada: comprobar la ejecución en Spark real; no se asigna un acierto automático.",
+    "source": {
+      "file": "Semana_11_SPARK_Ejercicios.md",
+      "section": "Nivel 3 · Ejercicio 12",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Conserva ventas con left join y verifica el conteo y regiones nulas.",
+        "Clasifica BAJA/MEDIA/ALTA con los límites correctos.",
+        "Agrupa por región y nivel con cantidad, total y promedio."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "pipeline",
+      "context": "FRAGMENTO: el programa de entradas ya definió spark, df_ventas, df_ciudades y cantidad_ventas desde HDFS. Inserta este código antes de su cierre.",
+      "steps": [
+        {
+          "title": "Conservar las ventas",
+          "body": "Usa left join y compara el conteo antes/después. Una clave duplicada puede multiplicar ventas aun usando left."
+        },
+        {
+          "title": "Clasificar con límites exactos",
+          "body": "100000 pertenece a MEDIA y 300000 a ALTA. Mantén los NULL de región y contabilízalos."
+        },
+        {
+          "title": "Cambiar la unidad de análisis",
+          "body": "Una fila agrupada representa región+nivel, no una venta individual."
+        }
+      ],
+      "run": "FRAGMENTO: insertar en el programa anterior antes de spark.stop; no ejecutar como archivo autónomo. En spark-master: guarda el .py, exporta PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 archivo.py. Verifica las rutas del ejercicio desde namenode con hdfs dfs -ls. El navegador no ejecuta Spark.",
+      "format": "block",
+      "artifact": "fragment",
+      "order": 11
+    }
+  },
+  {
+    "id": "spark-dev-w11-persistir-py",
+    "week": 11,
+    "concept": "parquet-validation",
+    "title": "Pipeline · escribir, recuperar y comprobar Parquet",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "El pipeline ya produjo df_resultado. Escribe el fragmento de persistencia y relectura; compara los conteos, inspecciona esquema/datos y comenta por qué igual conteo no garantiza igualdad del producto.\nUsa PySpark y comentarios Python; distingue el código del programa de los comandos de terminal.",
+    "starter": "# Tu solución PySpark.\n",
+    "expected": "Un directorio Parquet recuperable desde otra aplicación, con conteo coincidente y comprobación de claves/medidas pendiente de evidencia.",
+    "hints": [
+      "Escribe Parquet únicamente en la ruta del ejercicio. overwrite reemplaza su salida previa.",
+      "Lee otra vez el directorio con spark.read.parquet; un DataFrame en memoria no es un producto persistente.",
+      "Comprueba nombres, tipos, conteos y el lugar de spark.stop antes de consultar la referencia."
+    ],
+    "solution": "ruta_salida = \"hdfs://namenode:8020/curso/spark/guia3/pipeline/ventas_por_region_nivel\"\n# overwrite se limita a esta ruta de trabajo del ejercicio.\ndf_resultado.write.mode(\"overwrite\").parquet(ruta_salida)\ndf_recuperado = spark.read.parquet(ruta_salida)\ndf_recuperado.printSchema()\ndf_recuperado.show(100, False)\nif df_recuperado.count() != df_resultado.count():\n    raise ValueError(\"El conteo recuperado no coincide\")\n# Igual conteo no prueba igualdad de valores: comparar también claves, tipos y medidas.\n",
+    "explanation": "La guía original usa PySpark. Pipeline significa aquí proceso batch de datos, no ML Pipeline. Rúbrica guiada: comprobar la ejecución en Spark real; no se asigna un acierto automático.",
+    "source": {
+      "file": "Semana_11_SPARK_Ejercicios.md",
+      "section": "Nivel 3 · Ejercicio 13",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Usa la ruta de salida exacta del ejercicio y overwrite solo allí.",
+        "Relee con spark.read.parquet e inspecciona esquema y muestra.",
+        "Compara conteos y explica qué otras propiedades faltan por comprobar.",
+        "No confunde cache/persist con escritura permanente en HDFS."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "pipeline",
+      "context": "FRAGMENTO: spark y df_resultado existen al final de la etapa de agregación. Inserta antes de spark.stop. Entradas de la guía: hdfs://namenode:8020/curso/hive/datos_ventas/ventas_hive.csv (sin encabezado) y hdfs://namenode:8020/curso/spark/guia3/fuentes/ciudades.csv (con encabezado ciudad,region,zona). Salida SOLO del ejercicio: hdfs://namenode:8020/curso/spark/guia3/pipeline/ventas_por_region_nivel. No se incluye el archivo real ni se conocen sus agregados aquí.",
+      "steps": [
+        {
+          "title": "Persistir el producto",
+          "body": "Escribe Parquet únicamente en la ruta del ejercicio. overwrite reemplaza su salida previa."
+        },
+        {
+          "title": "Recuperar",
+          "body": "Lee otra vez el directorio con spark.read.parquet; un DataFrame en memoria no es un producto persistente."
+        },
+        {
+          "title": "Validar más allá del conteo",
+          "body": "Compara cantidad, esquema, claves y medidas. Igual número de filas no garantiza valores correctos."
+        }
+      ],
+      "run": "FRAGMENTO: insertar en el programa anterior antes de spark.stop; no ejecutar como archivo autónomo. En spark-master: guarda el .py, exporta PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 archivo.py. Verifica las rutas del ejercicio desde namenode con hdfs dfs -ls. El navegador no ejecuta Spark.",
+      "format": "block",
+      "artifact": "fragment",
+      "order": 12
+    }
+  },
+  {
+    "id": "spark-dev-w11-muestra-py",
+    "week": 11,
+    "concept": "pipeline",
+    "title": "Pipeline · caso completo con límites y región ausente",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Construye desde cero el programa con las dos muestras locales. Valida, integra con left, detecta la venta sin región, clasifica y agrega por región+nivel. Explica cada etapa y los límites 100000/300000. Esta muestra no es el archivo real del profesor.\nUsa PySpark y comentarios Python; distingue el código del programa de los comandos de terminal.",
+    "starter": "# Tu solución PySpark.\n",
+    "expected": "Siete ventas conservadas; una sin región. 99999→BAJA, 100000→MEDIA, 299999→MEDIA, 300000→ALTA.\nregion | nivel_venta | cantidad | total | promedio\nNULL | BAJA | 1 | 50000.0 | 50000.0\nAraucania | ALTA | 1 | 400000.0 | 400000.0\nBiobio | ALTA | 1 | 300000.0 | 300000.0\nBiobio | MEDIA | 1 | 299999.0 | 299999.0\nMetropolitana | BAJA | 1 | 99999.0 | 99999.0\nMetropolitana | MEDIA | 2 | 300000.0 | 150000.0",
+    "hints": [
+      "Ventas no tiene encabezado; ciudades sí. Ambas rutas se leen desde HDFS.",
+      "Inspecciona tipos, muestras y conteos; detén el proceso si una entrada obligatoria está vacía.",
+      "Comprueba nombres, tipos, conteos y el lugar de spark.stop antes de consultar la referencia."
+    ],
+    "solution": "from pyspark.sql import SparkSession\nspark = SparkSession.builder.appName(\"PipelineVentasGuia3\").getOrCreate()\ndf_ventas = spark.createDataFrame([(1, '2025-01-01', 'Ana', 'Santiago', 'Tecnologia', 99999.0), (2, '2025-01-02', 'Luis', 'Santiago', 'Hogar', 100000.0), (3, '2025-01-03', 'Carla', 'Concepcion', 'Tecnologia', 299999.0), (4, '2025-01-04', 'Pedro', 'Concepcion', 'Hogar', 300000.0), (5, '2025-01-05', 'Maria', 'SinReferencia', 'Tecnologia', 50000.0), (6, '2025-01-06', 'Diego', 'Temuco', 'Hogar', 400000.0), (7, '2025-01-07', 'Eva', 'Santiago', 'Tecnologia', 200000.0)], [\"id_venta\", \"fecha\", \"cliente\", \"ciudad\", \"categoria\", \"monto\"])\ndf_ciudades = spark.createDataFrame([('Santiago', 'Metropolitana', 'Centro'), ('Concepcion', 'Biobio', 'Sur'), ('Temuco', 'Araucania', 'Sur')], [\"ciudad\", \"region\", \"zona\"])\ndf_ventas.printSchema()\ndf_ciudades.printSchema()\ndf_ventas.show(5, False)\ndf_ciudades.show(10, False)\ncantidad_ventas = df_ventas.count()\nif cantidad_ventas == 0 or df_ciudades.count() == 0:\n    raise ValueError(\"Una fuente obligatoria está vacía\")\ndf_ventas.select(\"ciudad\").distinct().orderBy(\"ciudad\").show()\ndf_ciudades.select(\"ciudad\").distinct().orderBy(\"ciudad\").show()\n# Refuerzo original de validación: una referencia única por ciudad.\nif df_ciudades.groupBy(\"ciudad\").count().filter(\"count > 1\").count() > 0:\n    raise ValueError(\"Hay ciudades duplicadas en la referencia\")\nfrom pyspark.sql.functions import col, when, count, sum, avg, round\ndf_integrado = df_ventas.join(df_ciudades, on=\"ciudad\", how=\"left\")\nif df_integrado.count() != cantidad_ventas:\n    raise ValueError(\"Cambió la cantidad después del left join\")\nprint(\"Ventas sin región:\", df_integrado.filter(col(\"region\").isNull()).count())\ndf_transformado = df_integrado.withColumn(\n    \"nivel_venta\",\n    when(col(\"monto\") < 100000, \"BAJA\")\n    .when((col(\"monto\") >= 100000) & (col(\"monto\") < 300000), \"MEDIA\")\n    .otherwise(\"ALTA\")\n)\n# Se conservan las regiones NULL: no se elimina ni corrige sin analizar.\ndf_resultado = (df_transformado.groupBy(\"region\", \"nivel_venta\")\n    .agg(count(\"*\").alias(\"cantidad_ventas\"),\n         round(sum(\"monto\"), 2).alias(\"monto_total\"),\n         round(avg(\"monto\"), 2).alias(\"monto_promedio\"))\n    .orderBy(\"region\", \"nivel_venta\"))\ndf_resultado.show(100, False)\nspark.stop()",
+    "explanation": "La guía original usa PySpark. Pipeline significa aquí proceso batch de datos, no ML Pipeline. Rúbrica guiada: comprobar la ejecución en Spark real; no se asigna un acierto automático.",
+    "source": {
+      "file": "Semana_11_SPARK_Ejercicios.md",
+      "section": "Nivel 3 · Ejercicios 11–12 · caso original de aplicación",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Inicia SparkSession y valida entradas no vacías, tipos y unicidad de ciudad en referencia.",
+        "Conserva ventas con left join y verifica el conteo y regiones nulas.",
+        "Clasifica BAJA/MEDIA/ALTA con los límites correctos.",
+        "Agrupa por región y nivel con cantidad, total y promedio.",
+        "Distingue esperado de observado y mantiene spark.stop al final."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "pipeline",
+      "context": "Muestra ORIGINAL de entrenamiento, no el archivo completo del profesor. Ventas: id_venta,fecha,cliente,ciudad,categoria,monto.\n1,2025-01-01,Ana,Santiago,Tecnologia,99999.0\n2,2025-01-02,Luis,Santiago,Hogar,100000.0\n3,2025-01-03,Carla,Concepcion,Tecnologia,299999.0\n4,2025-01-04,Pedro,Concepcion,Hogar,300000.0\n5,2025-01-05,Maria,SinReferencia,Tecnologia,50000.0\n6,2025-01-06,Diego,Temuco,Hogar,400000.0\n7,2025-01-07,Eva,Santiago,Tecnologia,200000.0\nReferencia única por ciudad: ciudad,region,zona\nSantiago,Metropolitana,Centro\nConcepcion,Biobio,Sur\nTemuco,Araucania,Sur",
+      "steps": [
+        {
+          "title": "Preparar las fuentes",
+          "body": "Ventas no tiene encabezado; ciudades sí. Ambas rutas se leen desde HDFS."
+        },
+        {
+          "title": "Validar antes de integrar",
+          "body": "Inspecciona tipos, muestras y conteos; detén el proceso si una entrada obligatoria está vacía."
+        },
+        {
+          "title": "Revisar la clave",
+          "body": "ciudad enlaza ambas fuentes; la referencia debe tener una sola fila por clave para no multiplicar ventas."
+        },
+        {
+          "title": "Conservar las ventas",
+          "body": "Usa left join y compara el conteo antes/después. Una clave duplicada puede multiplicar ventas aun usando left."
+        },
+        {
+          "title": "Clasificar con límites exactos",
+          "body": "100000 pertenece a MEDIA y 300000 a ALTA. Mantén los NULL de región y contabilízalos."
+        },
+        {
+          "title": "Cambiar la unidad de análisis",
+          "body": "Una fila agrupada representa región+nivel, no una venta individual."
+        }
+      ],
+      "run": "En spark-master: guarda el .py, exporta PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 archivo.py. Verifica las rutas del ejercicio desde namenode con hdfs dfs -ls. El navegador no ejecuta Spark.",
+      "format": "case",
+      "artifact": "program",
+      "order": 13
+    }
+  },
+  {
+    "id": "spark-dev-w11-muestra-scala",
+    "week": 11,
+    "concept": "pipeline",
+    "title": "Pipeline · caso completo con límites y región ausente",
+    "language": "Scala",
+    "level": 4,
+    "task": "case",
+    "prompt": "Construye desde cero el programa con las dos muestras locales. Valida, integra con left, detecta la venta sin región, clasifica y agrega por región+nivel. Explica cada etapa y los límites 100000/300000. Esta muestra no es el archivo real del profesor.\nUsa un script Scala compatible con spark-shell; identifica la adaptación desde PySpark.",
+    "starter": "// Tu solución Scala.\n",
+    "expected": "Siete ventas conservadas; una sin región. 99999→BAJA, 100000→MEDIA, 299999→MEDIA, 300000→ALTA.\nregion | nivel_venta | cantidad | total | promedio\nNULL | BAJA | 1 | 50000.0 | 50000.0\nAraucania | ALTA | 1 | 400000.0 | 400000.0\nBiobio | ALTA | 1 | 300000.0 | 300000.0\nBiobio | MEDIA | 1 | 299999.0 | 299999.0\nMetropolitana | BAJA | 1 | 99999.0 | 99999.0\nMetropolitana | MEDIA | 2 | 300000.0 | 150000.0",
+    "hints": [
+      "Ventas no tiene encabezado; ciudades sí. Ambas rutas se leen desde HDFS.",
+      "Inspecciona tipos, muestras y conteos; detén el proceso si una entrada obligatoria está vacía.",
+      "Comprueba nombres, tipos, conteos y el lugar de spark.stop antes de consultar la referencia."
+    ],
+    "solution": "import org.apache.spark.sql.SparkSession\nval spark = SparkSession.builder().appName(\"PipelineVentasGuia3Scala\").getOrCreate()\nimport spark.implicits._\nval dfVentas = Seq((1, \"2025-01-01\", \"Ana\", \"Santiago\", \"Tecnologia\", 99999.0), (2, \"2025-01-02\", \"Luis\", \"Santiago\", \"Hogar\", 100000.0), (3, \"2025-01-03\", \"Carla\", \"Concepcion\", \"Tecnologia\", 299999.0), (4, \"2025-01-04\", \"Pedro\", \"Concepcion\", \"Hogar\", 300000.0), (5, \"2025-01-05\", \"Maria\", \"SinReferencia\", \"Tecnologia\", 50000.0), (6, \"2025-01-06\", \"Diego\", \"Temuco\", \"Hogar\", 400000.0), (7, \"2025-01-07\", \"Eva\", \"Santiago\", \"Tecnologia\", 200000.0)).toDF(\"id_venta\", \"fecha\", \"cliente\", \"ciudad\", \"categoria\", \"monto\")\nval dfCiudades = Seq((\"Santiago\", \"Metropolitana\", \"Centro\"), (\"Concepcion\", \"Biobio\", \"Sur\"), (\"Temuco\", \"Araucania\", \"Sur\")).toDF(\"ciudad\", \"region\", \"zona\")\ndfVentas.printSchema()\ndfCiudades.printSchema()\ndfVentas.show(5, false)\ndfCiudades.show(10, false)\nval cantidadVentas = dfVentas.count()\nrequire(cantidadVentas > 0 && dfCiudades.count() > 0, \"Una fuente obligatoria está vacía\")\nrequire(dfCiudades.groupBy(\"ciudad\").count().filter(\"count > 1\").count() == 0, \"Referencia duplicada por ciudad\")\nimport org.apache.spark.sql.functions._\nval dfIntegrado = dfVentas.join(dfCiudades, Seq(\"ciudad\"), \"left\")\nrequire(dfIntegrado.count() == cantidadVentas, \"Cambió la cantidad después del left join\")\nprintln(\"Ventas sin región: \" + dfIntegrado.filter(col(\"region\").isNull).count())\nval dfTransformado = dfIntegrado.withColumn(\"nivel_venta\", when(col(\"monto\") < 100000, \"BAJA\").when((col(\"monto\") >= 100000) && (col(\"monto\") < 300000), \"MEDIA\").otherwise(\"ALTA\"))\nval dfResultado = dfTransformado.groupBy(\"region\", \"nivel_venta\").agg(count(\"*\").alias(\"cantidad_ventas\"), round(sum(\"monto\"), 2).alias(\"monto_total\"), round(avg(\"monto\"), 2).alias(\"monto_promedio\")).orderBy(\"region\", \"nivel_venta\")\ndfResultado.show(100, false)\nspark.stop()",
+    "explanation": "La guía original usa PySpark. Esta es una adaptación explícita a Scala. Pipeline significa aquí proceso batch de datos, no ML Pipeline. Rúbrica guiada: comprobar la ejecución en Spark real; no se asigna un acierto automático.",
+    "source": {
+      "file": "Semana_11_SPARK_Ejercicios.md",
+      "section": "Nivel 3 · Ejercicios 11–12 · caso original de aplicación",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Inicia SparkSession y valida entradas no vacías, tipos y unicidad de ciudad en referencia.",
+        "Conserva ventas con left join y verifica el conteo y regiones nulas.",
+        "Clasifica BAJA/MEDIA/ALTA con los límites correctos.",
+        "Agrupa por región y nivel con cantidad, total y promedio.",
+        "Distingue esperado de observado y mantiene spark.stop al final."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "pipeline",
+      "context": "Muestra ORIGINAL de entrenamiento, no el archivo completo del profesor. Ventas: id_venta,fecha,cliente,ciudad,categoria,monto.\n1,2025-01-01,Ana,Santiago,Tecnologia,99999.0\n2,2025-01-02,Luis,Santiago,Hogar,100000.0\n3,2025-01-03,Carla,Concepcion,Tecnologia,299999.0\n4,2025-01-04,Pedro,Concepcion,Hogar,300000.0\n5,2025-01-05,Maria,SinReferencia,Tecnologia,50000.0\n6,2025-01-06,Diego,Temuco,Hogar,400000.0\n7,2025-01-07,Eva,Santiago,Tecnologia,200000.0\nReferencia única por ciudad: ciudad,region,zona\nSantiago,Metropolitana,Centro\nConcepcion,Biobio,Sur\nTemuco,Araucania,Sur",
+      "steps": [
+        {
+          "title": "Preparar las fuentes",
+          "body": "Ventas no tiene encabezado; ciudades sí. Ambas rutas se leen desde HDFS."
+        },
+        {
+          "title": "Validar antes de integrar",
+          "body": "Inspecciona tipos, muestras y conteos; detén el proceso si una entrada obligatoria está vacía."
+        },
+        {
+          "title": "Revisar la clave",
+          "body": "ciudad enlaza ambas fuentes; la referencia debe tener una sola fila por clave para no multiplicar ventas."
+        },
+        {
+          "title": "Conservar las ventas",
+          "body": "Usa left join y compara el conteo antes/después. Una clave duplicada puede multiplicar ventas aun usando left."
+        },
+        {
+          "title": "Clasificar con límites exactos",
+          "body": "100000 pertenece a MEDIA y 300000 a ALTA. Mantén los NULL de región y contabilízalos."
+        },
+        {
+          "title": "Cambiar la unidad de análisis",
+          "body": "Una fila agrupada representa región+nivel, no una venta individual."
+        }
+      ],
+      "run": "Adaptación educativa a Scala de una guía PySpark. En spark-shell del clúster, carga el script con :load /ruta/archivo.scala. Si lo conviertes en object/main, invoca main o compila un JAR compatible y usa spark-submit --class NombreClase archivo.jar. No envíes directamente un .scala a spark-submit.",
+      "format": "case",
+      "artifact": "program",
+      "order": 14
+    }
+  },
+  {
+    "id": "spark-dev-w11-hdfs-py",
+    "week": 11,
+    "concept": "pipeline",
+    "title": "Pipeline · programa batch completo HDFS a Parquet",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Entrega un programa completo que lea las dos fuentes reales, valide, integre, clasifique, agregue, escriba en la ruta Parquet del ejercicio y vuelva a leer/validar. Usa mensajes por etapa y comenta por qué sigue siendo batch al ejecutarse cada noche.\nUsa PySpark y comentarios Python; distingue el código del programa de los comandos de terminal.",
+    "starter": "# Tu solución PySpark.\n",
+    "expected": "Un producto Parquet por región y nivel recuperable después del cierre. Los conteos y medidas reales deben obtenerse al ejecutar; no se extrapola la muestra pequeña.",
+    "hints": [
+      "Ventas no tiene encabezado; ciudades sí. Ambas rutas se leen desde HDFS.",
+      "Inspecciona tipos, muestras y conteos; detén el proceso si una entrada obligatoria está vacía.",
+      "Comprueba nombres, tipos, conteos y el lugar de spark.stop antes de consultar la referencia."
+    ],
+    "solution": "from pyspark.sql import SparkSession\nspark = SparkSession.builder.appName(\"PipelineVentasGuia3\").getOrCreate()\nfrom pyspark.sql.types import StructType, StructField, IntegerType, StringType, DoubleType\nschema_ventas = StructType([\n    StructField(\"id_venta\", IntegerType(), True),\n    StructField(\"fecha\", StringType(), True),\n    StructField(\"cliente\", StringType(), True),\n    StructField(\"ciudad\", StringType(), True),\n    StructField(\"categoria\", StringType(), True),\n    StructField(\"monto\", DoubleType(), True)\n])\ndf_ventas = spark.read.schema(schema_ventas).option(\"header\", \"false\").csv(\"hdfs://namenode:8020/curso/hive/datos_ventas/ventas_hive.csv\")\ndf_ciudades = spark.read.option(\"header\", \"true\").option(\"inferSchema\", \"true\").csv(\"hdfs://namenode:8020/curso/spark/guia3/fuentes/ciudades.csv\")\ndf_ventas.printSchema()\ndf_ciudades.printSchema()\ndf_ventas.show(5, False)\ndf_ciudades.show(10, False)\ncantidad_ventas = df_ventas.count()\nif cantidad_ventas == 0 or df_ciudades.count() == 0:\n    raise ValueError(\"Una fuente obligatoria está vacía\")\ndf_ventas.select(\"ciudad\").distinct().orderBy(\"ciudad\").show()\ndf_ciudades.select(\"ciudad\").distinct().orderBy(\"ciudad\").show()\n# Refuerzo original de validación: una referencia única por ciudad.\nif df_ciudades.groupBy(\"ciudad\").count().filter(\"count > 1\").count() > 0:\n    raise ValueError(\"Hay ciudades duplicadas en la referencia\")\n\nfrom pyspark.sql.functions import col, when, count, sum, avg, round\ndf_integrado = df_ventas.join(df_ciudades, on=\"ciudad\", how=\"left\")\nif df_integrado.count() != cantidad_ventas:\n    raise ValueError(\"Cambió la cantidad después del left join\")\nprint(\"Ventas sin región:\", df_integrado.filter(col(\"region\").isNull()).count())\ndf_transformado = df_integrado.withColumn(\n    \"nivel_venta\",\n    when(col(\"monto\") < 100000, \"BAJA\")\n    .when((col(\"monto\") >= 100000) & (col(\"monto\") < 300000), \"MEDIA\")\n    .otherwise(\"ALTA\")\n)\n# Se conservan las regiones NULL: no se elimina ni corrige sin analizar.\ndf_resultado = (df_transformado.groupBy(\"region\", \"nivel_venta\")\n    .agg(count(\"*\").alias(\"cantidad_ventas\"),\n         round(sum(\"monto\"), 2).alias(\"monto_total\"),\n         round(avg(\"monto\"), 2).alias(\"monto_promedio\"))\n    .orderBy(\"region\", \"nivel_venta\"))\ndf_resultado.show(100, False)\n\nruta_salida = \"hdfs://namenode:8020/curso/spark/guia3/pipeline/ventas_por_region_nivel\"\n# overwrite se limita a esta ruta de trabajo del ejercicio.\ndf_resultado.write.mode(\"overwrite\").parquet(ruta_salida)\ndf_recuperado = spark.read.parquet(ruta_salida)\ndf_recuperado.printSchema()\ndf_recuperado.show(100, False)\nif df_recuperado.count() != df_resultado.count():\n    raise ValueError(\"El conteo recuperado no coincide\")\n# Igual conteo no prueba igualdad de valores: comparar también claves, tipos y medidas.\n\n# Batch: procesa fuentes ya disponibles; repetir cada noche no lo convierte en streaming.\nspark.stop()",
+    "explanation": "La guía original usa PySpark. Pipeline significa aquí proceso batch de datos, no ML Pipeline. Rúbrica guiada: comprobar la ejecución en Spark real; no se asigna un acierto automático.",
+    "source": {
+      "file": "Semana_11_SPARK_Ejercicios.md",
+      "section": "Nivel 3 · Ejercicios 11–14",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Inicia SparkSession y valida entradas no vacías, tipos y unicidad de ciudad en referencia.",
+        "Conserva ventas con left join y verifica el conteo y regiones nulas.",
+        "Clasifica BAJA/MEDIA/ALTA con los límites correctos.",
+        "Agrupa por región y nivel con cantidad, total y promedio.",
+        "Distingue esperado de observado y mantiene spark.stop al final.",
+        "Escribe en la ruta del ejercicio y valida la relectura.",
+        "Explica la diferencia entre ejecución batch y llegada continua de eventos."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "pipeline",
+      "context": "Entradas de la guía: hdfs://namenode:8020/curso/hive/datos_ventas/ventas_hive.csv (sin encabezado) y hdfs://namenode:8020/curso/spark/guia3/fuentes/ciudades.csv (con encabezado ciudad,region,zona). Salida SOLO del ejercicio: hdfs://namenode:8020/curso/spark/guia3/pipeline/ventas_por_region_nivel. No se incluye el archivo real ni se conocen sus agregados aquí.",
+      "steps": [
+        {
+          "title": "Preparar las fuentes",
+          "body": "Ventas no tiene encabezado; ciudades sí. Ambas rutas se leen desde HDFS."
+        },
+        {
+          "title": "Validar antes de integrar",
+          "body": "Inspecciona tipos, muestras y conteos; detén el proceso si una entrada obligatoria está vacía."
+        },
+        {
+          "title": "Revisar la clave",
+          "body": "ciudad enlaza ambas fuentes; la referencia debe tener una sola fila por clave para no multiplicar ventas."
+        },
+        {
+          "title": "Conservar las ventas",
+          "body": "Usa left join y compara el conteo antes/después. Una clave duplicada puede multiplicar ventas aun usando left."
+        },
+        {
+          "title": "Clasificar con límites exactos",
+          "body": "100000 pertenece a MEDIA y 300000 a ALTA. Mantén los NULL de región y contabilízalos."
+        },
+        {
+          "title": "Cambiar la unidad de análisis",
+          "body": "Una fila agrupada representa región+nivel, no una venta individual."
+        },
+        {
+          "title": "Persistir el producto",
+          "body": "Escribe Parquet únicamente en la ruta del ejercicio. overwrite reemplaza su salida previa."
+        },
+        {
+          "title": "Recuperar",
+          "body": "Lee otra vez el directorio con spark.read.parquet; un DataFrame en memoria no es un producto persistente."
+        },
+        {
+          "title": "Validar más allá del conteo",
+          "body": "Compara cantidad, esquema, claves y medidas. Igual número de filas no garantiza valores correctos."
+        }
+      ],
+      "run": "En spark-master: guarda el .py, exporta PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 archivo.py. Verifica las rutas del ejercicio desde namenode con hdfs dfs -ls. El navegador no ejecuta Spark.",
+      "format": "case",
+      "artifact": "program",
+      "order": 15
+    }
+  },
+  {
+    "id": "spark-dev-w11-hdfs-scala",
+    "week": 11,
+    "concept": "pipeline",
+    "title": "Pipeline · programa batch completo HDFS a Parquet",
+    "language": "Scala",
+    "level": 4,
+    "task": "case",
+    "prompt": "Entrega un programa completo que lea las dos fuentes reales, valide, integre, clasifique, agregue, escriba en la ruta Parquet del ejercicio y vuelva a leer/validar. Usa mensajes por etapa y comenta por qué sigue siendo batch al ejecutarse cada noche.\nUsa un script Scala compatible con spark-shell; identifica la adaptación desde PySpark.",
+    "starter": "// Tu solución Scala.\n",
+    "expected": "Un producto Parquet por región y nivel recuperable después del cierre. Los conteos y medidas reales deben obtenerse al ejecutar; no se extrapola la muestra pequeña.",
+    "hints": [
+      "Ventas no tiene encabezado; ciudades sí. Ambas rutas se leen desde HDFS.",
+      "Inspecciona tipos, muestras y conteos; detén el proceso si una entrada obligatoria está vacía.",
+      "Comprueba nombres, tipos, conteos y el lugar de spark.stop antes de consultar la referencia."
+    ],
+    "solution": "import org.apache.spark.sql.SparkSession\nval spark = SparkSession.builder().appName(\"PipelineVentasGuia3Scala\").getOrCreate()\nimport org.apache.spark.sql.types._\nval schemaVentas = StructType(Seq(\n  StructField(\"id_venta\", IntegerType, true),\n  StructField(\"fecha\", StringType, true),\n  StructField(\"cliente\", StringType, true),\n  StructField(\"ciudad\", StringType, true),\n  StructField(\"categoria\", StringType, true),\n  StructField(\"monto\", DoubleType, true)\n))\nval dfVentas = spark.read.schema(schemaVentas).option(\"header\", \"false\").csv(\"hdfs://namenode:8020/curso/hive/datos_ventas/ventas_hive.csv\")\nval dfCiudades = spark.read.option(\"header\", \"true\").option(\"inferSchema\", \"true\").csv(\"hdfs://namenode:8020/curso/spark/guia3/fuentes/ciudades.csv\")\ndfVentas.printSchema()\ndfCiudades.printSchema()\ndfVentas.show(5, false)\ndfCiudades.show(10, false)\nval cantidadVentas = dfVentas.count()\nrequire(cantidadVentas > 0 && dfCiudades.count() > 0, \"Una fuente obligatoria está vacía\")\nrequire(dfCiudades.groupBy(\"ciudad\").count().filter(\"count > 1\").count() == 0, \"Referencia duplicada por ciudad\")\nimport org.apache.spark.sql.functions._\nval dfIntegrado = dfVentas.join(dfCiudades, Seq(\"ciudad\"), \"left\")\nrequire(dfIntegrado.count() == cantidadVentas, \"Cambió la cantidad después del left join\")\nprintln(\"Ventas sin región: \" + dfIntegrado.filter(col(\"region\").isNull).count())\nval dfTransformado = dfIntegrado.withColumn(\"nivel_venta\", when(col(\"monto\") < 100000, \"BAJA\").when((col(\"monto\") >= 100000) && (col(\"monto\") < 300000), \"MEDIA\").otherwise(\"ALTA\"))\nval dfResultado = dfTransformado.groupBy(\"region\", \"nivel_venta\").agg(count(\"*\").alias(\"cantidad_ventas\"), round(sum(\"monto\"), 2).alias(\"monto_total\"), round(avg(\"monto\"), 2).alias(\"monto_promedio\")).orderBy(\"region\", \"nivel_venta\")\ndfResultado.show(100, false)\nval rutaSalida = \"hdfs://namenode:8020/curso/spark/guia3/pipeline/ventas_por_region_nivel\"\n// overwrite se limita a la ruta de trabajo del ejercicio.\ndfResultado.write.mode(\"overwrite\").parquet(rutaSalida)\nval dfRecuperado = spark.read.parquet(rutaSalida)\ndfRecuperado.printSchema()\ndfRecuperado.show(100, false)\nrequire(dfRecuperado.count() == dfResultado.count(), \"Conteo recuperado diferente\")\n// Comparar además claves, tipos y medidas: el conteo por sí solo no basta.\n\n// Batch: procesa un lote ya disponible.\nspark.stop()",
+    "explanation": "La guía original usa PySpark. Esta es una adaptación explícita a Scala. Pipeline significa aquí proceso batch de datos, no ML Pipeline. Rúbrica guiada: comprobar la ejecución en Spark real; no se asigna un acierto automático.",
+    "source": {
+      "file": "Semana_11_SPARK_Ejercicios.md",
+      "section": "Nivel 3 · Ejercicios 11–14",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Inicia SparkSession y valida entradas no vacías, tipos y unicidad de ciudad en referencia.",
+        "Conserva ventas con left join y verifica el conteo y regiones nulas.",
+        "Clasifica BAJA/MEDIA/ALTA con los límites correctos.",
+        "Agrupa por región y nivel con cantidad, total y promedio.",
+        "Distingue esperado de observado y mantiene spark.stop al final.",
+        "Escribe en la ruta del ejercicio y valida la relectura.",
+        "Explica la diferencia entre ejecución batch y llegada continua de eventos."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "pipeline",
+      "context": "Entradas de la guía: hdfs://namenode:8020/curso/hive/datos_ventas/ventas_hive.csv (sin encabezado) y hdfs://namenode:8020/curso/spark/guia3/fuentes/ciudades.csv (con encabezado ciudad,region,zona). Salida SOLO del ejercicio: hdfs://namenode:8020/curso/spark/guia3/pipeline/ventas_por_region_nivel. No se incluye el archivo real ni se conocen sus agregados aquí.",
+      "steps": [
+        {
+          "title": "Preparar las fuentes",
+          "body": "Ventas no tiene encabezado; ciudades sí. Ambas rutas se leen desde HDFS."
+        },
+        {
+          "title": "Validar antes de integrar",
+          "body": "Inspecciona tipos, muestras y conteos; detén el proceso si una entrada obligatoria está vacía."
+        },
+        {
+          "title": "Revisar la clave",
+          "body": "ciudad enlaza ambas fuentes; la referencia debe tener una sola fila por clave para no multiplicar ventas."
+        },
+        {
+          "title": "Conservar las ventas",
+          "body": "Usa left join y compara el conteo antes/después. Una clave duplicada puede multiplicar ventas aun usando left."
+        },
+        {
+          "title": "Clasificar con límites exactos",
+          "body": "100000 pertenece a MEDIA y 300000 a ALTA. Mantén los NULL de región y contabilízalos."
+        },
+        {
+          "title": "Cambiar la unidad de análisis",
+          "body": "Una fila agrupada representa región+nivel, no una venta individual."
+        },
+        {
+          "title": "Persistir el producto",
+          "body": "Escribe Parquet únicamente en la ruta del ejercicio. overwrite reemplaza su salida previa."
+        },
+        {
+          "title": "Recuperar",
+          "body": "Lee otra vez el directorio con spark.read.parquet; un DataFrame en memoria no es un producto persistente."
+        },
+        {
+          "title": "Validar más allá del conteo",
+          "body": "Compara cantidad, esquema, claves y medidas. Igual número de filas no garantiza valores correctos."
+        }
+      ],
+      "run": "Adaptación educativa a Scala de una guía PySpark. En spark-shell del clúster, carga el script con :load /ruta/archivo.scala. Si lo conviertes en object/main, invoca main o compila un JAR compatible y usa spark-submit --class NombreClase archivo.jar. No envíes directamente un .scala a spark-submit.",
+      "format": "case",
+      "artifact": "program",
+      "order": 16
+    }
+  },
+  {
+    "id": "spark-dev-w11-duplicados-py",
+    "week": 11,
+    "concept": "pipeline",
+    "title": "Pipeline · detectar un join que multiplica ventas",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "En la muestra local, la referencia trae Santiago duplicado por error. Escribe el programa que detecta esa clave duplicada y detiene el pipeline antes de agregar. No uses dropDuplicates a ciegas: explica qué revisión necesita la fuente.\nUsa PySpark y comentarios Python; distingue el código del programa de los comandos de terminal.",
+    "starter": "# Tu solución PySpark.\n",
+    "expected": "El programa debe detenerse por referencia duplicada, no producir un total inflado.",
+    "hints": [
+      "Ventas no tiene encabezado; ciudades sí. Ambas rutas se leen desde HDFS.",
+      "Inspecciona tipos, muestras y conteos; detén el proceso si una entrada obligatoria está vacía.",
+      "Comprueba nombres, tipos, conteos y el lugar de spark.stop antes de consultar la referencia."
+    ],
+    "solution": "from pyspark.sql import SparkSession\nspark = SparkSession.builder.appName(\"PipelineVentasGuia3\").getOrCreate()\ndf_ventas = spark.createDataFrame([(1, '2025-01-01', 'Ana', 'Santiago', 'Tecnologia', 99999.0), (2, '2025-01-02', 'Luis', 'Santiago', 'Hogar', 100000.0), (3, '2025-01-03', 'Carla', 'Concepcion', 'Tecnologia', 299999.0), (4, '2025-01-04', 'Pedro', 'Concepcion', 'Hogar', 300000.0), (5, '2025-01-05', 'Maria', 'SinReferencia', 'Tecnologia', 50000.0), (6, '2025-01-06', 'Diego', 'Temuco', 'Hogar', 400000.0), (7, '2025-01-07', 'Eva', 'Santiago', 'Tecnologia', 200000.0)], [\"id_venta\", \"fecha\", \"cliente\", \"ciudad\", \"categoria\", \"monto\"])\ndf_ciudades = spark.createDataFrame([('Santiago', 'Metropolitana', 'Centro'), ('Concepcion', 'Biobio', 'Sur'), ('Temuco', 'Araucania', 'Sur')], [\"ciudad\", \"region\", \"zona\"])\ndf_ciudades = df_ciudades.union(df_ciudades.filter(\"ciudad = 'Santiago'\"))\ndf_ventas.printSchema()\ndf_ciudades.printSchema()\ndf_ventas.show(5, False)\ndf_ciudades.show(10, False)\ncantidad_ventas = df_ventas.count()\nif cantidad_ventas == 0 or df_ciudades.count() == 0:\n    raise ValueError(\"Una fuente obligatoria está vacía\")\ndf_ventas.select(\"ciudad\").distinct().orderBy(\"ciudad\").show()\ndf_ciudades.select(\"ciudad\").distinct().orderBy(\"ciudad\").show()\n# Refuerzo original de validación: una referencia única por ciudad.\nif df_ciudades.groupBy(\"ciudad\").count().filter(\"count > 1\").count() > 0:\n    raise ValueError(\"Hay ciudades duplicadas en la referencia\")\n# La validación anterior debe lanzar ValueError antes de integrar o agregar.\nspark.stop()",
+    "explanation": "La guía original usa PySpark. Pipeline significa aquí proceso batch de datos, no ML Pipeline. Rúbrica guiada: comprobar la ejecución en Spark real; no se asigna un acierto automático.",
+    "source": {
+      "file": "Semana_11_SPARK_Ejercicios.md",
+      "section": "Nivel 3 · Ejercicio 12 §3; nivel 2 · Ejercicio 7 (advertencia sobre joins)",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Introduce la referencia duplicada del caso y la detecta por clave ciudad.",
+        "Detiene antes de join/agg y no elimina filas arbitrariamente.",
+        "Explica que left join no garantiza una fila por venta si la referencia tiene duplicados."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "pipeline",
+      "context": "Muestra ORIGINAL de entrenamiento, no el archivo completo del profesor. Ventas: id_venta,fecha,cliente,ciudad,categoria,monto.\n1,2025-01-01,Ana,Santiago,Tecnologia,99999.0\n2,2025-01-02,Luis,Santiago,Hogar,100000.0\n3,2025-01-03,Carla,Concepcion,Tecnologia,299999.0\n4,2025-01-04,Pedro,Concepcion,Hogar,300000.0\n5,2025-01-05,Maria,SinReferencia,Tecnologia,50000.0\n6,2025-01-06,Diego,Temuco,Hogar,400000.0\n7,2025-01-07,Eva,Santiago,Tecnologia,200000.0\nReferencia única por ciudad: ciudad,region,zona\nSantiago,Metropolitana,Centro\nConcepcion,Biobio,Sur\nTemuco,Araucania,Sur",
+      "steps": [
+        {
+          "title": "Preparar las fuentes",
+          "body": "Ventas no tiene encabezado; ciudades sí. Ambas rutas se leen desde HDFS."
+        },
+        {
+          "title": "Validar antes de integrar",
+          "body": "Inspecciona tipos, muestras y conteos; detén el proceso si una entrada obligatoria está vacía."
+        },
+        {
+          "title": "Revisar la clave",
+          "body": "ciudad enlaza ambas fuentes; la referencia debe tener una sola fila por clave para no multiplicar ventas."
+        }
+      ],
+      "run": "En spark-master: guarda el .py, exporta PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 archivo.py. Verifica las rutas del ejercicio desde namenode con hdfs dfs -ls. El navegador no ejecuta Spark.",
+      "format": "case",
+      "artifact": "program",
+      "order": 17
+    }
+  },
+  {
+    "id": "spark-dev-w11-faltantes-scala",
+    "week": 11,
+    "concept": "join-validation",
+    "title": "Pipeline · conservar y explicar las regiones NULL",
+    "language": "Scala",
+    "level": 4,
+    "task": "case",
+    "prompt": "Escribe el programa completo de la muestra. Compara inner y left, muestra las ventas sin región, y explica por qué conservar el conteo no demuestra cobertura regional. Agrega manteniendo el grupo NULL.\nUsa un script Scala compatible con spark-shell; identifica la adaptación desde PySpark.",
+    "starter": "// Tu solución Scala.\n",
+    "expected": "Inner: 6 filas; left: 7; una venta sin región. El grupo NULL/BAJA conserva 50000.0.",
+    "hints": [
+      "Usa left join y compara el conteo antes/después. Una clave duplicada puede multiplicar ventas aun usando left.",
+      "100000 pertenece a MEDIA y 300000 a ALTA. Mantén los NULL de región y contabilízalos.",
+      "Comprueba nombres, tipos, conteos y el lugar de spark.stop antes de consultar la referencia."
+    ],
+    "solution": "import org.apache.spark.sql.SparkSession\nval spark = SparkSession.builder().appName(\"PipelineVentasGuia3Scala\").getOrCreate()\nimport spark.implicits._\nval dfVentas = Seq((1, \"2025-01-01\", \"Ana\", \"Santiago\", \"Tecnologia\", 99999.0), (2, \"2025-01-02\", \"Luis\", \"Santiago\", \"Hogar\", 100000.0), (3, \"2025-01-03\", \"Carla\", \"Concepcion\", \"Tecnologia\", 299999.0), (4, \"2025-01-04\", \"Pedro\", \"Concepcion\", \"Hogar\", 300000.0), (5, \"2025-01-05\", \"Maria\", \"SinReferencia\", \"Tecnologia\", 50000.0), (6, \"2025-01-06\", \"Diego\", \"Temuco\", \"Hogar\", 400000.0), (7, \"2025-01-07\", \"Eva\", \"Santiago\", \"Tecnologia\", 200000.0)).toDF(\"id_venta\", \"fecha\", \"cliente\", \"ciudad\", \"categoria\", \"monto\")\nval dfCiudades = Seq((\"Santiago\", \"Metropolitana\", \"Centro\"), (\"Concepcion\", \"Biobio\", \"Sur\"), (\"Temuco\", \"Araucania\", \"Sur\")).toDF(\"ciudad\", \"region\", \"zona\")\ndfVentas.printSchema()\ndfCiudades.printSchema()\ndfVentas.show(5, false)\ndfCiudades.show(10, false)\nval cantidadVentas = dfVentas.count()\nrequire(cantidadVentas > 0 && dfCiudades.count() > 0, \"Una fuente obligatoria está vacía\")\nrequire(dfCiudades.groupBy(\"ciudad\").count().filter(\"count > 1\").count() == 0, \"Referencia duplicada por ciudad\")\nval dfInner = dfVentas.join(dfCiudades, Seq(\"ciudad\"), \"inner\")\nprintln(\"Inner: \" + dfInner.count())\nimport org.apache.spark.sql.functions._\nval dfIntegrado = dfVentas.join(dfCiudades, Seq(\"ciudad\"), \"left\")\nrequire(dfIntegrado.count() == cantidadVentas, \"Cambió la cantidad después del left join\")\nprintln(\"Ventas sin región: \" + dfIntegrado.filter(col(\"region\").isNull).count())\nval dfTransformado = dfIntegrado.withColumn(\"nivel_venta\", when(col(\"monto\") < 100000, \"BAJA\").when((col(\"monto\") >= 100000) && (col(\"monto\") < 300000), \"MEDIA\").otherwise(\"ALTA\"))\nval dfResultado = dfTransformado.groupBy(\"region\", \"nivel_venta\").agg(count(\"*\").alias(\"cantidad_ventas\"), round(sum(\"monto\"), 2).alias(\"monto_total\"), round(avg(\"monto\"), 2).alias(\"monto_promedio\")).orderBy(\"region\", \"nivel_venta\")\ndfResultado.show(100, false)\nspark.stop()",
+    "explanation": "La guía original usa PySpark. Esta es una adaptación explícita a Scala. Pipeline significa aquí proceso batch de datos, no ML Pipeline. Rúbrica guiada: comprobar la ejecución en Spark real; no se asigna un acierto automático.",
+    "source": {
+      "file": "Semana_11_SPARK_Ejercicios.md",
+      "section": "Ejercicios 7–8 y nivel 3 · Ejercicio 12 · adaptación original a Scala",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Compara inner y left sobre la misma muestra.",
+        "Detecta región NULL mediante isNull y mantiene la venta.",
+        "Distingue conservación de filas de correspondencia regional.",
+        "No atribuye resultados de la muestra al archivo del curso."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "pipeline",
+      "context": "Muestra ORIGINAL de entrenamiento, no el archivo completo del profesor. Ventas: id_venta,fecha,cliente,ciudad,categoria,monto.\n1,2025-01-01,Ana,Santiago,Tecnologia,99999.0\n2,2025-01-02,Luis,Santiago,Hogar,100000.0\n3,2025-01-03,Carla,Concepcion,Tecnologia,299999.0\n4,2025-01-04,Pedro,Concepcion,Hogar,300000.0\n5,2025-01-05,Maria,SinReferencia,Tecnologia,50000.0\n6,2025-01-06,Diego,Temuco,Hogar,400000.0\n7,2025-01-07,Eva,Santiago,Tecnologia,200000.0\nReferencia única por ciudad: ciudad,region,zona\nSantiago,Metropolitana,Centro\nConcepcion,Biobio,Sur\nTemuco,Araucania,Sur",
+      "steps": [
+        {
+          "title": "Conservar las ventas",
+          "body": "Usa left join y compara el conteo antes/después. Una clave duplicada puede multiplicar ventas aun usando left."
+        },
+        {
+          "title": "Clasificar con límites exactos",
+          "body": "100000 pertenece a MEDIA y 300000 a ALTA. Mantén los NULL de región y contabilízalos."
+        },
+        {
+          "title": "Cambiar la unidad de análisis",
+          "body": "Una fila agrupada representa región+nivel, no una venta individual."
+        }
+      ],
+      "run": "Adaptación educativa a Scala de una guía PySpark. En spark-shell del clúster, carga el script con :load /ruta/archivo.scala. Si lo conviertes en object/main, invoca main o compila un JAR compatible y usa spark-submit --class NombreClase archivo.jar. No envíes directamente un .scala a spark-submit.",
+      "format": "case",
+      "artifact": "program",
+      "order": 18
+    }
+  },
+  {
+    "id": "spark-dev-w11-cache-scala",
+    "week": 11,
+    "concept": "parquet-validation",
+    "title": "Pipeline · reutilizar no es persistir en HDFS",
+    "language": "Scala",
+    "level": 4,
+    "task": "case",
+    "prompt": "Construye el procesamiento completo de la muestra. Reutiliza temporalmente el resultado agregado para mostrarlo y contarlo; luego escríbelo como Parquet en la ruta del ejercicio, libera la caché y relee la salida. Explica qué sigue disponible cuando cierra Spark.\nUsa un script Scala compatible con spark-shell; identifica la adaptación desde PySpark.",
+    "starter": "// Tu solución Scala.\n",
+    "expected": "Seis grupos en la muestra y un directorio Parquet persistente. cache no sustituye la salida HDFS.",
+    "hints": [
+      "Escribe Parquet únicamente en la ruta del ejercicio. overwrite reemplaza su salida previa.",
+      "Lee otra vez el directorio con spark.read.parquet; un DataFrame en memoria no es un producto persistente.",
+      "Comprueba nombres, tipos, conteos y el lugar de spark.stop antes de consultar la referencia."
+    ],
+    "solution": "import org.apache.spark.sql.SparkSession\nval spark = SparkSession.builder().appName(\"PipelineVentasGuia3Scala\").getOrCreate()\nimport spark.implicits._\nval dfVentas = Seq((1, \"2025-01-01\", \"Ana\", \"Santiago\", \"Tecnologia\", 99999.0), (2, \"2025-01-02\", \"Luis\", \"Santiago\", \"Hogar\", 100000.0), (3, \"2025-01-03\", \"Carla\", \"Concepcion\", \"Tecnologia\", 299999.0), (4, \"2025-01-04\", \"Pedro\", \"Concepcion\", \"Hogar\", 300000.0), (5, \"2025-01-05\", \"Maria\", \"SinReferencia\", \"Tecnologia\", 50000.0), (6, \"2025-01-06\", \"Diego\", \"Temuco\", \"Hogar\", 400000.0), (7, \"2025-01-07\", \"Eva\", \"Santiago\", \"Tecnologia\", 200000.0)).toDF(\"id_venta\", \"fecha\", \"cliente\", \"ciudad\", \"categoria\", \"monto\")\nval dfCiudades = Seq((\"Santiago\", \"Metropolitana\", \"Centro\"), (\"Concepcion\", \"Biobio\", \"Sur\"), (\"Temuco\", \"Araucania\", \"Sur\")).toDF(\"ciudad\", \"region\", \"zona\")\ndfVentas.printSchema()\ndfCiudades.printSchema()\ndfVentas.show(5, false)\ndfCiudades.show(10, false)\nval cantidadVentas = dfVentas.count()\nrequire(cantidadVentas > 0 && dfCiudades.count() > 0, \"Una fuente obligatoria está vacía\")\nrequire(dfCiudades.groupBy(\"ciudad\").count().filter(\"count > 1\").count() == 0, \"Referencia duplicada por ciudad\")\nimport org.apache.spark.sql.functions._\nval dfIntegrado = dfVentas.join(dfCiudades, Seq(\"ciudad\"), \"left\")\nrequire(dfIntegrado.count() == cantidadVentas, \"Cambió la cantidad después del left join\")\nprintln(\"Ventas sin región: \" + dfIntegrado.filter(col(\"region\").isNull).count())\nval dfTransformado = dfIntegrado.withColumn(\"nivel_venta\", when(col(\"monto\") < 100000, \"BAJA\").when((col(\"monto\") >= 100000) && (col(\"monto\") < 300000), \"MEDIA\").otherwise(\"ALTA\"))\nval dfResultado = dfTransformado.groupBy(\"region\", \"nivel_venta\").agg(count(\"*\").alias(\"cantidad_ventas\"), round(sum(\"monto\"), 2).alias(\"monto_total\"), round(avg(\"monto\"), 2).alias(\"monto_promedio\")).orderBy(\"region\", \"nivel_venta\")\ndfResultado.show(100, false)\ndfResultado.cache()\ndfResultado.count()\ndfResultado.show()\nval rutaSalida = \"hdfs://namenode:8020/curso/spark/guia3/pipeline/ventas_por_region_nivel\"\n// overwrite se limita a la ruta de trabajo del ejercicio.\ndfResultado.write.mode(\"overwrite\").parquet(rutaSalida)\nval dfRecuperado = spark.read.parquet(rutaSalida)\ndfRecuperado.printSchema()\ndfRecuperado.show(100, false)\nrequire(dfRecuperado.count() == dfResultado.count(), \"Conteo recuperado diferente\")\n// Comparar además claves, tipos y medidas: el conteo por sí solo no basta.\ndfResultado.unpersist()\n// La caché es temporal; el directorio Parquet sobrevive al cierre de la aplicación.\nspark.stop()",
+    "explanation": "La guía original usa PySpark. Esta es una adaptación explícita a Scala. Pipeline significa aquí proceso batch de datos, no ML Pipeline. Rúbrica guiada: comprobar la ejecución en Spark real; no se asigna un acierto automático.",
+    "source": {
+      "file": "Semana_11_SPARK_Ejercicios.md",
+      "section": "Ejercicio 10; nivel 3 · Ejercicio 13 §11 · adaptación original a Scala",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Materializa la caché con una acción y la libera al terminar su uso.",
+        "Escribe y relee Parquet en la ruta definida.",
+        "Distingue la vida del DataFrame/cache de la del producto HDFS."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "pipeline",
+      "context": "Muestra ORIGINAL de entrenamiento, no el archivo completo del profesor. Ventas: id_venta,fecha,cliente,ciudad,categoria,monto.\n1,2025-01-01,Ana,Santiago,Tecnologia,99999.0\n2,2025-01-02,Luis,Santiago,Hogar,100000.0\n3,2025-01-03,Carla,Concepcion,Tecnologia,299999.0\n4,2025-01-04,Pedro,Concepcion,Hogar,300000.0\n5,2025-01-05,Maria,SinReferencia,Tecnologia,50000.0\n6,2025-01-06,Diego,Temuco,Hogar,400000.0\n7,2025-01-07,Eva,Santiago,Tecnologia,200000.0\nReferencia única por ciudad: ciudad,region,zona\nSantiago,Metropolitana,Centro\nConcepcion,Biobio,Sur\nTemuco,Araucania,Sur",
+      "steps": [
+        {
+          "title": "Persistir el producto",
+          "body": "Escribe Parquet únicamente en la ruta del ejercicio. overwrite reemplaza su salida previa."
+        },
+        {
+          "title": "Recuperar",
+          "body": "Lee otra vez el directorio con spark.read.parquet; un DataFrame en memoria no es un producto persistente."
+        },
+        {
+          "title": "Validar más allá del conteo",
+          "body": "Compara cantidad, esquema, claves y medidas. Igual número de filas no garantiza valores correctos."
+        }
+      ],
+      "run": "Adaptación educativa a Scala de una guía PySpark. En spark-shell del clúster, carga el script con :load /ruta/archivo.scala. Si lo conviertes en object/main, invoca main o compila un JAR compatible y usa spark-submit --class NombreClase archivo.jar. No envíes directamente un .scala a spark-submit.",
+      "format": "case",
+      "artifact": "program",
+      "order": 19
+    }
+  },
+  {
+    "id": "spark-dev-w11-sesion-py",
+    "week": 11,
+    "concept": "spark-session",
+    "title": "SparkSession · iniciar, trabajar y cerrar",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Programa desde cero la sesión, crea el DataFrame de Ana 150000 y Luis 85000, registra una vista y consulta montos >100000. Cierra solo después de mostrar la consulta. Explica dónde se indica el Master.\nUsa PySpark y comentarios Python; distingue el código del programa de los comandos de terminal.",
+    "starter": "# Tu solución PySpark.\n",
+    "expected": "Solo Ana 150000.0. Se mantiene una sesión activa durante creación, registro y consulta.",
+    "hints": [
+      "SparkSession.builder.appName(...).getOrCreate() proporciona el punto de entrada. El Master se configura al ejecutar la aplicación.",
+      "Usa la misma sesión para crear/leer DataFrames y consultar una vista temporal.",
+      "Comprueba nombres, tipos, conteos y el lugar de spark.stop antes de consultar la referencia."
+    ],
+    "solution": "from pyspark.sql import SparkSession\nspark = SparkSession.builder.appName(\"PipelineVentasGuia3\").getOrCreate()\ndf = spark.createDataFrame([(\"Ana\", 150000.0), (\"Luis\", 85000.0)], [\"cliente\", \"monto\"])\ndf.createOrReplaceTempView(\"clientes\")\nspark.sql(\"SELECT cliente, monto FROM clientes WHERE monto > 100000\").show()\nspark.stop()",
+    "explanation": "La guía original usa PySpark. Pipeline significa aquí proceso batch de datos, no ML Pipeline. Rúbrica guiada: comprobar la ejecución en Spark real; no se asigna un acierto automático.",
+    "source": {
+      "file": "Semana_11_SPARK_Ejercicios.md",
+      "section": "Conocimientos previos; nivel 3 · Ejercicio 11 §4 y ejercicio 12 §1; antecedente semana 10 nivel 4",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Usa SparkSession.builder/appName/getOrCreate correctamente.",
+        "Crea el DataFrame y registra la vista con la misma sesión.",
+        "Ejecuta la consulta antes de spark.stop.",
+        "Distingue configuración del Master en spark-submit/spark-shell de appName."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "session",
+      "context": "Muestra ORIGINAL: Ana 150000.0 y Luis 85000.0. La guía de semana 11 reutiliza SparkSession de semana 10.",
+      "steps": [
+        {
+          "title": "Iniciar",
+          "body": "SparkSession.builder.appName(...).getOrCreate() proporciona el punto de entrada. El Master se configura al ejecutar la aplicación."
+        },
+        {
+          "title": "Usar",
+          "body": "Usa la misma sesión para crear/leer DataFrames y consultar una vista temporal."
+        },
+        {
+          "title": "Cerrar al final",
+          "body": "No detengas Spark entre las etapas. La vista no es un archivo permanente; Parquet en HDFS sí puede releerse."
+        }
+      ],
+      "run": "En spark-master: guarda el .py, exporta PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 archivo.py. Verifica las rutas del ejercicio desde namenode con hdfs dfs -ls. El navegador no ejecuta Spark.",
+      "format": "case",
+      "artifact": "program",
+      "order": 20
+    }
+  },
+  {
+    "id": "spark-dev-w11-sesion-scala",
+    "week": 11,
+    "concept": "spark-session",
+    "title": "SparkSession · iniciar, trabajar y cerrar",
+    "language": "Scala",
+    "level": 4,
+    "task": "case",
+    "prompt": "Programa desde cero la sesión, crea el DataFrame de Ana 150000 y Luis 85000, registra una vista y consulta montos >100000. Cierra solo después de mostrar la consulta. Explica dónde se indica el Master.\nUsa un script Scala compatible con spark-shell; identifica la adaptación desde PySpark.",
+    "starter": "// Tu solución Scala.\n",
+    "expected": "Solo Ana 150000.0. Se mantiene una sesión activa durante creación, registro y consulta.",
+    "hints": [
+      "SparkSession.builder.appName(...).getOrCreate() proporciona el punto de entrada. El Master se configura al ejecutar la aplicación.",
+      "Usa la misma sesión para crear/leer DataFrames y consultar una vista temporal.",
+      "Comprueba nombres, tipos, conteos y el lugar de spark.stop antes de consultar la referencia."
+    ],
+    "solution": "import org.apache.spark.sql.SparkSession\nval spark = SparkSession.builder().appName(\"PipelineVentasGuia3Scala\").getOrCreate()\nimport spark.implicits._\nval df = Seq((\"Ana\", 150000.0), (\"Luis\", 85000.0)).toDF(\"cliente\", \"monto\")\ndf.createOrReplaceTempView(\"clientes\")\nspark.sql(\"SELECT cliente, monto FROM clientes WHERE monto > 100000\").show()\nspark.stop()",
+    "explanation": "La guía original usa PySpark. Esta es una adaptación explícita a Scala. Pipeline significa aquí proceso batch de datos, no ML Pipeline. Rúbrica guiada: comprobar la ejecución en Spark real; no se asigna un acierto automático.",
+    "source": {
+      "file": "Semana_11_SPARK_Ejercicios.md",
+      "section": "Conocimientos previos; nivel 3 · Ejercicio 11 §4 y ejercicio 12 §1; antecedente semana 10 nivel 4",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Usa SparkSession.builder/appName/getOrCreate correctamente.",
+        "Crea el DataFrame y registra la vista con la misma sesión.",
+        "Ejecuta la consulta antes de spark.stop.",
+        "Distingue configuración del Master en spark-submit/spark-shell de appName."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "session",
+      "context": "Muestra ORIGINAL: Ana 150000.0 y Luis 85000.0. La guía de semana 11 reutiliza SparkSession de semana 10.",
+      "steps": [
+        {
+          "title": "Iniciar",
+          "body": "SparkSession.builder.appName(...).getOrCreate() proporciona el punto de entrada. El Master se configura al ejecutar la aplicación."
+        },
+        {
+          "title": "Usar",
+          "body": "Usa la misma sesión para crear/leer DataFrames y consultar una vista temporal."
+        },
+        {
+          "title": "Cerrar al final",
+          "body": "No detengas Spark entre las etapas. La vista no es un archivo permanente; Parquet en HDFS sí puede releerse."
+        }
+      ],
+      "run": "Adaptación educativa a Scala de una guía PySpark. En spark-shell del clúster, carga el script con :load /ruta/archivo.scala. Si lo conviertes en object/main, invoca main o compila un JAR compatible y usa spark-submit --class NombreClase archivo.jar. No envíes directamente un .scala a spark-submit.",
+      "format": "case",
+      "artifact": "program",
+      "order": 21
+    }
+  },
+  {
+    "id": "spark-dev-w11-cierre-py",
+    "week": 11,
+    "concept": "spark-session",
+    "title": "SparkSession · corregir un cierre prematuro",
+    "language": "PySpark",
+    "level": 4,
+    "task": "case",
+    "prompt": "Un pipeline cierra Spark justo después de leer fuentes y después intenta crear una vista y consultar. Reescribe el programa completo sobre la muestra y ubica el cierre correctamente; no ocultes el error creando sesiones arbitrarias entre etapas.\nUsa PySpark y comentarios Python; distingue el código del programa de los comandos de terminal.",
+    "starter": "# Tu solución PySpark.\n",
+    "expected": "El programa puede completar sus etapas antes del cierre. La solución se comprueba en Spark real.",
+    "hints": [
+      "SparkSession.builder.appName(...).getOrCreate() proporciona el punto de entrada. El Master se configura al ejecutar la aplicación.",
+      "Usa la misma sesión para crear/leer DataFrames y consultar una vista temporal.",
+      "Comprueba nombres, tipos, conteos y el lugar de spark.stop antes de consultar la referencia."
+    ],
+    "solution": "from pyspark.sql import SparkSession\nspark = SparkSession.builder.appName(\"PipelineVentasGuia3\").getOrCreate()\ndf_ventas = spark.createDataFrame([(1, '2025-01-01', 'Ana', 'Santiago', 'Tecnologia', 99999.0), (2, '2025-01-02', 'Luis', 'Santiago', 'Hogar', 100000.0), (3, '2025-01-03', 'Carla', 'Concepcion', 'Tecnologia', 299999.0), (4, '2025-01-04', 'Pedro', 'Concepcion', 'Hogar', 300000.0), (5, '2025-01-05', 'Maria', 'SinReferencia', 'Tecnologia', 50000.0), (6, '2025-01-06', 'Diego', 'Temuco', 'Hogar', 400000.0), (7, '2025-01-07', 'Eva', 'Santiago', 'Tecnologia', 200000.0)], [\"id_venta\", \"fecha\", \"cliente\", \"ciudad\", \"categoria\", \"monto\"])\ndf_ciudades = spark.createDataFrame([('Santiago', 'Metropolitana', 'Centro'), ('Concepcion', 'Biobio', 'Sur'), ('Temuco', 'Araucania', 'Sur')], [\"ciudad\", \"region\", \"zona\"])\ndf_ventas.printSchema()\ndf_ciudades.printSchema()\ndf_ventas.show(5, False)\ndf_ciudades.show(10, False)\ncantidad_ventas = df_ventas.count()\nif cantidad_ventas == 0 or df_ciudades.count() == 0:\n    raise ValueError(\"Una fuente obligatoria está vacía\")\ndf_ventas.select(\"ciudad\").distinct().orderBy(\"ciudad\").show()\ndf_ciudades.select(\"ciudad\").distinct().orderBy(\"ciudad\").show()\n# Refuerzo original de validación: una referencia única por ciudad.\nif df_ciudades.groupBy(\"ciudad\").count().filter(\"count > 1\").count() > 0:\n    raise ValueError(\"Hay ciudades duplicadas en la referencia\")\nfrom pyspark.sql.functions import col, when, count, sum, avg, round\ndf_integrado = df_ventas.join(df_ciudades, on=\"ciudad\", how=\"left\")\nif df_integrado.count() != cantidad_ventas:\n    raise ValueError(\"Cambió la cantidad después del left join\")\nprint(\"Ventas sin región:\", df_integrado.filter(col(\"region\").isNull()).count())\ndf_transformado = df_integrado.withColumn(\n    \"nivel_venta\",\n    when(col(\"monto\") < 100000, \"BAJA\")\n    .when((col(\"monto\") >= 100000) & (col(\"monto\") < 300000), \"MEDIA\")\n    .otherwise(\"ALTA\")\n)\n# Se conservan las regiones NULL: no se elimina ni corrige sin analizar.\ndf_resultado = (df_transformado.groupBy(\"region\", \"nivel_venta\")\n    .agg(count(\"*\").alias(\"cantidad_ventas\"),\n         round(sum(\"monto\"), 2).alias(\"monto_total\"),\n         round(avg(\"monto\"), 2).alias(\"monto_promedio\"))\n    .orderBy(\"region\", \"nivel_venta\"))\ndf_resultado.show(100, False)\n# Cierre único al final, después de todas las acciones y validaciones.\nspark.stop()",
+    "explanation": "La guía original usa PySpark. Pipeline significa aquí proceso batch de datos, no ML Pipeline. Rúbrica guiada: comprobar la ejecución en Spark real; no se asigna un acierto automático.",
+    "source": {
+      "file": "Semana_11_SPARK_Ejercicios.md",
+      "section": "Nivel 3 · Ejercicio 12 §1 y ejercicio 14",
+      "origin": "original"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Mantiene la sesión durante todas las etapas.",
+        "Elimina el cierre prematuro y lo sitúa al final.",
+        "No usa getOrCreate como parche para esconder una mala secuencia.",
+        "Explica que una variable Python llamada spark no demuestra una sesión operativa después de stop."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "session",
+      "context": "Muestra ORIGINAL de entrenamiento, no el archivo completo del profesor. Ventas: id_venta,fecha,cliente,ciudad,categoria,monto.\n1,2025-01-01,Ana,Santiago,Tecnologia,99999.0\n2,2025-01-02,Luis,Santiago,Hogar,100000.0\n3,2025-01-03,Carla,Concepcion,Tecnologia,299999.0\n4,2025-01-04,Pedro,Concepcion,Hogar,300000.0\n5,2025-01-05,Maria,SinReferencia,Tecnologia,50000.0\n6,2025-01-06,Diego,Temuco,Hogar,400000.0\n7,2025-01-07,Eva,Santiago,Tecnologia,200000.0\nReferencia única por ciudad: ciudad,region,zona\nSantiago,Metropolitana,Centro\nConcepcion,Biobio,Sur\nTemuco,Araucania,Sur",
+      "steps": [
+        {
+          "title": "Iniciar",
+          "body": "SparkSession.builder.appName(...).getOrCreate() proporciona el punto de entrada. El Master se configura al ejecutar la aplicación."
+        },
+        {
+          "title": "Usar",
+          "body": "Usa la misma sesión para crear/leer DataFrames y consultar una vista temporal."
+        },
+        {
+          "title": "Cerrar al final",
+          "body": "No detengas Spark entre las etapas. La vista no es un archivo permanente; Parquet en HDFS sí puede releerse."
+        }
+      ],
+      "run": "En spark-master: guarda el .py, exporta PYSPARK_PYTHON=python3 y PYSPARK_DRIVER_PYTHON=python3; ejecuta /spark/bin/spark-submit --master spark://spark-master:7077 archivo.py. Verifica las rutas del ejercicio desde namenode con hdfs dfs -ls. El navegador no ejecuta Spark.",
+      "format": "case",
+      "artifact": "program",
+      "order": 22
+    }
+  },
+  {
+    "id": "spark-dev-w11-releer-scala",
+    "week": 11,
+    "concept": "spark-session",
+    "title": "SparkSession · recuperar el producto en otra aplicación",
+    "language": "Scala",
+    "level": 4,
+    "task": "case",
+    "prompt": "Escribe una nueva aplicación/script Scala para recuperar la salida Parquet del pipeline previo, mostrar su esquema, filas y conteo, y cerrar su propia sesión. Explica qué debe existir antes y por qué no basta usar la antigua vista temporal.\nUsa un script Scala compatible con spark-shell; identifica la adaptación desde PySpark.",
+    "starter": "// Tu solución Scala.\n",
+    "expected": "Producto recuperable sin depender de variables, vista ni caché de la aplicación que lo escribió. El conteo real se observa al ejecutar.",
+    "hints": [
+      "SparkSession.builder.appName(...).getOrCreate() proporciona el punto de entrada. El Master se configura al ejecutar la aplicación.",
+      "Usa la misma sesión para crear/leer DataFrames y consultar una vista temporal.",
+      "Comprueba nombres, tipos, conteos y el lugar de spark.stop antes de consultar la referencia."
+    ],
+    "solution": "import org.apache.spark.sql.SparkSession\nval spark = SparkSession.builder().appName(\"PipelineVentasGuia3Scala\").getOrCreate()\nval ruta = \"hdfs://namenode:8020/curso/spark/guia3/pipeline/ventas_por_region_nivel\"\nval recuperado = spark.read.parquet(ruta)\nrecuperado.printSchema()\nrecuperado.show(100, false)\nprintln(\"Filas recuperadas: \" + recuperado.count())\n// Requiere que la aplicación anterior haya escrito esta ruta de trabajo.\nspark.stop()",
+    "explanation": "La guía original usa PySpark. Esta es una adaptación explícita a Scala. Pipeline significa aquí proceso batch de datos, no ML Pipeline. Rúbrica guiada: comprobar la ejecución en Spark real; no se asigna un acierto automático.",
+    "source": {
+      "file": "Semana_11_SPARK_Ejercicios.md",
+      "section": "Nivel 3 · Ejercicio 13 §9–11 y ejercicio 14 §8",
+      "origin": "adapted"
+    },
+    "validation": {
+      "kind": "runtime",
+      "criteria": [
+        "Inicia su sesión y utiliza la URI Parquet de salida de la guía.",
+        "Lee con spark.read.parquet y examina esquema/conteo/datos.",
+        "Distingue persistencia HDFS de vista temporal y variables de otra aplicación.",
+        "Documenta el prerrequisito de que la salida ya fue generada y cierra al final."
+      ]
+    },
+    "fundamental": false,
+    "training": {
+      "track": "session",
+      "context": "Entradas de la guía: hdfs://namenode:8020/curso/hive/datos_ventas/ventas_hive.csv (sin encabezado) y hdfs://namenode:8020/curso/spark/guia3/fuentes/ciudades.csv (con encabezado ciudad,region,zona). Salida SOLO del ejercicio: hdfs://namenode:8020/curso/spark/guia3/pipeline/ventas_por_region_nivel. No se incluye el archivo real ni se conocen sus agregados aquí.",
+      "steps": [
+        {
+          "title": "Iniciar",
+          "body": "SparkSession.builder.appName(...).getOrCreate() proporciona el punto de entrada. El Master se configura al ejecutar la aplicación."
+        },
+        {
+          "title": "Usar",
+          "body": "Usa la misma sesión para crear/leer DataFrames y consultar una vista temporal."
+        },
+        {
+          "title": "Cerrar al final",
+          "body": "No detengas Spark entre las etapas. La vista no es un archivo permanente; Parquet en HDFS sí puede releerse."
+        }
+      ],
+      "run": "Adaptación educativa a Scala de una guía PySpark. En spark-shell del clúster, carga el script con :load /ruta/archivo.scala. Si lo conviertes en object/main, invoca main o compila un JAR compatible y usa spark-submit --class NombreClase archivo.jar. No envíes directamente un .scala a spark-submit.",
+      "format": "case",
+      "artifact": "program",
+      "order": 23
+    }
+  }
+]

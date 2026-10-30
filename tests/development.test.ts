@@ -8,11 +8,11 @@ import {checkCode} from '../src/spark/validator.ts';
 import {defaultScale,seeded} from '../src/lib/engine.ts';
 import type {SparkAttempt} from '../src/spark/types.ts';
 test('Development content covers guide exercise 12 and every level 4 activity with explicit Scala adaptations',()=>{
- assert.equal(developmentExercises.filter(e=>!e.id.startsWith('spark-dev-py-')).length,14);assert.equal(developmentExercises.length,32);assert.equal(developmentExercises.filter(e=>e.language==='Scala').length,10);assert.equal(developmentExercises.filter(e=>e.language==='PySpark').length,22);
+ assert.equal(developmentExercises.filter(e=>e.week<=10&&!e.id.startsWith('spark-dev-py-')).length,14);assert.equal(developmentExercises.filter(e=>e.week<=10).length,32);assert.equal(developmentExercises.filter(e=>e.language==='Scala'&&e.week<=10).length,10);assert.equal(developmentExercises.filter(e=>e.language==='PySpark'&&e.week<=10).length,22);
  assert.equal(developmentExercises.filter(e=>e.training!.track==='exercise12').length,3);assert.equal(developmentExercises.filter(e=>e.training!.track==='level4').length,14);assert.equal(developmentExercises.filter(e=>e.training!.track==='transfer').length,15);
  for(const language of ['Scala','PySpark'])for(const id of ['16-','16-cambio-','17-'])assert.ok(developmentExercises.some(e=>e.language===language&&e.id.includes(id)));
  for(const e of developmentExercises){assert.equal(e.task,'case');assert.ok(e.validation.kind==='runtime'||e.validation.kind==='rubric');assert.ok(e.training!.context&&e.training!.steps.length>=3&&e.training!.run);assert.equal(checkCode(e,e.solution).outcome,'review');assert.ok(e.source.section);if(e.language==='Scala'&&e.training!.track==='level4')assert.match(e.explanation,/adaptación educativa/);}
- assert.ok(developmentExercises.some(e=>e.week===9));assert.ok(developmentExercises.every(e=>[9,10].includes(e.week)));
+ assert.ok(developmentExercises.some(e=>e.week===9));assert.ok(developmentExercises.every(e=>[9,10,11].includes(e.week)));
 });
 test('Training fixture has traceable correct totals, means, months and threshold variants without guessing real CSV totals',()=>{
  assert.equal(fixture.length,6);const technology=fixture.filter(r=>r.categoria==='Tecnologia');const group=(data:typeof fixture,key:'ciudad'|'categoria')=>Object.fromEntries([...new Set(data.map(r=>r[key]))].map(k=>[k,data.filter(r=>r[key]===k).reduce((n,r)=>n+r.monto,0)]));

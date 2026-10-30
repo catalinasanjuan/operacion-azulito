@@ -1,0 +1,77 @@
+{
+  "ventas": [
+    {
+      "id_venta": 1,
+      "fecha": "2025-01-01",
+      "cliente": "Ana",
+      "ciudad": "Santiago",
+      "categoria": "Tecnologia",
+      "monto": 99999.0
+    },
+    {
+      "id_venta": 2,
+      "fecha": "2025-01-02",
+      "cliente": "Luis",
+      "ciudad": "Santiago",
+      "categoria": "Hogar",
+      "monto": 100000.0
+    },
+    {
+      "id_venta": 3,
+      "fecha": "2025-01-03",
+      "cliente": "Carla",
+      "ciudad": "Concepcion",
+      "categoria": "Tecnologia",
+      "monto": 299999.0
+    },
+    {
+      "id_venta": 4,
+      "fecha": "2025-01-04",
+      "cliente": "Pedro",
+      "ciudad": "Concepcion",
+      "categoria": "Hogar",
+      "monto": 300000.0
+    },
+    {
+      "id_venta": 5,
+      "fecha": "2025-01-05",
+      "cliente": "Maria",
+      "ciudad": "SinReferencia",
+      "categoria": "Tecnologia",
+      "monto": 50000.0
+    },
+    {
+      "id_venta": 6,
+      "fecha": "2025-01-06",
+      "cliente": "Diego",
+      "ciudad": "Temuco",
+      "categoria": "Hogar",
+      "monto": 400000.0
+    },
+    {
+      "id_venta": 7,
+      "fecha": "2025-01-07",
+      "cliente": "Eva",
+      "ciudad": "Santiago",
+      "categoria": "Tecnologia",
+      "monto": 200000.0
+    }
+  ],
+  "ciudades": [
+    {
+      "ciudad": "Santiago",
+      "region": "Metropolitana",
+      "zona": "Centro"
+    },
+    {
+      "ciudad": "Concepcion",
+      "region": "Biobio",
+      "zona": "Sur"
+    },
+    {
+      "ciudad": "Temuco",
+      "region": "Araucania",
+      "zona": "Sur"
+    }
+  ]
+}

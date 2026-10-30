@@ -36,3 +36,8 @@ Contrastar con guías originales cuando se incorporen. No se afirma aprobación 
 ## Ampliación Spark (evaluación 3)
 
 Misión Spark mantiene independiente el banco de evaluación 2. Las semanas 9 y 10 se basan en las tres guías originales de `juliopez/Hadoop`, fijadas al commit 6dbb5edb023d218b50b9d2494676ceb0de51ecb5. Véase [SPARK.md](SPARK.md) para la relación entre guías, lecciones, ejercicios y mecanismos de revisión. No se publica contenido de semanas futuras.
+
+
+## Semana 11: listado de prueba actualizado
+
+Se incorpora la guía real `Semana_11_SPARK_Ejercicios.md` del commit 11d2cee2b28af20d7da8b9692595962d59ea0582: pipeline batch (ejercicios 11–14 y sus antecedentes) y ciclo de vida de SparkSession. Se conserva semana 10, nivel 3, ejercicio 12 y nivel 4 completo. El término pipeline no se interpreta como ML Pipeline. Véase [SPARK.md](SPARK.md) para trazabilidad, muestra original y límites de validación.

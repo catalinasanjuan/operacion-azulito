@@ -1,0 +1,145 @@
+[
+  {
+    "id": "w11-session",
+    "week": 11,
+    "title": "SparkSession: la sesión del programa",
+    "explanation": "SparkSession es el punto de entrada para DataFrames y SQL. La guía crea una sesión, integra las etapas y la cierra al final. appName identifica la aplicación; --master indica dónde ejecutarla. Una variable llamada spark no mantiene vivo un contexto ya detenido.",
+    "analogy": "Abres un taller para trabajar y lo cierras al terminar, no entre cada paso de la receta.",
+    "code": "from pyspark.sql import SparkSession\nspark = SparkSession.builder.appName(\"PipelineVentasGuia3\").getOrCreate()\n# ... lectura, transformaciones, acciones y validaciones ...\nspark.stop()",
+    "lines": [
+      "Importa el punto de entrada.",
+      "Crea o recupera la sesión y nombra la aplicación.",
+      "Las etapas ocurren antes del cierre.",
+      "Cierra al terminar el programa."
+    ],
+    "check": "¿Dónde va spark.stop en un pipeline?",
+    "answers": [
+      "Entre lectura y join",
+      "Después de las etapas y validaciones"
+    ],
+    "correct": 1,
+    "remember": "Una sesión permite trabajar; no sustituye el almacenamiento HDFS.",
+    "source": {
+      "file": "Semana_11_SPARK_Ejercicios.md",
+      "section": "Conocimientos previos; ejercicio 11 §4, ejercicio 12 §1"
+    }
+  },
+  {
+    "id": "w11-inputs",
+    "week": 11,
+    "title": "Pipeline: leer y validar antes de integrar",
+    "explanation": "Un pipeline organiza fuentes, lectura, validación, integración, transformación, agregación y persistencia. En esta guía es batch, no ML Pipeline. Ventas no tiene encabezado; ciudades sí. Una fuente obligatoria vacía debe detener el proceso.",
+    "analogy": "Antes de cocinar revisas ingredientes y cantidades: no mezclas una caja vacía por seguir la receta.",
+    "code": "cantidad_ventas = df_ventas.count()\nif cantidad_ventas == 0 or df_ciudades.count() == 0:\n    raise ValueError(\"Una fuente obligatoria está vacía\")",
+    "lines": [
+      "Cuenta ventas mediante una acción.",
+      "Comprueba las dos entradas.",
+      "Detiene antes de integrar."
+    ],
+    "check": "¿Qué se hace primero?",
+    "answers": [
+      "Join y después revisar si había datos",
+      "Validar entradas antes del join"
+    ],
+    "correct": 1,
+    "remember": "Inspecciona fuente, columnas, tipos, muestras, conteos y clave ciudad.",
+    "source": {
+      "file": "Semana_11_SPARK_Ejercicios.md",
+      "section": "Nivel 3 · Ejercicio 11"
+    }
+  },
+  {
+    "id": "w11-join",
+    "week": 11,
+    "title": "Left join: conservar no es encontrar correspondencia",
+    "explanation": "Left conserva las ventas sin región como NULL; inner las descarta si no hay ciudad equivalente. Una referencia con ciudad duplicada puede multiplicar ventas. Compara conteos y detecta NULL: son controles distintos.",
+    "analogy": "Conservar todas las boletas no significa haber encontrado la dirección regional de cada cliente.",
+    "code": "df_integrado = df_ventas.join(df_ciudades, on=\"ciudad\", how=\"left\")\ndf_integrado.filter(col(\"region\").isNull()).show()",
+    "lines": [
+      "Integra conservando ventas de la izquierda.",
+      "Inspecciona las que no encontraron región."
+    ],
+    "check": "¿Un left join garantiza una sola fila por venta?",
+    "answers": [
+      "Siempre",
+      "Depende también de la unicidad de la referencia"
+    ],
+    "correct": 1,
+    "remember": "No elimines faltantes ni duplicados a ciegas: diagnostica la fuente.",
+    "source": {
+      "file": "Semana_11_SPARK_Ejercicios.md",
+      "section": "Ejercicios 7–8; nivel 3 · Ejercicio 12 §2–4"
+    }
+  },
+  {
+    "id": "w11-levels",
+    "week": 11,
+    "title": "Clasificar y cambiar la unidad de análisis",
+    "explanation": "La guía clasifica montos <100000 como BAJA, de 100000 a menos de 300000 como MEDIA y desde 300000 como ALTA. Luego agrupa por región y nivel: una fila deja de representar una venta y pasa a representar una combinación.",
+    "analogy": "Primero etiquetas cada boleta; después cuentas y sumas las boletas de cada casillero.",
+    "code": "df_transformado = df_integrado.withColumn(\"nivel_venta\", when(col(\"monto\") < 100000, \"BAJA\").when(col(\"monto\") < 300000, \"MEDIA\").otherwise(\"ALTA\"))\ndf_transformado.groupBy(\"region\", \"nivel_venta\").count().show()",
+    "lines": [
+      "Las condiciones se evalúan en orden y producen una columna nueva.",
+      "Agrupa y cuenta registros por combinación; agrega sum/avg para medidas monetarias."
+    ],
+    "check": "¿A qué nivel pertenece 300000?",
+    "answers": [
+      "MEDIA",
+      "ALTA"
+    ],
+    "correct": 1,
+    "remember": "100000 es MEDIA; 300000 es ALTA. Preserva los NULL de región según la guía.",
+    "source": {
+      "file": "Semana_11_SPARK_Ejercicios.md",
+      "section": "Nivel 3 · Ejercicio 12 §5–8"
+    }
+  },
+  {
+    "id": "w11-parquet",
+    "week": 11,
+    "title": "Persistir no es solo mostrar ni cachear",
+    "explanation": "write.parquet crea un producto HDFS recuperable por otra aplicación. cache/persist permite reutilizar datos temporalmente durante Spark. Tras escribir, relee y valida: igual conteo no garantiza iguales valores. overwrite reemplaza la salida y solo se usa en la ruta del ejercicio.",
+    "analogy": "Un resultado escrito en una libreta permanece cuando cierras el taller; lo que dejaste en la mesa no es el mismo tipo de conservación.",
+    "code": "df_resultado.write.mode(\"overwrite\").parquet(ruta_salida)\nrecuperado = spark.read.parquet(ruta_salida)\nrecuperado.printSchema()\nrecuperado.show()",
+    "lines": [
+      "Escribe únicamente en la ruta de trabajo definida.",
+      "Recupera el producto desde HDFS.",
+      "Inspecciona tipos.",
+      "Inspecciona datos y contrasta claves, medidas y conteos."
+    ],
+    "check": "¿Igual conteo demuestra todos los valores correctos?",
+    "answers": [
+      "Sí",
+      "No"
+    ],
+    "correct": 1,
+    "remember": "Parquet es columnar y conserva esquema; no se inspecciona con cat como si fuera CSV.",
+    "source": {
+      "file": "Semana_11_SPARK_Ejercicios.md",
+      "section": "Ejercicio 4; ejercicio 10; nivel 3 · Ejercicio 13"
+    }
+  },
+  {
+    "id": "w11-batch",
+    "week": 11,
+    "title": "Ejecutar el pipeline como una unidad batch",
+    "explanation": "La aplicación procesa fuentes que ya están disponibles y termina con un producto Parquet. Ejecutarla cada noche sigue siendo batch. Una nueva aplicación inicia su sesión y puede recuperar ese producto. Esto no convierte automáticamente el proceso en streaming.",
+    "analogy": "Procesar la caja de boletas del día completo sigue siendo trabajar por lotes aunque lo hagas todos los días.",
+    "code": "# Terminal de spark-master, no instrucciones Python:\n# /spark/bin/spark-submit --master spark://spark-master:7077 pipeline_ventas.py\n# Verificación desde namenode:\n# hdfs dfs -ls /curso/spark/guia3/pipeline/ventas_por_region_nivel/",
+    "lines": [
+      "Ejecuta el archivo completo sobre datos ya disponibles.",
+      "El resultado debe poder verificarse en HDFS después de terminar."
+    ],
+    "check": "¿Repetir cada noche lo transforma en streaming?",
+    "answers": [
+      "Sí",
+      "No"
+    ],
+    "correct": 1,
+    "remember": "No se enseñan aquí Kafka ni ML Pipelines como si fueran el pipeline programado de esta guía.",
+    "source": {
+      "file": "Semana_11_SPARK_Ejercicios.md",
+      "section": "Nivel 3 · Ejercicio 14; límite conceptual ejercicio 15"
+    }
+  }
+]

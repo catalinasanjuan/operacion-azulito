@@ -1,5 +1,5 @@
 import {checkCode} from './validator';
-import {exercises,sparkLessons} from './content';
+import {exercises,sparkLessons,examPriorities} from './content';
 import {grade,shuffle} from '../lib/engine';
 import type {Scale} from '../types';
 import type {Exercise,SparkAttempt,SparkExam,SparkProgress,SparkSession} from './types';
@@ -45,7 +45,7 @@ export function selectDevelopmentExam(count:number,weeks:number[],language:'Scal
  if(!weeks.length)throw Error('Selecciona al menos una semana.');
  if(!Number.isInteger(count)||count<1||count>pool.length)throw Error(`Hay ${pool.length} casos completos de desarrollo para estos filtros. Elige entre 1 y ${pool.length} o amplía la selección.`);
  const result:Exercise[]=[];
- if(focus==='priority'&&count>=2){for(const track of ['exercise12','level4']){const e=pool.find(e=>e.training?.track===track);if(e)result.push(e);}}
+ if(focus==='priority'){for(const priority of examPriorities){if(result.length>=count)break;const e=pool.find(e=>e.training?.track===priority.track&&e.week===priority.week);if(e)result.push(e);}}
  for(const week of weeks){if(result.length>=count)break;if(!result.some(e=>e.week===week)){const e=pool.find(e=>e.week===week&&!result.includes(e));if(e)result.push(e);}}
  result.push(...pool.filter(e=>!result.includes(e)).slice(0,count-result.length));return shuffle(result,rng);
 }
